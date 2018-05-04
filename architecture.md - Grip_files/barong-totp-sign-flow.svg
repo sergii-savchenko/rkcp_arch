@@ -1,0 +1,355 @@
+<svg id="mermaid-1520866272822" width="100%" xmlns="http://www.w3.org/2000/svg" height="100%" style="max-width:1102.015625px;" viewBox="-50 -50 1102.015625 856"><style>
+
+
+#mermaid-1520866272822 .label {
+  font-family: 'trebuchet ms', verdana, arial;
+  color: #333; }
+
+#mermaid-1520866272822 .node rect,
+#mermaid-1520866272822 .node circle,
+#mermaid-1520866272822 .node ellipse,
+#mermaid-1520866272822 .node polygon {
+  fill: #ECECFF;
+  stroke: #9370DB;
+  stroke-width: 1px; }
+
+#mermaid-1520866272822 .node.clickable {
+  cursor: pointer; }
+
+#mermaid-1520866272822 .arrowheadPath {
+  fill: #333333; }
+
+#mermaid-1520866272822 .edgePath .path {
+  stroke: #333333;
+  stroke-width: 1.5px; }
+
+#mermaid-1520866272822 .edgeLabel {
+  background-color: #e8e8e8; }
+
+#mermaid-1520866272822 .cluster rect {
+  fill: #ffffde !important;
+  rx: 4 !important;
+  stroke: #aaaa33 !important;
+  stroke-width: 1px !important; }
+
+#mermaid-1520866272822 .cluster text {
+  fill: #333; }
+
+#mermaid-1520866272822 .actor {
+  stroke: #CCCCFF;
+  fill: #ECECFF; }
+
+#mermaid-1520866272822 text.actor {
+  fill: black;
+  stroke: none; }
+
+#mermaid-1520866272822 .actor-line {
+  stroke: grey; }
+
+#mermaid-1520866272822 .messageLine0 {
+  stroke-width: 1.5;
+  stroke-dasharray: '2 2';
+  marker-end: 'url(#arrowhead)';
+  stroke: #333; }
+
+#mermaid-1520866272822 .messageLine1 {
+  stroke-width: 1.5;
+  stroke-dasharray: '2 2';
+  stroke: #333; }
+
+#mermaid-1520866272822 #arrowhead {
+  fill: #333; }
+
+#mermaid-1520866272822 #crosshead path {
+  fill: #333 !important;
+  stroke: #333 !important; }
+
+#mermaid-1520866272822 .messageText {
+  fill: #333;
+  stroke: none; }
+
+#mermaid-1520866272822 .labelBox {
+  stroke: #CCCCFF;
+  fill: #ECECFF; }
+
+#mermaid-1520866272822 .labelText {
+  fill: black;
+  stroke: none; }
+
+#mermaid-1520866272822 .loopText {
+  fill: black;
+  stroke: none; }
+
+#mermaid-1520866272822 .loopLine {
+  stroke-width: 2;
+  stroke-dasharray: '2 2';
+  marker-end: 'url(#arrowhead)';
+  stroke: #CCCCFF; }
+
+#mermaid-1520866272822 .note {
+  stroke: #aaaa33;
+  fill: #fff5ad; }
+
+#mermaid-1520866272822 .noteText {
+  fill: black;
+  stroke: none;
+  font-family: 'trebuchet ms', verdana, arial;
+  font-size: 14px; }
+
+
+#mermaid-1520866272822 .section {
+  stroke: none;
+  opacity: 0.2; }
+
+#mermaid-1520866272822 .section0 {
+  fill: rgba(102, 102, 255, 0.49); }
+
+#mermaid-1520866272822 .section2 {
+  fill: #fff400; }
+
+#mermaid-1520866272822 .section1,
+#mermaid-1520866272822 .section3 {
+  fill: white;
+  opacity: 0.2; }
+
+#mermaid-1520866272822 .sectionTitle0 {
+  fill: #333; }
+
+#mermaid-1520866272822 .sectionTitle1 {
+  fill: #333; }
+
+#mermaid-1520866272822 .sectionTitle2 {
+  fill: #333; }
+
+#mermaid-1520866272822 .sectionTitle3 {
+  fill: #333; }
+
+#mermaid-1520866272822 .sectionTitle {
+  text-anchor: start;
+  font-size: 11px;
+  text-height: 14px; }
+
+
+#mermaid-1520866272822 .grid .tick {
+  stroke: lightgrey;
+  opacity: 0.3;
+  shape-rendering: crispEdges; }
+
+#mermaid-1520866272822 .grid path {
+  stroke-width: 0; }
+
+
+#mermaid-1520866272822 .today {
+  fill: none;
+  stroke: red;
+  stroke-width: 2px; }
+
+
+
+#mermaid-1520866272822 .task {
+  stroke-width: 2; }
+
+#mermaid-1520866272822 .taskText {
+  text-anchor: middle;
+  font-size: 11px; }
+
+#mermaid-1520866272822 .taskTextOutsideRight {
+  fill: black;
+  text-anchor: start;
+  font-size: 11px; }
+
+#mermaid-1520866272822 .taskTextOutsideLeft {
+  fill: black;
+  text-anchor: end;
+  font-size: 11px; }
+
+
+#mermaid-1520866272822 .taskText0,
+#mermaid-1520866272822 .taskText1,
+#mermaid-1520866272822 .taskText2,
+#mermaid-1520866272822 .taskText3 {
+  fill: white; }
+
+#mermaid-1520866272822 .task0,
+#mermaid-1520866272822 .task1,
+#mermaid-1520866272822 .task2,
+#mermaid-1520866272822 .task3 {
+  fill: #8a90dd;
+  stroke: #534fbc; }
+
+#mermaid-1520866272822 .taskTextOutside0,
+#mermaid-1520866272822 .taskTextOutside2 {
+  fill: black; }
+
+#mermaid-1520866272822 .taskTextOutside1,
+#mermaid-1520866272822 .taskTextOutside3 {
+  fill: black; }
+
+
+#mermaid-1520866272822 .active0,
+#mermaid-1520866272822 .active1,
+#mermaid-1520866272822 .active2,
+#mermaid-1520866272822 .active3 {
+  fill: #bfc7ff;
+  stroke: #534fbc; }
+
+#mermaid-1520866272822 .activeText0,
+#mermaid-1520866272822 .activeText1,
+#mermaid-1520866272822 .activeText2,
+#mermaid-1520866272822 .activeText3 {
+  fill: black !important; }
+
+
+#mermaid-1520866272822 .done0,
+#mermaid-1520866272822 .done1,
+#mermaid-1520866272822 .done2,
+#mermaid-1520866272822 .done3 {
+  stroke: grey;
+  fill: lightgrey;
+  stroke-width: 2; }
+
+#mermaid-1520866272822 .doneText0,
+#mermaid-1520866272822 .doneText1,
+#mermaid-1520866272822 .doneText2,
+#mermaid-1520866272822 .doneText3 {
+  fill: black !important; }
+
+
+#mermaid-1520866272822 .crit0,
+#mermaid-1520866272822 .crit1,
+#mermaid-1520866272822 .crit2,
+#mermaid-1520866272822 .crit3 {
+  stroke: #ff8888;
+  fill: red;
+  stroke-width: 2; }
+
+#mermaid-1520866272822 .activeCrit0,
+#mermaid-1520866272822 .activeCrit1,
+#mermaid-1520866272822 .activeCrit2,
+#mermaid-1520866272822 .activeCrit3 {
+  stroke: #ff8888;
+  fill: #bfc7ff;
+  stroke-width: 2; }
+
+#mermaid-1520866272822 .doneCrit0,
+#mermaid-1520866272822 .doneCrit1,
+#mermaid-1520866272822 .doneCrit2,
+#mermaid-1520866272822 .doneCrit3 {
+  stroke: #ff8888;
+  fill: lightgrey;
+  stroke-width: 2;
+  cursor: pointer;
+  shape-rendering: crispEdges; }
+
+#mermaid-1520866272822 .doneCritText0,
+#mermaid-1520866272822 .doneCritText1,
+#mermaid-1520866272822 .doneCritText2,
+#mermaid-1520866272822 .doneCritText3 {
+  fill: black !important; }
+
+#mermaid-1520866272822 .activeCritText0,
+#mermaid-1520866272822 .activeCritText1,
+#mermaid-1520866272822 .activeCritText2,
+#mermaid-1520866272822 .activeCritText3 {
+  fill: black !important; }
+
+#mermaid-1520866272822 .titleText {
+  text-anchor: middle;
+  font-size: 18px;
+  fill: black; }
+
+#mermaid-1520866272822 g.classGroup text {
+  fill: #9370DB;
+  stroke: none;
+  font-family: 'trebuchet ms', verdana, arial;
+  font-size: 10px; }
+
+#mermaid-1520866272822 g.classGroup rect {
+  fill: #ECECFF;
+  stroke: #9370DB; }
+
+#mermaid-1520866272822 g.classGroup line {
+  stroke: #9370DB;
+  stroke-width: 1; }
+
+#mermaid-1520866272822 .classLabel .box {
+  stroke: none;
+  stroke-width: 0;
+  fill: #ECECFF;
+  opacity: 0.5; }
+
+#mermaid-1520866272822 .classLabel .label {
+  fill: #9370DB;
+  font-size: 10px; }
+
+#mermaid-1520866272822 .relation {
+  stroke: #9370DB;
+  stroke-width: 1;
+  fill: none; }
+
+#mermaid-1520866272822 #compositionStart {
+  fill: #9370DB;
+  stroke: #9370DB;
+  stroke-width: 1; }
+
+#mermaid-1520866272822 #compositionEnd {
+  fill: #9370DB;
+  stroke: #9370DB;
+  stroke-width: 1; }
+
+#mermaid-1520866272822 #aggregationStart {
+  fill: #ECECFF;
+  stroke: #9370DB;
+  stroke-width: 1; }
+
+#mermaid-1520866272822 #aggregationEnd {
+  fill: #ECECFF;
+  stroke: #9370DB;
+  stroke-width: 1; }
+
+#mermaid-1520866272822 #dependencyStart {
+  fill: #9370DB;
+  stroke: #9370DB;
+  stroke-width: 1; }
+
+#mermaid-1520866272822 #dependencyEnd {
+  fill: #9370DB;
+  stroke: #9370DB;
+  stroke-width: 1; }
+
+#mermaid-1520866272822 #extensionStart {
+  fill: #9370DB;
+  stroke: #9370DB;
+  stroke-width: 1; }
+
+#mermaid-1520866272822 #extensionEnd {
+  fill: #9370DB;
+  stroke: #9370DB;
+  stroke-width: 1; }
+
+#mermaid-1520866272822 .commit-id,
+#mermaid-1520866272822 .commit-msg,
+#mermaid-1520866272822 .branch-label {
+  fill: lightgrey;
+  color: lightgrey; }
+
+#mermaid-1520866272822 .node text {
+  font-family: 'trebuchet ms', verdana, arial;
+  font-size: 14px; }
+
+#mermaid-1520866272822 div.mermaidTooltip {
+  position: absolute;
+  text-align: center;
+  max-width: 200px;
+  padding: 2px;
+  font-family: 'trebuchet ms', verdana, arial;
+  font-size: 12px;
+  background: #ffffde;
+  border: 1px solid #aaaa33;
+  border-radius: 2px;
+  pointer-events: none;
+  z-index: 100; }
+</style><style>#mermaid-1520866272822 {
+    color: rgba(0, 0, 0, 0.65);
+    font: normal normal 400 normal 14px / 21px "Monospaced Number", "Chinese Quote", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }</style><g></g><g><line id="actor238" x1="75" y1="5" x2="75" y2="805" class="actor-line" stroke-width="0.5px" stroke="#999"></line><rect x="0" y="0" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="75" y="32.5" dominant-baseline="central" alignment-baseline="central" class="actor" style="text-anchor: middle;"><tspan x="75" dy="0">User</tspan></text></g><g><line id="actor239" x1="275" y1="5" x2="275" y2="805" class="actor-line" stroke-width="0.5px" stroke="#999"></line><rect x="200" y="0" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="275" y="32.5" dominant-baseline="central" alignment-baseline="central" class="actor" style="text-anchor: middle;"><tspan x="275" dy="0">AppLogic</tspan></text></g><g><line id="actor240" x1="475" y1="5" x2="475" y2="805" class="actor-line" stroke-width="0.5px" stroke="#999"></line><rect x="400" y="0" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="475" y="32.5" dominant-baseline="central" alignment-baseline="central" class="actor" style="text-anchor: middle;"><tspan x="475" dy="0">Barong</tspan></text></g><g><line id="actor241" x1="675" y1="5" x2="675" y2="805" class="actor-line" stroke-width="0.5px" stroke="#999"></line><rect x="600" y="0" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="675" y="32.5" dominant-baseline="central" alignment-baseline="central" class="actor" style="text-anchor: middle;"><tspan x="675" dy="0">Vault</tspan></text></g><g><line id="actor242" x1="875" y1="5" x2="875" y2="805" class="actor-line" stroke-width="0.5px" stroke="#999"></line><rect x="800" y="0" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="875" y="32.5" dominant-baseline="central" alignment-baseline="central" class="actor" style="text-anchor: middle;"><tspan x="875" dy="0">Peatio</tspan></text></g><defs><marker id="arrowhead" refX="5" refY="2" markerWidth="6" markerHeight="4" orient="auto"><path d="M 0,0 V 4 L6,2 Z"></path></marker></defs><defs><marker id="crosshead" markerWidth="15" markerHeight="8" orient="auto" refX="16" refY="4"><path fill="black" stroke="#000000" stroke-width="1px" d="M 9,2 V 6 L16,4 Z" style="stroke-dasharray: 0, 0;"></path><path fill="none" stroke="#000000" stroke-width="1px" d="M 0,1 L 6,7 M 6,1 L 0,7" style="stroke-dasharray: 0, 0;"></path></marker></defs><g><text x="175" y="93" class="messageText" style="text-anchor: middle;">(Header JWT) TOTP sign request: action, data, nbf</text><line x1="75" y1="100" x2="275" y2="100" class="messageLine0" stroke-width="2" stroke="black" style="fill: none;"></line></g><g><text x="375" y="128" class="messageText" style="text-anchor: middle;">Forward to Barong</text><line x1="275" y1="135" x2="475" y2="135" class="messageLine0" stroke-width="2" stroke="black" style="fill: none;"></line></g><g><text x="475" y="163" class="messageText" style="text-anchor: middle;">Action and payload saved</text><path d="M 475,170 C 535,160 535,200 475,190" class="messageLine0" stroke-width="2" stroke="black" style="fill: none;"></path></g><g><text x="575" y="228" class="messageText" style="text-anchor: middle;">Create TOTP</text><line x1="475" y1="235" x2="675" y2="235" class="messageLine0" stroke-width="2" stroke="black" style="fill: none;"></line></g><g><text x="575" y="263" class="messageText" style="text-anchor: middle;">Send OTP to User via Barong</text><line x1="675" y1="270" x2="475" y2="270" class="messageLine1" stroke-width="2" stroke="black" style="stroke-dasharray: 3, 3; fill: none;"></line></g><g><text x="275" y="298" class="messageText" style="text-anchor: middle;">Send OTP to User (sms/email/ga)</text><line x1="475" y1="305" x2="75" y2="305" class="messageLine0" stroke-width="2" stroke="black" marker-end="url(#arrowhead)" style="fill: none;"></line></g><g><text x="375" y="333" class="messageText" style="text-anchor: middle;">Ready to accept TOTP</text><line x1="475" y1="340" x2="275" y2="340" class="messageLine1" stroke-width="2" stroke="black" style="stroke-dasharray: 3, 3; fill: none;"></line></g><g><text x="175" y="368" class="messageText" style="text-anchor: middle;">TOTP form</text><line x1="275" y1="375" x2="75" y2="375" class="messageLine1" stroke-width="2" stroke="black" style="stroke-dasharray: 3, 3; fill: none;"></line></g><g><text x="175" y="403" class="messageText" style="text-anchor: middle;">TOTP</text><line x1="75" y1="410" x2="275" y2="410" class="messageLine0" stroke-width="2" stroke="black" style="fill: none;"></line></g><g><text x="375" y="438" class="messageText" style="text-anchor: middle;">Check TOTP verified</text><line x1="275" y1="445" x2="475" y2="445" class="messageLine0" stroke-width="2" stroke="black" style="fill: none;"></line></g><g><text x="575" y="473" class="messageText" style="text-anchor: middle;">Check TOTP verified</text><line x1="475" y1="480" x2="675" y2="480" class="messageLine0" stroke-width="2" stroke="black" style="fill: none;"></line></g><g><text x="575" y="508" class="messageText" style="text-anchor: middle;">Accepted</text><line x1="675" y1="515" x2="475" y2="515" class="messageLine1" stroke-width="2" stroke="black" style="stroke-dasharray: 3, 3; fill: none;"></line></g><g><text x="375" y="543" class="messageText" style="text-anchor: middle;">Signed document with nbf</text><line x1="475" y1="550" x2="275" y2="550" class="messageLine1" stroke-width="2" stroke="black" style="stroke-dasharray: 3, 3; fill: none;"></line></g><g><text x="575" y="578" class="messageText" style="text-anchor: middle;">Put document to queue</text><line x1="275" y1="585" x2="875" y2="585" class="messageLine0" stroke-width="2" stroke="black" style="fill: none;"></line></g><g><text x="875" y="613" class="messageText" style="text-anchor: middle;">Lock funds / create withdraw destination</text><path d="M 875,620 C 935,610 935,650 875,640" class="messageLine0" stroke-width="2" stroke="black" style="fill: none;"></path></g><g><text x="575" y="678" class="messageText" style="text-anchor: middle;">Document accepted</text><line x1="875" y1="685" x2="275" y2="685" class="messageLine1" stroke-width="2" stroke="black" style="stroke-dasharray: 3, 3; fill: none;"></line></g><g><text x="175" y="713" class="messageText" style="text-anchor: middle;">Document accepted</text><line x1="275" y1="720" x2="75" y2="720" class="messageLine1" stroke-width="2" stroke="black" style="stroke-dasharray: 3, 3; fill: none;"></line></g><g><rect x="0" y="740" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="75" y="772.5" dominant-baseline="central" alignment-baseline="central" class="actor" style="text-anchor: middle;"><tspan x="75" dy="0">User</tspan></text></g><g><rect x="200" y="740" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="275" y="772.5" dominant-baseline="central" alignment-baseline="central" class="actor" style="text-anchor: middle;"><tspan x="275" dy="0">AppLogic</tspan></text></g><g><rect x="400" y="740" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="475" y="772.5" dominant-baseline="central" alignment-baseline="central" class="actor" style="text-anchor: middle;"><tspan x="475" dy="0">Barong</tspan></text></g><g><rect x="600" y="740" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="675" y="772.5" dominant-baseline="central" alignment-baseline="central" class="actor" style="text-anchor: middle;"><tspan x="675" dy="0">Vault</tspan></text></g><g><rect x="800" y="740" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="875" y="772.5" dominant-baseline="central" alignment-baseline="central" class="actor" style="text-anchor: middle;"><tspan x="875" dy="0">Peatio</tspan></text></g><text x="401.0078125" y="-25">TOTP Sign withdraw and withdraw destination</text></svg>

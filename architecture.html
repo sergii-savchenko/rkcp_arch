@@ -1,0 +1,1621 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <title>architecture.md - Grip</title>
+  <link rel="icon" href="http://localhost:6419/__/grip/static/favicon.ico">
+  <link rel="stylesheet" href="architecture.md%20-%20Grip_files/github-ef9e6df593c3136722bd837c0437786d.css">
+  <link rel="stylesheet" href="architecture.md%20-%20Grip_files/site-b4158a9f22ebd9e592779d889c0f9aaf.css">
+  <link rel="stylesheet" href="architecture.md%20-%20Grip_files/frameworks-1a4dd44c32a7f3b22f5ee95cb87b4646.css">
+  <link rel="stylesheet" href="architecture.md%20-%20Grip_files/octicons.css">
+  <style>
+    /* Page tweaks */
+    .preview-page {
+      margin-top: 64px;
+    }
+    /* User-content tweaks */
+    .timeline-comment-wrapper > .timeline-comment:after,
+    .timeline-comment-wrapper > .timeline-comment:before {
+      content: none;
+    }
+    /* User-content overrides */
+    .discussion-timeline.wide {
+      width: 920px;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div id="preview-page" class="preview-page" data-autorefresh-url="/__/grip/refresh/">
+
+    
+
+      <div role="main" class="main-content">
+        <div class="container new-discussion-timeline experiment-repo-nav">
+          <div class="repository-content">
+            <div id="readme" class="readme boxed-group clearfix announce instapaper_body md">
+              
+                <h3>
+                  <span class="octicon octicon-book"></span>
+                  architecture.md
+                </h3>
+              
+              <article class="markdown-body entry-content" itemprop="text" id="grip-content">
+                <h1>
+<a id="user-content-rubykube-crypto-platform" class="anchor" href="#rubykube-crypto-platform" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Rubykube Crypto-Platform</h1>
+<p><a href="http://localhost:6419/images/rk_logo.svg" target="_blank"><img src="architecture.md%20-%20Grip_files/rk_logo.svg" alt="rk_logo" style="max-width:100%;"></a></p>
+<h2>
+<a id="user-content-technical-architecture" class="anchor" href="#technical-architecture" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>TECHNICAL ARCHITECTURE</h2>
+<h4>
+<a id="user-content-version-14---march-2018" class="anchor" href="#version-14---march-2018" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Version 1.4 - March 2018</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Contribution</th>
+<th>Date</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Valentine S.</td>
+<td>Added Kite architecture chapter</td>
+<td>10.03.2018</td>
+</tr>
+<tr>
+<td>Valentine S.</td>
+<td>Added Terraform chapter</td>
+<td>10.03.2018</td>
+</tr>
+<tr>
+<td>Valentine S.</td>
+<td>Added Bosh architecture chapter</td>
+<td>10.03.2018</td>
+</tr>
+<tr>
+<td>Ali S.</td>
+<td>Added Concourse chapter</td>
+<td>10.03.2018</td>
+</tr>
+<tr>
+<td>Valentine S.</td>
+<td>Added Packer chapter</td>
+<td>11.03.2018</td>
+</tr>
+<tr>
+<td>Valentine S.</td>
+<td>Added Vagrant chapter</td>
+<td>11.03.2018</td>
+</tr>
+<tr>
+<td>Valentine S.</td>
+<td>Added GCP chapter</td>
+<td>11.03.2018</td>
+</tr>
+<tr>
+<td>Valentine S.</td>
+<td>Added Docker chapter</td>
+<td>12.03.2018</td>
+</tr>
+<tr>
+<td>Ali S.</td>
+<td>Added Kubernetes chapter</td>
+<td>12.03.2018</td>
+</tr>
+<tr>
+<td>Ali S.</td>
+<td>Added Helm chapter</td>
+<td>12.03.2018</td>
+</tr>
+<tr>
+<td>Yaroslav S.</td>
+<td>Added Peatio chapter</td>
+<td>12.03.2018</td>
+</tr>
+<tr>
+<td>YM,YC,SP,GF</td>
+<td>Added Frontend chapter</td>
+<td>12.03.2018</td>
+</tr>
+<tr>
+<td>Valentine S.</td>
+<td>Updated the introduction</td>
+<td>12.03.2018</td>
+</tr>
+<tr>
+<td>Yaroslav S</td>
+<td>Added System Overview diagram</td>
+<td>12.03.2018</td>
+</tr>
+<tr>
+<td>Valentine S.</td>
+<td>Added Compose chapter</td>
+<td>12.03.2018</td>
+</tr>
+<tr>
+<td>Galya F.</td>
+<td>Added Backend services chapter</td>
+<td>12.03.2018</td>
+</tr>
+<tr>
+<td>Sophia P.</td>
+<td>Updated Backend services chapter</td>
+<td>12.03.2018</td>
+</tr>
+</tbody>
+</table>
+<h2>
+<a id="user-content-table-of-contents" class="anchor" href="#table-of-contents" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Table of contents</h2>
+<p>[TOC]</p>
+<h2>
+<a id="user-content-introduction" class="anchor" href="#introduction" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Introduction</h2>
+<p>The influence of cryptocurrency (CCY) on the world's financial 
+markets and service industry, is gaining ground on the traditional 
+financial models at a steady and seemingly relentless pace. With 
+increased media coverage and volatile market behavior it continues to 
+attract businesses, traders, crypto-enthusiasts and your every day world
+ citizen believing in the long term value of a relatively small 
+investment today.</p>
+<p>However, a list of serious problems has plagued this industry 
+throughout it's early stages and it's typically related to the 
+centralized nature of every exchange, starting with unbalanced loads, 
+lack of tech support, inability managing registration parameters, 
+undetected or unresolved security holes and the like. Results of these 
+problems always lead to financial losses, with hundreds of million Euro 
+lost in stand alone instances. Billions have found their way into 
+hacker's wallets or 'misapropriated' for a lack of internal security 
+measures.</p>
+<p>Understanding the landscape of technology enabling the cryptocurrency
+ market, our team of FinTech seasoned DevOps and cryptocurrency experts 
+decided to create the Rubykube Crypto-Platform. RKCP is a complete 
+cryptocurrency exchange solution, designed and crafted specifically for 
+high-load, zero-downtime, autoscaling and secure deployments.</p>
+<p>This document aims to describe every aspect of the RKCP in a comprehensive and understandable way.</p>
+<h2>
+<a id="user-content-system-description" class="anchor" href="#system-description" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>System description</h2>
+<h2>
+<a id="user-content-system-overview" class="anchor" href="#system-overview" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>System Overview</h2>
+<p><a href="http://localhost:6419/images/system-overview.png" target="_blank"><img src="architecture.md%20-%20Grip_files/system-overview.png" alt="img" style="max-width:100%;"></a></p>
+<p>The RKCP system consists of 5 main subsystems:</p>
+<ul>
+<li>
+<strong>Peatio</strong> is the core cryptoexchange engine which handles all the trading and accounting operations</li>
+<li>
+<strong>Barong</strong> is an authentication server created and 
+maintained by our team. It handles user authentication using the OAuth2 
+protocol, KYC verification and 2FA</li>
+<li>
+<strong>AppLogic</strong>  is an intermediate application connected to 
+both Barong and Peatio API's. It is designed for extending the system's 
+functionality, for example adding a Paygate or a custom AML provider</li>
+<li>
+<strong>Frontend</strong> application is the only component that can be 
+seen by the end user. It handles all the outside system interaction and 
+is connected directly to the <strong>AppLogic</strong> component</li>
+<li>
+<strong>Kite Infrastructure</strong> is the system's foundation 
+consisting of a set of DevOps tools, cloud components and deployment 
+files, held together and managed by Kite, our next-gen cloud environment
+ management tool</li>
+</ul>
+<h2>
+<a id="user-content-sub-system-description" class="anchor" href="#sub-system-description" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Sub-system Description</h2>
+<h2>
+<a id="user-content-components-description" class="anchor" href="#components-description" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Components description</h2>
+<h3>
+<a id="user-content-installation-and-administration" class="anchor" href="#installation-and-administration" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installation and Administration</h3>
+<p>You can find the dedicated documentation for the platform installation and administration <a href="http://localhost:6419/administration.md">here</a>.</p>
+<h3>
+<a id="user-content-network-overview" class="anchor" href="#network-overview" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Network overview</h3>
+<p>Users access to services through a cloud load balancer service which 
+load balance requests over kubernetes cluster nodes. Application 
+components are running in pods (docker containers) in the Kubernetes 
+cluster, communications between pods are in a private network layer 
+inside the kubernetes cluster. A cloud SQL service is used as central 
+database, a secure TCP tunnel connection is established between the 
+kubernetes private network layer and the cloud SQL service to ensure the
+ privacy of connections.</p>
+<p><a href="http://localhost:6419/images/network-overview.png" target="_blank"><img src="architecture.md%20-%20Grip_files/network-overview.png" alt="" style="max-width:100%;"></a></p>
+<h3>
+<a id="user-content-frontend-application" class="anchor" href="#frontend-application" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Frontend Application</h3>
+<p>Frontend Application is a user interface component for interaction with other parts of RKCP.</p>
+<p>It is an Angular based application with all necessary tools for your 
+wallets and orders management, it provides the connection of UI and 
+actions on peatio-backend.</p>
+<p>Frontend component has the following structure:</p>
+<p><a href="http://localhost:6419/images/order-page.jpg" target="_blank"><img src="architecture.md%20-%20Grip_files/order-page.jpg" alt="img" style="max-width:100%;"></a></p>
+<h4>
+<a id="user-content-trade-page" class="anchor" href="#trade-page" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Trade Page</h4>
+<p>Trade page is one of the main parts of Frontend components and provides the following functionality:</p>
+<ol>
+<li>Possibility of creating orders for buying or selling CCY</li>
+<li>Ability to choose the most appropriate market and create orders within</li>
+<li>Monitoring of:
+• current market trades
+• order book displaying real time transactions
+• user's open order</li>
+<li>Create orders based on the order book of the current market</li>
+<li>Chart, displaying completed actions for buying or selling CCY</li>
+</ol>
+<p>The summary architecture is showed on scheme:</p>
+<pre lang="sequence"><code>Title: Trade page
+User-&gt;Market: Input amount and price of asked CCY
+Market--&gt;User: Match ask with appropriate bid
+User-&gt;Market: Input amount and price of bid CCY
+Market--&gt;User: Match bid with appropriate ask
+
+</code></pre>
+<p>You can buy and sell CCY on both Trade and Buy/Sell pages, but there 
+are some differences between these transaction. On the Trade page you 
+can get a look at all available orders, where at the Buy/Sell you won’t 
+be able to do that. Also, on the  Buy/Sell page you have to enter only 
+amount of CCY you want to buy, and there is no need to input the price, 
+as it will display the average price for the selected CCY at that 
+moment.</p>
+<h4>
+<a id="user-content-buysell-page" class="anchor" href="#buysell-page" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Buy/Sell page:</h4>
+<p>'Buy / Sell' component is a page that is designed to create orders 
+for the purchase or sale of CCY. Thanks to this part of Front End, the 
+user can create orders without going to the tab 'Trade'. At every step 
+of the order user receives a friendly notification.</p>
+<pre lang="sequence"><code>Title: Buy/Sell
+Buy-&gt;Markets: Input amount of asked CCY
+Sell-&gt;Markets: Input amount of bid CCY
+Markets--&gt;Buy: Match ask with appropriate bid
+Markets--&gt;Sell: Match bid with appropriate ask
+
+
+</code></pre>
+<h4>
+<a id="user-content-wallets-page" class="anchor" href="#wallets-page" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Wallets page:</h4>
+<p>The wallet page gives user the ability to manage his fiat an CCY 
+wallets. This component is responsible for deposit and withdrawal 
+process.</p>
+<h6>
+<a id="user-content-deposit-process" class="anchor" href="#deposit-process" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Deposit process:</h6>
+<pre lang="sequence"><code>Title: Fiat Deposit
+User-&gt;Frontend: Get information about bank account and SN
+User-&gt;Bank: Include SN in payment description
+Peatio-&gt;Frontend: Administrator accepts deposit
+User-&gt;Frontend: Refresh page
+Frontend--&gt;User: Update balance
+
+</code></pre>
+<hr>
+<pre lang="sequence"><code>Title: CCY Deposit
+User--&gt;Frontend: Get deposit address
+User-&gt;Kubelogic: Deposit
+Kubelogic--&gt;Wallet: Transaction
+Kubelogic--&gt;Frontend: Get deposit acceptance
+Frontend-&gt;User: Update balance and deposit history
+</code></pre>
+<p>It usually takes less than 1 minute to generate deposit address and QR-code.</p>
+<hr>
+<h6>
+<a id="user-content-withdraw-process" class="anchor" href="#withdraw-process" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Withdraw process:</h6>
+<pre lang="sequence"><code>Title: Fiat Withdraw
+User-&gt;Frontend: Fill in fields for withdraw
+Frontend-&gt;KubeLogic: Withdraw request
+KubeLogic--&gt;Frontend: Get succesful response
+Frontend-&gt;User: Update balance and withdraw history
+
+</code></pre>
+<p>Check whether history was updated.</p>
+<hr>
+<pre lang="sequence"><code>Title: CCY Withdraw
+User-&gt;Frontend: Enter withdraw address and amount
+Frontend--&gt;Kubelogic: Withdrawal request
+Kubelogic--&gt;Frontend: Get succesful response
+Frontend-&gt;User: Update balance and withdraw history
+</code></pre>
+<h4>
+<a id="user-content-order-page" class="anchor" href="#order-page" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Order Page</h4>
+<p>The main function of order page is to display all past orders that were created on the 'Trade' and 'Buy/Sell' pages.</p>
+<p>This component is presented in the form of a responsive with the following fields:</p>
+<p>• Side      	 		• Remaining      		• Deals</p>
+<p>• Market      			• Executed     		• State</p>
+<p>• Amount     			• Price      			• Time</p>
+<p>If there are no orders yet, user will see a corresponding message notification.</p>
+<h4>
+<a id="user-content-history-page" class="anchor" href="#history-page" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>History Page</h4>
+<p>The main aim of the History component is to display all the unique account actions. It is divided into:</p>
+<p><a href="http://localhost:6419/images/history-page.jpg" target="_blank"><img src="architecture.md%20-%20Grip_files/history-page.jpg" alt="img" style="max-width:100%;"></a></p>
+<h3>
+<a id="user-content-kubelogic-application" class="anchor" href="#kubelogic-application" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Kubelogic Application</h3>
+<p>Kubelogic is a component acting both as a proxy to the Barong and 
+Peatio API's used by the frontend and as an extendable base application 
+containing extra logic, e.g. a payment gateway or an interface for a 
+third party party KYC/AML provider.</p>
+<h4>
+<a id="user-content-business-cases" class="anchor" href="#business-cases" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Business Cases</h4>
+<h5>
+<a id="user-content-third-party-kycaml-provider" class="anchor" href="#third-party-kycaml-provider" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Third Party KYC/AML provider</h5>
+<pre lang="sequence"><code>End User-&gt;Barong: Submit documents
+Barong--&gt;End User: Confirm upload
+Barong-&gt;App Logic: Push Document upload event
+App Logic-&gt;AML Provider: Submit document to AML Api
+AML Provider--&gt;App Logic: AML approval
+App Logic-&gt;Barong: Update document state
+Note right of Barong: Compliance approves
+Barong-&gt;App Logic: Push KYC Approval event
+App Logic--&gt;End User: Notify user by email
+</code></pre>
+<h5>
+<a id="user-content-multi-signature-withdrawal-request" class="anchor" href="#multi-signature-withdrawal-request" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Multi-signature withdrawal request</h5>
+<p>Process below describes an automated crypto-currency withdrawal.</p>
+<pre lang="sequence"><code>End User-&gt;App Logic: Request withdrawal
+App Logic--&gt;End User: Email confirmation link
+End User-&gt;App Logic: Click on confirmation link
+App Logic--&gt;End User: Signed withdrawal object
+End User-&gt;Barong: Request signed payload with OTP
+Barong--&gt;End User: signed withdrawal object
+End User-&gt;Peatio: Submit signed withdrawal
+Peatio-&gt;Peatio Worker: Submit withdrawal on network
+Peatio Worker--&gt;Peatio: TxID is returned
+Peatio--&gt;End User: Transaction confirmations
+</code></pre>
+<h5>
+<a id="user-content-fiat-withdrawal" class="anchor" href="#fiat-withdrawal" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>FIAT Withdrawal</h5>
+<pre lang="sequence"><code>participant End User
+participant Accountant
+participant App Logic
+participant Barong
+End User-&gt;Barong: Request signed bank details
+Barong--&gt;End User: Returns OTP signed payload
+End User-&gt;App Logic: Create beneficiary
+App Logic--&gt;End User: Beneficiary status
+Note right of App Logic: Beneficiary is reviewed
+End User-&gt;Barong: Request signed withdrawal
+Barong--&gt;End User: Returns OTP signed payload
+End User-&gt;App Logic: Submit Withdrawal request
+Note right of App Logic: Withdrawal is opened
+App Logic--&gt;End User: Return status
+Note right of App Logic: Withdrawal is reviewed
+Note left of Accountant: Issue bank transfer
+Accountant-&gt;App Logic: Update withdrawal status
+App Logic-&gt;Peatio: Submit withdrawal signed payload
+Peatio--&gt;App Logic: Confirm transaction
+Note right of App Logic: Withdrawal is closed
+App Logic--&gt;End User: Email Confirmation
+</code></pre>
+<h5>
+<a id="user-content-payment-gateway" class="anchor" href="#payment-gateway" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Payment Gateway</h5>
+<p>Deposit through a third party payment gateway</p>
+<pre lang="sequence"><code>End User-&gt;App Logic: Select payment option
+App Logic-&gt;Payment Gate: Enter payment details
+Payment Gate--&gt;App Logic: Webhook Callback
+Note right of App Logic: Update order state
+App Logic-&gt;Peatio: Submit signed deposit payload
+Peatio--&gt;App Logic: Return status
+Note right of App Logic: Close Order
+</code></pre>
+<h5>
+<a id="user-content-manual-bank-swift-deposit" class="anchor" href="#manual-bank-swift-deposit" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Manual Bank SWIFT deposit</h5>
+<pre lang="sequence"><code>participant End User
+participant Accountant
+End User-&gt;App Logic: Visit bank deposit page
+App Logic--&gt;End User: Returns deposit SN
+Note left of End User: Issue bank wire
+Accountant-&gt;App Logic: Consolidate payment received
+Note right of App Logic: Deposit confirmed
+App Logic-&gt;Peatio: Submit signed deposit request
+Peatio--&gt;App Logic: Return status
+Note right of App Logic: Close Deposit
+App Logic--&gt;End User: Send Email confirmation
+</code></pre>
+<h3>
+<a id="user-content-peatio" class="anchor" href="#peatio" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Peatio</h3>
+<p>Peatio is main Crypto-Currency exchange component facilitating the 
+trade of cryptocurrencies for assets, conventional fiat and an 
+everygrowing array of different digital currencies.</p>
+<p><a href="http://localhost:6419/images/peatio-logo.png" target="_blank"><img src="architecture.md%20-%20Grip_files/peatio-logo.png" alt="img" style="max-width:100%;"></a></p>
+<p>Crypto-Currency exchange component requirements:</p>
+<ul>
+<li>Website and server safety</li>
+<li>High performance</li>
+<li>Usability and scalibility</li>
+<li>Highly configurable and extendable</li>
+<li>Support multiple digital currencies</li>
+<li>Support for FIAT currency</li>
+<li>Industry standard security</li>
+</ul>
+<p>Peatio.tech version of Peatio strives to and goes above all of these requirements.</p>
+<h4>
+<a id="user-content-peatio-subcomponents" class="anchor" href="#peatio-subcomponents" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Peatio subcomponents</h4>
+<h5>
+<a id="user-content-peatio-daemons" class="anchor" href="#peatio-daemons" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Peatio daemons:</h5>
+<ul>
+<li>Deposit Coin - processes incoming cryptocurrency deposits</li>
+<li>Deposit Coin Address - cryptocurrency deposit wallet address generation</li>
+<li>Email Notification - email sending</li>
+<li>Stats - group of daemons responsible for fund reports</li>
+<li>Trade Executor - stats daemons management</li>
+<li>Withdraw Coin - processes cryptocurrency withdrawal</li>
+<li>Market Ticker - trades processing</li>
+<li>Matching - orders matching</li>
+<li>Order Processor - order creation and canceling</li>
+<li>Pusher Market - global real-time notifications</li>
+<li>Pusher Member - member real-time notifications</li>
+<li>Coins - enqueue cryptocurrency deposit jobs</li>
+<li>Hot Wallets - wallets balance refresh</li>
+<li>Payment Transaction - payment transactions process</li>
+<li>Websocket API - implements websocket protocol</li>
+<li>Withdraw Audit - enqueue cryptocurrency withdraw jobs</li>
+</ul>
+<h5>
+<a id="user-content-coin-api" class="anchor" href="#coin-api" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Coin API:</h5>
+<ul>
+<li>Base API - abstract class with common methods implementation</li>
+<li>BitGo - RESTful API client for BitGo</li>
+<li>BTC/ETH/XRP - cryptocurrency specific JSON RPC clients</li>
+</ul>
+<h5>
+<a id="user-content-admin-panel" class="anchor" href="#admin-panel" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Admin panel:</h5>
+<ul>
+<li>
+<p>Currencies Summary</p>
+</li>
+<li>
+<p>Deposit/Withdraw management and processing</p>
+</li>
+<li>
+<p>Member Accounts and Funds management</p>
+<p>​</p>
+</li>
+</ul>
+<h4>
+<a id="user-content-cryptocurrency-exchange-in-action" class="anchor" href="#cryptocurrency-exchange-in-action" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Cryptocurrency exchange in action</h4>
+<h5>
+<a id="user-content-automated-cryptocurrency-deposit" class="anchor" href="#automated-cryptocurrency-deposit" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Automated cryptocurrency deposit</h5>
+<pre lang="sequence"><code>participant End User
+participant Peatio
+participant Peatio Worker
+End User-&gt;Peatio: Visit cryptocurrency\ndeposit page
+Peatio--&gt;End User: Deposit address
+Note left of End User: Blockchain\ntransaction
+Note right of Peatio Worker: Deposit process
+Peatio Worker--&gt;Peatio: Confirm deposit
+Note right of Peatio: Wallet stats\nrefresh
+Peatio--&gt;End User: Update balance
+</code></pre>
+<h5>
+<a id="user-content-trade-flow" class="anchor" href="#trade-flow" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Trade flow</h5>
+<pre lang="sequence"><code>participant End User
+participant Peatio
+participant Peatio Workers
+End User-&gt;Peatio: Trade page
+Peatio--&gt;End User: Trade page
+End User-&gt;Peatio: Bid/Ask order
+Peatio-&gt;Peatio Workers: Process order request
+Peatio Workers--&gt;End User: Created order notification
+Note right of Peatio Workers: Order matching
+Peatio Workers--&gt;Peatio: Stats refresh
+Note right of Peatio: Close order
+Peatio Workers--&gt;End User: Proccesed order notification
+
+</code></pre>
+<h3>
+<a id="user-content-barong" class="anchor" href="#barong" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Barong</h3>
+<p>Barong is KYC/AML component which acts as a central authentication and authorization system in RKCP.</p>
+<p>KYC is one of the most critical components of the RKCP. This 
+component is responsible for AML/PEP compliance throughout controls.</p>
+<p>KYC controls typically include the following:</p>
+<ul>
+<li>Collection and analysis of basic identity information such as 
+Identity documents (referred to in US regulations and practice as a 
+"Customer Identification Program" or CIP)</li>
+<li>Name matching against lists of known parties (such as "politically exposed person" or PEP)</li>
+<li>Determination of the customer's risk in terms of propensity to commit money laundering, terrorist finance, or identity theft</li>
+<li>Creation of an expectation of a customer's transactional behavior</li>
+<li>Monitoring of a customer's transactions against expected behavior and recorded profile as well as that of the customer's peers</li>
+</ul>
+<p>Barong as component is customisable to fulfill this needs. This 
+product provide a framework to be implemented in terms of exact market 
+regulations and standards, but also provide ready to use functionality.</p>
+<p>Basic list of features of Barong is:</p>
+<ul>
+<li>User registration</li>
+<li>Email and phone verification</li>
+<li>Identification documents upload</li>
+<li>Application management</li>
+<li>Authentication and Authorization through OAuth2</li>
+<li>Per transaction identification for vulnerable operations (WIP) with secret management and TOTP</li>
+</ul>
+<h4>
+<a id="user-content-registration-flow" class="anchor" href="#registration-flow" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Registration flow</h4>
+<p>This flow is customer specific and must comply actual regulations on 
+market. Out-of-the box Barong provides email verification, phone 
+verification, document upload. KYC Officer actions are not defined by 
+system by default, because each market has its own regulator and acts to
+ comply.</p>
+<h4>
+<a id="user-content-authentication-flow" class="anchor" href="#authentication-flow" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Authentication flow</h4>
+<p><a href="http://localhost:6419/images/barong-auth-flow.svg" target="_blank"><img src="architecture.md%20-%20Grip_files/barong-auth-flow.svg" alt="Authentication Flow Diagram" style="max-width:100%;"></a></p>
+<pre lang="sequence"><code>Title: Processes: Login
+User-&gt;AppLogic: Clicks "Login" (GET: /oauth/barong)
+AppLogic--&gt;User: redirect
+User-&gt;Barong: GET: /oauth/barong/?
+Barong--&gt;User: Authorization Form (scopes: peatio, barong)
+User-&gt;Barong: Accepts needed scopes
+Barong--&gt;User: JWT with aud
+User-&gt;User: Save session JWT in store
+</code></pre>
+<h4>
+<a id="user-content-totp-sign-flow" class="anchor" href="#totp-sign-flow" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>TOTP sign flow</h4>
+<p><a href="http://localhost:6419/images/barong-totp-sign-flow.svg" target="_blank"><img src="architecture.md%20-%20Grip_files/barong-totp-sign-flow.svg" alt="TOTP Sign Flow Diagram" style="max-width:100%;"></a></p>
+<pre lang="sequence"><code>Title: TOTP Sign withdraw and withdraw destination
+User-&gt;AppLogic: (Header JWT) TOTP sign request: action, data, nbf
+AppLogic-&gt;Barong: Forward to Barong
+Barong-&gt;Barong: Action and payload saved
+Barong-&gt;Vault: Create TOTP
+Vault--&gt;Barong: Send OTP to User via Barong
+Barong-&gt;&gt;User: Send OTP to User (sms/email/ga)
+
+Barong--&gt;AppLogic: Ready to accept TOTP
+AppLogic--&gt;User: TOTP form
+User-&gt;AppLogic: TOTP
+AppLogic-&gt;Barong: Check TOTP verified
+Barong-&gt;Vault: Check TOTP verified
+Vault--&gt;Barong: Accepted
+Barong--&gt;AppLogic: Signed document with nbf
+AppLogic-&gt;Peatio: Put document to queue
+Peatio-&gt;Peatio: Lock funds / create withdraw destination
+Peatio--&gt;AppLogic: Document accepted
+AppLogic--&gt;User: Document accepted
+</code></pre>
+<h5>
+<a id="user-content-example-create-withdraw-destination-payload-coins" class="anchor" href="#example-create-withdraw-destination-payload-coins" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Example create withdraw destination payload coins</h5>
+<div class="highlight highlight-source-json"><pre>{
+  <span class="pl-s"><span class="pl-pds">"</span>action<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>withdraw_destination#create<span class="pl-pds">"</span></span>,
+  <span class="pl-s"><span class="pl-pds">"</span>data<span class="pl-pds">"</span></span>: {
+    <span class="pl-s"><span class="pl-pds">"</span>currency<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>btc<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>label<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>My Bitcoin Wallet<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>type<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>coin<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>address<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>18VTUbTmBoXhZ9BJRKy2YMYuNbo8Xta8SQ<span class="pl-pds">"</span></span>
+  }
+}</pre></div>
+<h5>
+<a id="user-content-example-create-withdraw-destination-payload-fiat" class="anchor" href="#example-create-withdraw-destination-payload-fiat" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Example create withdraw destination payload fiat</h5>
+<div class="highlight highlight-source-json"><pre>{
+  <span class="pl-s"><span class="pl-pds">"</span>action<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>withdraw_destination#create<span class="pl-pds">"</span></span>,
+  <span class="pl-s"><span class="pl-pds">"</span>data<span class="pl-pds">"</span></span>: {
+    <span class="pl-s"><span class="pl-pds">"</span>currency<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>usd<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>label<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>My Bank Account<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>type<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>fiat<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>bank_name<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>International Bank<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>bank_branch_name<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>International Bank (branch #12345)<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>bank_branch_address<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Planet Earth<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>bank_identifier_code<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>IB_12345_67890<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>bank_account_number<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>BAN123456789<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>bank_account_holder_name<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>John Doe<span class="pl-pds">"</span></span>
+  }
+}</pre></div>
+<h5>
+<a id="user-content-example-create-withdraw-payload" class="anchor" href="#example-create-withdraw-payload" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Example create withdraw payload</h5>
+<div class="highlight highlight-source-json"><pre>{
+  <span class="pl-s"><span class="pl-pds">"</span>action<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>withdraw#create<span class="pl-pds">"</span></span>,
+  <span class="pl-s"><span class="pl-pds">"</span>data<span class="pl-pds">"</span></span>: {
+    <span class="pl-s"><span class="pl-pds">"</span>amount<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>10.0<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>fee<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>0.0005<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>destination_id<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>1<span class="pl-pds">"</span></span>
+  },
+  <span class="pl-s"><span class="pl-pds">"</span>params<span class="pl-pds">"</span></span>: {
+    <span class="pl-s"><span class="pl-pds">"</span>exp<span class="pl-pds">"</span></span>: <span class="pl-c1">123456789</span>,
+    <span class="pl-s"><span class="pl-pds">"</span>nbf<span class="pl-pds">"</span></span>: <span class="pl-c1">123456252</span>
+  }
+}</pre></div>
+<h4>
+<a id="user-content-application-registration-flow" class="anchor" href="#application-registration-flow" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Application registration flow</h4>
+<p><a href="http://localhost:6419/images/barong-create-app.svg" target="_blank"><img src="architecture.md%20-%20Grip_files/barong-create-app.svg" alt="New Application Flow Diagram" style="max-width:100%;"></a></p>
+<pre lang="sequence"><code>User-&gt;Barong: Login to /admin
+Barong--&gt;User: Ok
+User-&gt;Barong: Navigate to applications
+Barong--&gt;User: Ok
+User-&gt;Barong: Fill create application form
+Barong--&gt;User: Ok
+</code></pre>
+<h3>
+<a id="user-content-backend-services" class="anchor" href="#backend-services" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Backend services</h3>
+<h4>
+<a id="user-content-cloud-sql" class="anchor" href="#cloud-sql" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Cloud SQL</h4>
+<p><a href="http://localhost:6419/images/cloudsql-logo.png" target="_blank"><img src="architecture.md%20-%20Grip_files/cloudsql-logo.png" alt="img" style="max-width:100%;"></a></p>
+<p>Cloud SQL for MySQL is a fully-managed database service that makes it
+ easy to set up, maintain, manage, and administer your MySQL relational 
+databases on GCP.</p>
+<p><a href="http://localhost:6419/images/cloudsql-connection.svg" target="_blank"><img src="architecture.md%20-%20Grip_files/cloudsql-connection.svg" alt="img" style="max-width:100%;"></a></p>
+<p>Features:</p>
+<ul>
+<li>Fully managed MySQL Community Edition databases in the cloud.</li>
+<li>Second Generation instances support MySQL 5.6 or 5.7, and provide up
+ to 416 GB of RAM and 10 TB data storage, with the option to 
+automatically increase the storage   - size as needed.</li>
+<li>First Generation instances support MySQL 5.5 or 5.6, and provide up to 16 GB of RAM and 500 GB data storage.</li>
+<li>Create and manage instances in the Google Cloud Platform Console.</li>
+<li>Instances available in US, EU, or Asia.</li>
+<li>Customer data encrypted on Google’s internal networks and in database tables, temporary files, and backups.</li>
+<li>Support for secure external connections with the Cloud SQL Proxy or with the Secure Sockets Layer (SSL) protocol.</li>
+<li>Data replication between multiple zones with automatic failover.</li>
+<li>Import and export databases using mysqldump, or import and export CSV files.</li>
+<li>Support for MySQL wire protocol and standard MySQL connectors.</li>
+<li>Automated and on-demand backups, and point-in-time recovery.</li>
+<li>Instance cloning.</li>
+<li>Integration with Stackdriver logging and monitoring.</li>
+<li>ISO/IEC 27001 compliant.</li>
+</ul>
+<h4>
+<a id="user-content-redis" class="anchor" href="#redis" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Redis</h4>
+<p><a href="http://localhost:6419/images/redis-logo.png" target="_blank"><img src="architecture.md%20-%20Grip_files/redis-logo.png" alt="img" style="max-width:100%;"></a></p>
+<p>Redis is an open source (BSD licensed), in-memory data structure 
+store, used as a database, cache and message broker. It supports data 
+structures such as strings, hashes, lists, sets, sorted sets with range 
+queries, bitmaps, hyperloglogs and geospatial indexes with radius 
+queries. Redis has built-in replication, Lua scripting, LRU eviction, 
+transactions and different levels of on-disk persistence, and provides 
+high availability via Redis Sentinel and automatic partitioning with 
+Redis Cluster.</p>
+<p>In order to achieve its outstanding performance, Redis works with an 
+in-memory dataset. Depending on your use case, you can persist it either
+ by dumping the dataset to disk every once in a while, or by appending 
+each command to a log. Persistence can be optionally disabled, if you 
+just need a feature-rich, networked, in-memory cache.</p>
+<p>Redis also supports trivial-to-setup master-slave asynchronous 
+replication, with very fast non-blocking first synchronization, 
+auto-reconnection with partial resynchronization on net split.</p>
+<p><a href="http://localhost:6419/images/redis-diagram.png" target="_blank"><img src="architecture.md%20-%20Grip_files/redis-diagram.png" alt="img" style="max-width:100%;"></a></p>
+<p>Other features include:</p>
+<ul>
+<li>Transactions</li>
+<li>Pub/Sub</li>
+<li>Lua scripting</li>
+<li>Keys with a limited time-to-live</li>
+<li>LRU eviction of keys</li>
+<li>Automatic failover</li>
+</ul>
+<h4>
+<a id="user-content-vault" class="anchor" href="#vault" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Vault</h4>
+<p><a href="http://localhost:6419/images/vault-logo.png" target="_blank"><img src="architecture.md%20-%20Grip_files/vault-logo.png" alt="img" style="max-width:100%;"></a></p>
+<p>Vault is a tool for securely accessing secrets. A secret is anything 
+that you want to tightly control access to, such as API keys, passwords,
+ or certificates. Vault provides a unified interface to any secret, 
+while providing tight access control and recording a detailed audit log.</p>
+<p>A modern system requires access to a multitude of secrets: database 
+credentials, API keys for external services, credentials for 
+service-oriented architecture communication, etc. Understanding who is 
+accessing what secrets is already very difficult and platform-specific. 
+Adding on key rolling, secure storage, and detailed audit logs is almost
+ impossible without a custom solution. This is where Vault steps in.</p>
+<p>The key features of Vault are:</p>
+<ul>
+<li>
+<p><strong>Secure Secret Storage:</strong> Arbitrary key/value secrets 
+can be stored in Vault. Vault encrypts these secrets prior to writing 
+them to persistent storage, so gaining access to the raw storage isn't 
+enough to access your secrets. Vault can write to disk, Consul, and 
+more.</p>
+</li>
+<li>
+<p><strong>Dynamic Secrets:</strong> Vault can generate secrets 
+on-demand for some systems, such as AWS or SQL databases. For example, 
+when an application needs to access an S3 bucket, it asks Vault for 
+credentials, and Vault will generate an AWS keypair with valid 
+permissions on demand. After creating these dynamic secrets, Vault will 
+also automatically revoke them after the lease is up.</p>
+</li>
+<li>
+<p><strong>Data Encryption:</strong> Vault can encrypt and decrypt data 
+without storing it. This allows security teams to define encryption 
+parameters and developers to store encrypted data in a location such as 
+SQL without having to design their own encryption methods.</p>
+</li>
+<li>
+<p><strong>Leasing and Renewal:</strong> All secrets in Vault have a 
+lease associated with them. At the end of the lease, Vault will 
+automatically revoke that secret. Clients are able to renew leases via 
+built-in renew APIs.</p>
+</li>
+<li>
+<p><strong>Revocation:</strong> Vault has built-in support for secret 
+revocation. Vault can revoke not only single secrets, but a tree of 
+secrets, for example all secrets read by a specific user, or all secrets
+ of a particular type. Revocation assists in key rolling as well as 
+locking down systems in the case of an intrusion.</p>
+</li>
+</ul>
+<p><a href="http://localhost:6419/images/vault-diagram.png" target="_blank"><img src="architecture.md%20-%20Grip_files/vault-diagram.png" alt="img" style="max-width:100%;"></a></p>
+<h5>
+<a id="user-content-use-case" class="anchor" href="#use-case" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Use case</h5>
+<p>At a bare minimum, Vault can be used for the storage of any secrets. 
+For example, Vault would be a fantastic way to store sensitive 
+environment variables, database credentials, API keys, etc.</p>
+<p>Compare this with the current way to store these which might be 
+plaintext in files, configuration management, a database, etc. It would 
+be much safer to query these using vault read or the API. This protects 
+the plaintext version of these secrets as well as records access in the 
+Vault audit log.</p>
+<p>In addition to being able to store secrets, Vault can be used to 
+encrypt/decrypt data that is stored elsewhere. The primary use of this 
+is to allow applications to encrypt their data while still storing it in
+ the primary data store.</p>
+<p>The benefit of this is that developers do not need to worry about how
+ to properly encrypt data. The responsibility of encryption is on Vault 
+and the security team managing it, and developers just encrypt/decrypt 
+data as needed.</p>
+<h4>
+<a id="user-content-rabbitmq" class="anchor" href="#rabbitmq" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>RabbitMQ</h4>
+<p>RabbitMQ is a messaging broker that supports multiple messaging 
+protocols. It is lightweight and easy to deploy. RabbitMQ runs on many 
+operating systems and cloud environments, and provides a wide range of 
+developer tools for most popular languages. It ships in a state where it
+ can be used straight away in simple cases such as development and QA 
+environments - just start the server and it's ready to go.</p>
+<p><a href="http://localhost:6419/images/rabbitmq.png" target="_blank"><img src="architecture.md%20-%20Grip_files/rabbitmq.png" alt="img" style="max-width:100%;"></a></p>
+<p>Messaging brokers receive messages from publishers (applications that
+ publish them, also known as producers) and route them to consumers 
+(applications that process them).</p>
+<p>Since it is a network protocol, the publishers, consumers and the broker can all reside on different machines.</p>
+<table>
+<thead>
+<tr>
+<th>Features</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Asynchronous Messaging</td>
+<td>Supports multiple messaging protocols, message queuing, delivery 
+acknowledgement, flexible routing to queues, multiple exchange type.</td>
+</tr>
+<tr>
+<td>Developer Experience</td>
+<td>Deploy with BOSH, Chef, Docker and Puppet. Develop cross-language 
+messaging with favorite programming languages such as: Java, .NET, PHP, 
+Python, JavaScript, Ruby, Go and many others.</td>
+</tr>
+<tr>
+<td>Distributed Deployment</td>
+<td>Deploy as clusters for high availability and throughput; federate across multiple availability zones and regions.</td>
+</tr>
+<tr>
+<td>Enterprise &amp; Cloud Ready</td>
+<td>Pluggable authentication, authorization, supports TLS and LDAP. Lightweight and easy to deploy in public and private clouds.</td>
+</tr>
+<tr>
+<td>Tools &amp; Plugins</td>
+<td>Diverse array of tools and plugins supporting continuous 
+integration, operational metrics, and integration to other enterprise 
+systems. Flexible plug-in approach for extending RabbitMQ functionality.</td>
+</tr>
+<tr>
+<td>Management &amp; Monitoring</td>
+<td>HTTP-API, command line tool, and UI for managing and monitoring RabbitMQ.</td>
+</tr>
+</tbody>
+</table>
+<h4>
+<a id="user-content-bitgo" class="anchor" href="#bitgo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>BitGo</h4>
+<p>Every cryptoexchange needs an ultimately secure wallet solution and 
+it's not the easiest thing to do in a cloud environment. However, BitGo 
+comes to rescue, offering a maximum-security multisignature wallets as a
+ service.</p>
+<p><a href="http://localhost:6419/images/bitgo.jpg" target="_blank"><img src="architecture.md%20-%20Grip_files/bitgo.jpg" alt="img" style="max-width:100%;"></a></p>
+<p>Bitgo offers a very secure wallet solution which remains approachable
+ by the average consumer on the street. Convenience and security often 
+do not mix that well, but Bitgo shows it can be done. However it does 
+not provide users with much anonymity, but that is not something most 
+people are looking for. There are also no extra features to take 
+advantage of, but that is not a deal breaker either.</p>
+<p>Its technology solves the most difficult security, compliance and 
+custodial problems associated with blockchain-based currencies, enabling
+ the integration of digital currency into the global financial system.</p>
+<p>For any Ethereum users there is an Ethereum-based wallet which uses 
+the same Bitgo technology. In fact, it is built by most of the engineers
+ who are working on the Bitcoin wallet. This project is known as 
+Ether.li, and features all of the same aspects one can find in the Bitgo
+ Bitcoin wallet. It provides multisignature solutions for Ethereum 
+users, which will be appreciated by some users. Bringing this 
+functionality to different cryptocurrencies is a smart strategy by 
+Bitgo.</p>
+<p>Using the web version means private keys are not generated in a 
+secure manner, even though users can protect them with a password. The 
+mobile apps work as one would expect, without any unnecessary bells and 
+whistles. Advanced users not looking for  multisignature support may 
+find Bitgo a bit boring, but for novice users, it is a very powerful 
+solution. There is no reason not to give Bitgo wallet a try.</p>
+<p>Supported currencies:</p>
+<p><a href="http://localhost:6419/images/bitgo-currencies.png" target="_blank"><img src="architecture.md%20-%20Grip_files/bitgo-currencies.png" alt="img" style="max-width:100%;"></a></p>
+<h3>
+<a id="user-content-kite-infrastructure" class="anchor" href="#kite-infrastructure" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Kite infrastructure</h3>
+<p>Rubykube Crypto Platform infrastructure is a diverse and expansive 
+topic. To work as a fail-safe and zero-downtime platform it relies on a 
+cloud platform proven by years of usage and a set of chosen DevOps 
+tools. However, it’s hard to keep all the things together in control and
+ harmony. Thus, we’ve created a one tool to rule them all and help 
+people get high up to the clouds - Kite.</p>
+<h4>
+<a id="user-content-kite-architecture" class="anchor" href="#kite-architecture" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Kite architecture</h4>
+<p>Kite is a CLI for scaffolding, managing DevOps environments and enhancing different tools by fusing them into one workflow.</p>
+<h5>
+<a id="user-content-purpose" class="anchor" href="#purpose" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Purpose</h5>
+<p>Kite follows Ruby on Rails guidelines in terms of environment handling and file scaffolding.</p>
+<p>Main Kite features are:</p>
+<ul>
+<li>Modular architecture</li>
+<li>Fast and simple code scaffolding</li>
+<li>Support for isolated DevOps environments</li>
+<li>Provides a Terraform wrapper</li>
+<li>Ability to interconnect most existing DevOps tools</li>
+<li>Designed for convenient team collaboration</li>
+</ul>
+<h5>
+<a id="user-content-components" class="anchor" href="#components" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Components</h5>
+<p><a href="http://localhost:6419/images/kite-struct.png" target="_blank"><img src="architecture.md%20-%20Grip_files/kite-struct.png" alt="img" style="max-width:100%;"></a></p>
+<p>​							<strong>A diagram depicting the Kite project structure</strong></p>
+<p>Every Kite deployment consists of the following components:</p>
+<ul>
+<li>
+<strong>Project</strong> is a base skeleton which consists only of a 
+configuration file for future environments, a Kite executable and 
+initial documentation</li>
+<li>
+<strong>Environment</strong> is a separated directory with its own credentials and modules which contains base files for connection to the IaaS</li>
+<li>
+<strong>Module</strong> is a repository consisting of scripts, configs 
+and basically any types of files which form a component or a whole stack
+ when coupled together</li>
+</ul>
+<p><strong>Workflow</strong></p>
+<p><a href="http://localhost:6419/images/kite-workflow.png" target="_blank"><img src="architecture.md%20-%20Grip_files/kite-workflow.png" alt="img" style="max-width:100%;"></a></p>
+<p>Typical Kite workflow is as follows:</p>
+<ul>
+<li>Create a new project</li>
+<li>Generate an environment</li>
+<li>Initialize a module in this environment</li>
+<li>Fill in all the module’s variables and render it</li>
+</ul>
+<h4>
+<a id="user-content-docker" class="anchor" href="#docker" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Docker</h4>
+<p>Every cloud deployment needs a virtualization provider and our team has found <a href="https://www.docker.com/" rel="nofollow">Docker</a> to be the best fit.</p>
+<p><a href="http://localhost:6419/images/docker-logo.png" target="_blank"><img src="architecture.md%20-%20Grip_files/docker-logo.png" alt="Docker logo" style="max-width:100%;"></a></p>
+<p><a href="https://www.docker.com/what-docker" rel="nofollow">The Docker platform</a>
+ is the only container platform to build, secure and manage the widest 
+array of applications from development to production both on premises 
+and in the cloud.</p>
+<p>Some of its key feature are:</p>
+<ul>
+<li>
+<p><strong>Agility</strong> - accelerate software development and deployment by 13X and respond instantly to customer needs</p>
+</li>
+<li>
+<p><strong>Portability</strong> - eliminate the “works on my machine” once and for all. Gain independence across on-prem and cloud environments</p>
+</li>
+<li>
+<p><strong>Security</strong> - deliver applications safer across the entire lifecycle with built in security capabilities and configurations out of the box</p>
+</li>
+<li>
+<p><strong>Cost savings</strong> - optimize the use of your infrastructure resources and streamline operations to save 50% in total costs.</p>
+</li>
+<li>
+<p><strong>Simplicity</strong> - Docker makes powerful tools for application creation and orchestration, accessible to everyone</p>
+</li>
+<li>
+<p><strong>Openness</strong> - built with open source technology and a modular design makes it easy to integrate into your existing environment</p>
+</li>
+<li>
+<p><strong>Independence</strong> - Docker creates a separation of 
+concerns between developers and IT and between applications and 
+infrastructure to unlock innovation</p>
+</li>
+</ul>
+<h5>
+<a id="user-content-what-is-a-container" class="anchor" href="#what-is-a-container" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>What is a Container</h5>
+<p><a href="http://localhost:6419/images/docker-structure.png" target="_blank"><img src="architecture.md%20-%20Grip_files/docker-structure.png" alt="Docker composition" style="max-width:100%;"></a></p>
+<p><a href="https://www.docker.com/what-container" rel="nofollow">A container image</a>
+ is a lightweight, stand-alone, executable package of a piece of 
+software that includes everything needed to run it: code, runtime, 
+system tools, system libraries, settings.</p>
+<p>Available for both Linux and Windows based apps, containerized 
+software will always run the same, regardless of the environment. 
+Containers isolate software from its surroundings, for example 
+differences between development and staging environments and help reduce
+ conflicts between teams running different software on the same 
+infrastructure.</p>
+<p>Key points of containers:</p>
+<ul>
+<li>
+<p><strong>Lightweight</strong></p>
+<p>Docker containers running on a single machine share that machine's 
+operating system kernel; they start instantly and use less compute and 
+RAM. Images are constructed from filesystem layers and share common 
+files. This minimizes disk usage and image downloads are much faster</p>
+</li>
+<li>
+<p><strong>Standart</strong></p>
+<p>Docker containers are based on open standards and run on all major 
+Linux distributions, Microsoft Windows, and on any infrastructure 
+including VMs, bare-metal and in the cloud</p>
+</li>
+<li>
+<p><strong>Secure</strong></p>
+<p>Docker containers isolate applications from one another and from the 
+underlying infrastructure. Docker provides the strongest default 
+isolation to limit app issues to a single container instead of the 
+entire machine</p>
+</li>
+</ul>
+<h5>
+<a id="user-content-comparing-between-containers-and-vms" class="anchor" href="#comparing-between-containers-and-vms" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Comparing between Containers and VMs</h5>
+<p>Containers and virtual machines have similar resource isolation and 
+allocation benefits, but function differently because containers 
+virtualize the operating system instead of hardware. Containers are more
+ portable and efficient.</p>
+<p><a href="http://localhost:6419/images/docker-container.png" target="_blank"><img src="architecture.md%20-%20Grip_files/docker-container.png" alt="Docker container" style="max-width:100%;"></a></p>
+<p>​									<strong>Containers</strong></p>
+<p>Containers are an abstraction at the app layer that packages code and
+ dependencies together. Multiple containers can run on the same machine 
+and share the OS kernel with other containers, each running as isolated 
+processes in user space. Containers take up less space than VMs 
+(container images are typically tens of MBs in size), and start almost 
+instantly.</p>
+<p><a href="http://localhost:6419/images/docker-vm.png" target="_blank"><img src="architecture.md%20-%20Grip_files/docker-vm.png" alt="VM" style="max-width:100%;"></a></p>
+<p>​								<strong>Virtual Machines</strong></p>
+<p>Virtual machines (VMs) are an abstraction of physical hardware 
+turning one server into many servers. The hypervisor allows multiple VMs
+ to run on a single machine. Each VM includes a full copy of an 
+operating system, one or more apps, necessary binaries and libraries - 
+taking up tens of GBs. VMs can also be slow to boot.</p>
+<h5>
+<a id="user-content-summary" class="anchor" href="#summary" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Summary</h5>
+<p>Docker is a breakthrough technology allowing for complex cloud 
+deployments which are fast, reliable and immutable. Because of this 
+Docker is a base for more complex cloud technologies, including 
+Kubernetes and Docker Compose.</p>
+<h4>
+<a id="user-content-google-cloud-platform" class="anchor" href="#google-cloud-platform" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Google Cloud Platform</h4>
+<p>Every cloud platform needs a reliable infrastructure provider. Our team made a thorough research on the topic and chose <a href="https://cloud.google.com/" rel="nofollow">the Google Cloud Platform(GCP)</a> as the best candidate because of its speed, competitive pricing and progressive design.</p>
+<p><a href="http://localhost:6419/images/gcp-logo.png" target="_blank"><img src="architecture.md%20-%20Grip_files/gcp-logo.png" alt="GCP logo" style="max-width:100%;"></a></p>
+<h5>
+<a id="user-content-gcp-resources" class="anchor" href="#gcp-resources" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>GCP resources</h5>
+<p><a href="https://cloud.google.com/docs/overview/" rel="nofollow">GCP</a>
+ consists of a set of physical assets, such as computers and hard disk 
+drives, and virtual resources, such as virtual machines (VMs), that are 
+contained in <a href="https://www.google.com/about/datacenters/" rel="nofollow">Google's data centers</a> around the globe. Each data center location is in a global <em>region</em>. Regions include Central US, Western Europe, and East Asia. Each region is a collection of <em>zones</em>,
+ which are isolated from each other within the region. Each zone is 
+identified by a name that combines a letter identifier with the name of 
+the region. For example, zone <code>a</code> in the East Asia region is named <code>asia-east1-a</code>.</p>
+<p>This distribution of resources provides several benefits, including 
+redundancy in case of failure and reduced latency by locating resources 
+closer to clients. This distribution also introduces some rules about 
+how resources can be used together.</p>
+<h5>
+<a id="user-content-accessing-resources-through-services" class="anchor" href="#accessing-resources-through-services" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Accessing resources through services</h5>
+<p>In cloud computing, what you might be used to thinking of as software and hardware products, become <em>services</em>. These services provide access to the underlying resources. <a href="https://cloud.google.com/products/" rel="nofollow">The list of available GCP services</a>
+ is long, and it keeps growing. When you develop your website or 
+application on GCP, you mix and match these services into combinations 
+that provide the infrastructure you need, and then add your code to 
+enable the scenarios you want to build.</p>
+<h5>
+<a id="user-content-global-regional-and-zonal-resources" class="anchor" href="#global-regional-and-zonal-resources" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Global, regional, and zonal resources</h5>
+<p>Some resources can be accessed by any other resource, across regions and zones. These <a href="https://cloud.google.com/docs/geography-and-regions" rel="nofollow"><em>global resources</em></a>
+ include preconfigured disk images, disk snapshots, and networks. Some 
+resources can be accessed only by resources that are located in the same
+ region. These <em>regional resources</em> include static external IP 
+addresses. Other resources can be accessed only by resources that are 
+located in the same zone. These <em>zonal resources</em> include VM instances, their types, and disks.</p>
+<p>The following diagram shows the relationship between global scope, regions and zones, and some of their resources:</p>
+<p><a href="http://localhost:6419/images/gcp-zones.svg" target="_blank"><img src="architecture.md%20-%20Grip_files/gcp-zones.svg" alt="GCP global scope" style="max-width:100%;"></a></p>
+<h5>
+<a id="user-content-projects" class="anchor" href="#projects" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Projects</h5>
+<p>Any GCP resources that you allocate and use must belong to a project.
+ You can think of a project as the organizing entity for what you're 
+building. A project is made up of the settings, permissions, and other 
+metadata that describe your applications. Resources within a single 
+project can work together easily, for example by communicating through 
+an internal network, subject to the regions-and-zones rules. The 
+resources that each project contains remain separate across project 
+boundaries; you can only interconnect them through an external network 
+connection.</p>
+<p>Each GCP project has:</p>
+<ul>
+<li>A project name, which you provide.</li>
+<li>A project ID, which you can provide or GCP can provide for you.</li>
+<li>A project number, which GCP provides.</li>
+</ul>
+<h5>
+<a id="user-content-google-cloud-platform-console" class="anchor" href="#google-cloud-platform-console" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Google Cloud Platform Console</h5>
+<p><a href="http://localhost:6419/images/gcp-console.png" target="_blank"><img src="architecture.md%20-%20Grip_files/gcp-console.png" alt="The Google Cloud Platform Console provides a web UI" style="max-width:100%;"></a></p>
+<p><a href="https://cloud.google.com/compute/docs/console" rel="nofollow">The Google Cloud Platform Console</a>
+ provides a web-based, graphical user interface that you can use to 
+manage your GCP projects and resources. When you use the GCP Console, 
+you create a new project, or choose an existing project, and use the 
+resources that you create in the context of that project. You can create
+ multiple projects, so you can use projects to separate your work in 
+whatever way makes sense for you. For example, you might start a new 
+project if you want to make sure only certain team members can access 
+the resources in that project, while all team members can continue to 
+access resources in another project.</p>
+<h5>
+<a id="user-content-command-line-interface" class="anchor" href="#command-line-interface" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Command-line interface</h5>
+<p>If you prefer to work in a terminal window, <a href="https://cloud.google.com/sdk/docs/" rel="nofollow">the Google Cloud SDK</a> provides the <a href="https://cloud.google.com/sdk/gcloud/" rel="nofollow"><code>gcloud</code> command-line tool</a>, which gives you access to the commands you need. The <code>gcloud</code> tool can be used to manage both your development workflow and your GCP resources. See the gcloud <a href="https://cloud.google.com/sdk/gcloud/reference/" rel="nofollow">reference</a> for the complete list of available commands.</p>
+<p>GCP also provides <a href="https://cloud.google.com/shell/docs/features" rel="nofollow">Cloud Shell</a>, a browser-based, interactive shell environment for GCP. You can access Cloud Shell from the GCP console.</p>
+<p><a href="http://localhost:6419/images/gcp-shell.png" target="_blank"><img src="architecture.md%20-%20Grip_files/gcp-shell.png" alt="GCP Cloud Shell interface" style="max-width:100%;"></a></p>
+<p>Cloud Shell provides:</p>
+<ul>
+<li>A temporary Compute Engine virtual machine instance.</li>
+<li>Command-line access to the instance from a web browser.</li>
+<li>A built-in code editor.</li>
+<li>5 GB of persistent disk storage.</li>
+<li>Pre-installed Google Cloud SDK and other tools.</li>
+<li>Language support for Java, Go, Python, Node.js, PHP, Ruby and .NET.</li>
+<li>Web preview functionality.</li>
+<li>Built-in authorization for access to GCP Console projects and resources.</li>
+</ul>
+<h5>
+<a id="user-content-computing-and-hosting-services" class="anchor" href="#computing-and-hosting-services" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Computing and hosting services</h5>
+<p>GCP gives you options for computing and hosting. You can choose to:</p>
+<ul>
+<li>Work in a serverless environment.</li>
+<li>Use a managed application platform.</li>
+<li>Leverage container technologies to gain lots of flexibility.</li>
+<li>Build your own cloud-based infrastructure to have the most control and flexibility.</li>
+</ul>
+<p>You can imagine a spectrum where, at one end, you have most of the 
+responsibilities for resource management and, at the other end, Google 
+has most of those responsibilities:</p>
+<p><a href="http://localhost:6419/images/gcp-ops.svg" target="_blank"><img src="architecture.md%20-%20Grip_files/gcp-ops.svg" alt="GCP Ops Workflow" style="max-width:100%;"></a></p>
+<h5>
+<a id="user-content-containers" class="anchor" href="#containers" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Containers</h5>
+<p>With container-based computing, you can focus on your application 
+code, instead of on deployments and integration into hosting 
+environments. <a href="https://cloud.google.com/kubernetes-engine/" rel="nofollow">Google Kubernetes Engine</a>, GCP's <em>containers as a service</em>(CaaS) offering, is built on the open source <a href="https://kubernetes.io/" rel="nofollow">Kubernetes</a> system, which gives you the flexibility of on-premises or hybrid clouds, in addition to GCP's public cloud infrastructure.</p>
+<p>When you build with Kubernetes Engine, you can:</p>
+<ul>
+<li>Create and manage groups of Compute Engine instances running Kubernetes, called <em>clusters</em>. Kubernetes Engine uses Compute Engine instances as <em>nodes</em>
+ in a cluster. Each node runs the Docker runtime, a Kubelet agent that 
+monitors the health of the node, and a simple network proxy.</li>
+<li>Use Google Container Registry for secure, private storage of Docker 
+images. You can push images to your registry and then you can pull 
+images to any Compute Engine instance or your own hardware by using an 
+HTTP endpoint.</li>
+<li>Create an external network load balancer.</li>
+</ul>
+<h3>
+<a id="user-content-virtual-machines" class="anchor" href="#virtual-machines" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Virtual machines</h3>
+<p>GCP's unmanaged compute service is <a href="https://cloud.google.com/compute/docs/" rel="nofollow">Google Compute Engine</a>. You can think of Compute Engine as providing an <em>infrastructure as a service</em>
+ (IaaS), because the system provides a robust computing infrastructure, 
+but you must choose and configure the platform components that you want 
+to use. With Compute Engine, it's your responsibility to configure, 
+administer, and monitor the systems. Google will ensure that resources 
+are available, reliable, and ready for you to use, but it's up to you to
+ provision and manage them. The advantage, here, is that you have 
+complete control of the systems and unlimited flexibility.</p>
+<p>When you build on Compute Engine, you can:</p>
+<ul>
+<li>Use virtual machines (VMs), called instances, to build your 
+application, much like you would if you had your own hardware 
+infrastructure. You can choose from a variety of instance types to 
+customize your configuration to meet your needs and your budget.</li>
+<li>Choose which global regions and zones to deploy your resources in, giving you control over where your data is stored and used.</li>
+<li>Choose which operating systems, development stacks, languages, frameworks, services, and other software technologies you prefer.</li>
+<li>Create instances from public or private images .</li>
+<li>Use GCP storage technologies or any third-party technologies you prefer.</li>
+<li>Create instance groups to more easily manage multiple instances together.</li>
+<li>Use autoscaling with an instance group to automatically add and remove capacity.</li>
+<li>Attach and detach disks as needed.</li>
+<li>Use SSH to connect directly to your instances.</li>
+</ul>
+<h5>
+<a id="user-content-storage-services" class="anchor" href="#storage-services" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Storage services</h5>
+<p>Whatever your application, you'll probably need to store some data. GCP provides a variety of storage services, including:</p>
+<ul>
+<li>A SQL database in Cloud SQL, which provides either MySQL or PostgreSQL databases.</li>
+<li>A fully managed, mission-critical, relational database service in 
+Cloud Spanner that offers transactional consistency at global scale, 
+schemas, SQL querying, and automatic, synchronous replication for high 
+availability.</li>
+<li>Two options for NoSQL data storage: Cloud Datastore and Cloud Bigtable.</li>
+<li>Consistent, scalable, large-capacity data storage in Cloud Storage. Cloud Storage comes in several flavors:
+<ul>
+<li>Multi-Regional provides maximum availability and geo-redundancy.</li>
+<li>Regional provides high availability and a localized storage location.</li>
+<li>Nearline provides low-cost archival storage ideal for data accessed less than once a month.</li>
+<li>Coldline provides the lowest-cost archival storage for backup and disaster recovery.</li>
+</ul>
+</li>
+<li>Persistent disks on Compute Engine, for use as primary storage for 
+your instances. Compute Engine offers both hard-disk-based persistent 
+disks, called <em>standard persistent disks</em>, and solid-state persistent disks (SSD).</li>
+</ul>
+<h5>
+<a id="user-content-summary-1" class="anchor" href="#summary-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Summary</h5>
+<p>Google Cloud Platform is a progressive Infrastructure as a Service 
+provider with a diverse product lineup and innovative approach to cloud 
+computing. Our team's experience shows that over the years GCP is 
+becoming better and better just like a good wine, and each one of our 
+DevOps would choose GCP over any other cloud IaaS.</p>
+<h4>
+<a id="user-content-terraform" class="anchor" href="#terraform" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Terraform</h4>
+<p>For most of the initial IaaS interaction(resource creation and provisioning) Kite relies on <a href="https://www.terraform.io/" rel="nofollow">Terraform</a>.</p>
+<p><a href="http://localhost:6419/images/terraform-logo.jpg" target="_blank"><img src="architecture.md%20-%20Grip_files/terraform-logo.jpg" alt="Terraform logo" style="max-width:100%;"></a></p>
+<p><a href="https://www.terraform.io/docs/index.html" rel="nofollow">Terraform</a>
+ is a tool for building, changing, and versioning infrastructure safely 
+and efficiently. It can manage existing and popular service providers as
+ well as custom in-house solutions.</p>
+<p>The key features of Terraform are:</p>
+<ul>
+<li>
+<p><strong>Infrastructure as Code</strong></p>
+<p>Infrastructure is described using a high-level configuration syntax. 
+This allows a blueprint of your datacenter to be versioned and treated 
+as you would any other code. Additionally, infrastructure can be shared 
+and re-used.</p>
+</li>
+<li>
+<p><strong>Execution Plans</strong></p>
+<p>Terraform has a "planning" step where it generates an execution plan.
+ The execution plan shows what Terraform will do when you call apply. 
+This lets you avoid any surprises when Terraform manipulates 
+infrastructure.</p>
+</li>
+<li>
+<p><strong>Resource Graph</strong></p>
+<p>Terraform builds a graph of all your resources, and parallelizes the 
+creation and modification of any non-dependent resources. Because of 
+this, Terraform builds infrastructure as efficiently as possible, and 
+operators get insight into dependencies in their infrastructure.</p>
+</li>
+<li>
+<p><strong>Change Automation</strong></p>
+<p>Complex changesets can be applied to your infrastructure with minimal
+ human interaction. With the previously mentioned execution plan and 
+resource graph, you know exactly what Terraform will change and in what 
+order, avoiding many possible human errors.</p>
+<p>​</p>
+</li>
+</ul>
+<h4>
+<a id="user-content-packer" class="anchor" href="#packer" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Packer</h4>
+<p>Every VM-based deployment greatly benefits from having standardized, 
+stored as code and pre-baked machine images which can be deployed in a 
+matter of seconds. For this purpose Kite relies on Packer.</p>
+<p><a href="http://localhost:6419/images/packer-logo.png" target="_blank"><img src="architecture.md%20-%20Grip_files/packer-logo.png" alt="Packer logo" style="max-width:100%;"></a></p>
+<p><a href="https://www.packer.io/" rel="nofollow">Packer</a> is an open
+ source tool for creating identical machine images for multiple 
+platforms from a single source configuration. Packer is lightweight, 
+runs on every major operating system, and is highly performant, creating
+ machine images for multiple platforms in parallel. Packer does not 
+replace configuration management like Chef or Puppet. In fact, when 
+building images, Packer is able to use tools like Chef or Puppet to 
+install software onto the image.</p>
+<p>A <a href="https://www.packer.io/intro/index.html" rel="nofollow"><em>machine image</em></a>
+ is a single static unit that contains a pre-configured operating system
+ and installed software which is used to quickly create new running 
+machines. Machine image formats change for each platform. Some examples 
+include AMIs for EC2, VMDK/VMX files for VMware, OVF exports for 
+VirtualBox, etc.</p>
+<h5>
+<a id="user-content-advantages-of-using-packer" class="anchor" href="#advantages-of-using-packer" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Advantages of using Packer</h5>
+<ul>
+<li>
+<strong>Super fast infrastructure deployment</strong>. Packer images 
+allow you to launch completely provisioned and configured machines in 
+seconds, rather than several minutes or hours. This benefits not only 
+production, but development as well, since development virtual machines 
+can also be launched in seconds, without waiting for a typically much 
+longer provisioning time.</li>
+<li>
+<strong>Multi-provider portability</strong>. Because Packer creates 
+identical images for multiple platforms, you can run production in AWS, 
+staging/QA in a private cloud like OpenStack, and development in desktop
+ virtualization solutions such as VMware or VirtualBox. Each environment
+ is running an identical machine image, giving ultimate portability.</li>
+<li>
+<strong>Improved stability</strong>. Packer installs and configures all 
+the software for a machine at the time the image is built. If there are 
+bugs in these scripts, they'll be caught early, rather than several 
+minutes after a machine is launched.</li>
+<li>
+<strong>Greater testability</strong>. After a machine image is built, 
+that machine image can be quickly launched and smoke tested to verify 
+that things appear to be working. If they are, you can be confident that
+ any other machines launched from that image will function properly.</li>
+</ul>
+<h5>
+<a id="user-content-summary-2" class="anchor" href="#summary-2" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Summary</h5>
+<p>Packer plays a major role in keeping the deployments stable, 
+persistent and predictable. Ability to create images that are fit for 
+any platform allow companies to manage multi-provider environments with 
+ease when it comes to VM management.</p>
+<h4>
+<a id="user-content-bosh-architecture" class="anchor" href="#bosh-architecture" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>BOSH architecture</h4>
+<p><a href="https://bosh.io/" rel="nofollow">BOSH</a> is a sophisticated
+ tool designed to leverage complex multi-VM deployments such as high 
+availability Redis and RabbitMQ or a custom Prometheus stacks.</p>
+<h5>
+<a id="user-content-purpose-1" class="anchor" href="#purpose-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Purpose</h5>
+<p><a href="https://bosh.io/docs/about.html" rel="nofollow">BOSH</a> is a
+ project that unifies release engineering, deployment, and lifecycle 
+management of small and large-scale cloud software. BOSH can provision 
+and deploy software over hundreds of VMs. It also performs monitoring, 
+failure recovery, and software updates with zero-to-minimal downtime.</p>
+<p>BOSH supports multiple Infrastructure as a Service (IaaS) providers 
+like VMware vSphere, Google Cloud Platform, Amazon Web Services EC2, and
+ OpenStack. There is a Cloud Provider Interface (CPI) that enables users
+ to extend BOSH to support additional IaaS providers such as Apache 
+CloudStack and VirtualBox.</p>
+<h5>
+<a id="user-content-what-problems-does-bosh-solve" class="anchor" href="#what-problems-does-bosh-solve" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>What problems does BOSH solve</h5>
+<p>BOSH was purposefully constructed to address the four principles of modern Release Engineering in the following ways:</p>
+<ul>
+<li>
+<strong>Identifiability</strong>: Being able to identify all of the source, tools, environment, and other components that make up a particular release.</li>
+<li>
+<strong>Reproducibility</strong>: The ability to integrate source, third
+ party components, data, and deployment externals of a software system 
+in order to guarantee operational stability.</li>
+<li>
+<strong>Consistency</strong>: The mission to provide a stable framework for development, deployment, audit, and accountability for software components.</li>
+<li>
+<strong>Agility</strong>: The ongoing research into what are the 
+repercussions of modern software engineering practices on the 
+productivity in the software cycle, i.e. continuous integration.</li>
+</ul>
+<h5>
+<a id="user-content-components-1" class="anchor" href="#components-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Components</h5>
+<p><a href="http://localhost:6419/images/bosh-arch.png" target="_blank"><img src="architecture.md%20-%20Grip_files/bosh-arch.png" alt="img" style="max-width:100%;"></a></p>
+<p>​						<strong>A diagram depicting BOSH inner architecture</strong></p>
+<p>A typical BOSH installation consists of the following components:</p>
+<ul>
+<li>
+<strong>Command Line Interface (CLI)</strong> is the primary operator 
+interface to BOSH. An operator uses the CLI to interact with the 
+Director and perform actions on the cloud</li>
+<li>
+<strong>Director</strong> is the core orchestrating component in BOSH. 
+The Director controls VM creation and deployment, as well as other 
+software and service lifecycle events</li>
+<li>
+<strong>Agent</strong> listens for instructions from the Director and 
+carries out those instructions. The Agent receives job specifications 
+from the Director and uses them to assign a role, or Job, to the VM.</li>
+<li>
+<strong>Cloud Provider Interface (CPI)</strong> is an API that the 
+Director uses to interact with an IaaS to create and manage stemcells, 
+VMs, and disks. A CPI abstracts infrastructure differences from the rest
+ of BOSH.</li>
+<li>
+<strong>Health Monitor</strong> uses status and lifecycle events 
+received from Agents to monitor the health of VMs. If the Health Monitor
+ detects a problem with a VM, it can send an alert through notification 
+plugins, or trigger the Resurrector</li>
+<li>When the Director creates or updates a VM, it stores configuration information for the VM in the <strong>Registry</strong> so that it can be used during bootstrapping stage of the VM.</li>
+</ul>
+<h5>
+<a id="user-content-example-component-interaction" class="anchor" href="#example-component-interaction" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Example component interaction</h5>
+<p><a href="http://localhost:6419/images/bosh-components.png" target="_blank"><img src="architecture.md%20-%20Grip_files/bosh-components.png" alt="img" style="max-width:100%;"></a></p>
+<p>Creating a new VM:</p>
+<ol>
+<li>Through the <strong>CLI</strong>, the operator takes an action (e.g. deploy for the first time, scaling up deployment) which requires creating a new VM.</li>
+<li>The <strong>CLI</strong> passes the instruction to the Director.</li>
+<li>The Director uses the <strong>CPI</strong> to tell the IaaS to launch a VM.</li>
+<li>The IaaS provides the <strong>Director</strong> with information (IP addresses and IDs) the <strong>Agent</strong> on the VM needs to configure the VM.</li>
+<li>The <strong>Director</strong> updates the <strong>Registry</strong> with the configuration information for the VM.</li>
+<li>The <strong>Agent</strong> running on the VM requests the configuration information for the VM from the <strong>Registry</strong>.</li>
+<li>The <strong>Registry</strong> responds with the IP addresses and IDs.</li>
+<li>The <strong>Agent</strong> uses the IP addresses and IDs to configure the VM.</li>
+</ol>
+<h4>
+<a id="user-content-concourse" class="anchor" href="#concourse" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Concourse</h4>
+<blockquote>
+<p><strong>Continuous integration</strong> tool, that scales with your project.</p>
+</blockquote>
+<p>Concourse's end <strong>goal</strong> is to provide an expressive system with as few distinct moving parts as possible.</p>
+<p><a href="https://concourse-ci.org/" rel="nofollow">Concourse</a> limits itself to <strong>three core concepts</strong>:</p>
+<ul>
+<li><strong>tasks</strong></li>
+<li><strong>resources</strong></li>
+<li>
+<strong>jobs</strong> that compose taksks and resources</li>
+</ul>
+<p>Interesting features like timed triggers and synchronizing usage of 
+external environments are modeled in terms of these, rather than as 
+layers on top.</p>
+<p>With these primitives you can model any pipeline, from simple (<em>unit → integration → deploy → ship</em>) to complex (<em>testing on multiple infrastructures, fanning out and in, etc.</em>).</p>
+<p>There are no more nooks and crannies of Concourse introduced as your pipeline becomes more involved.</p>
+<p><a href="http://localhost:6419/images/concourse.svg" target="_blank"><img src="architecture.md%20-%20Grip_files/concourse.svg" alt="rk_logo" style="max-width:100%;"></a></p>
+<p>Let's take a look for <em>each of<a href="https://concourse-ci.org/concepts.html" rel="nofollow"> <strong>three core concepts</strong></a>:</em></p>
+<h5>
+<a id="user-content-tasks" class="anchor" href="#tasks" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Tasks</h5>
+<p>A task is the execution of a script in an isolated environment with dependent resources available to it. For example, running <code>myrepo/scripts/test</code> in a Docker container, with the working directory containing all of the task's dependencies.</p>
+<p>If the script exits <code>0</code>, the task succeeds. Otherwise, it fails.</p>
+<p>A task can either be executed by a <em>Job</em> or executed manually with <a href="https://concourse-ci.org/fly-cli.html" rel="nofollow">the Fly CLI</a>.
+ Both execute the same configuration, giving the guarantee that 
+locally-executed tasks with Fly are running the same way they would in 
+your pipeline.</p>
+<h5>
+<a id="user-content-resources" class="anchor" href="#resources" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Resources</h5>
+<p>A resource is any entity that can be checked for new versions, pulled
+ down at a specific version or pushed up to idempotently create new 
+versions. A common example would be a git repository, but it can also 
+represent more abstract things.</p>
+<p>At its core, Concourse knows nothing about things like <code>git</code>. Instead, it consumes a generic interface implemented by <em>resource types</em>, which can be <em>configured in your pipeline</em> alongside the things that use it.</p>
+<p>This abstraction is immensely powerful, as it does not limit 
+Concourse to whatever things its authors thought to integrate with. 
+Instead, as a user of Concourse you can just reuse resource type 
+implementations, or implement your own, like our kite concourse 
+resource. See <a href="https://github.com/rubykube/kite/blob/master/docs/kite-concourse-resource.md">Docs</a> to find more about <em>kite concourse</em> resource.</p>
+<h5>
+<a id="user-content-jobs" class="anchor" href="#jobs" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Jobs</h5>
+<p>At a high level, a job describes some actions to perform when dependent resources change (or when manually triggered). <em>For example:</em> you may define a job that runs your unit tests whenever new code is pushed to a repository.</p>
+<p>Jobs can be thought of as functions with inputs and outputs, that 
+automatically run when new inputs are available. A job can depend on the
+ outputs of upstream jobs, which is the root of pipeline functionality.</p>
+<p>The definition of actions to perform is done via a Build Plan, which 
+is a very powerful composition-based DSL that can express anything from 
+running simple unit tests to running a matrix of tasks and aggregating 
+the result.</p>
+<h5>
+<a id="user-content-example-pipelines" class="anchor" href="#example-pipelines" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Example pipelines</h5>
+<p><a href="http://localhost:6419/images/concourse-example-1.png" target="_blank"><img src="architecture.md%20-%20Grip_files/concourse-example-1.png" alt="Pipeline example" style="max-width:100%;"></a></p>
+<p><strong>Example review pipeline</strong></p>
+<p><a href="http://localhost:6419/images/concourse-example-2.png" target="_blank"><img src="architecture.md%20-%20Grip_files/concourse-example-2.png" alt="Pipeline example" style="max-width:100%;"></a></p>
+<p><strong>Example release candidate pipeline</strong></p>
+<p><a href="http://localhost:6419/images/concourse-example-3.png" target="_blank"><img src="architecture.md%20-%20Grip_files/concourse-example-3.png" alt="Pipeline example" style="max-width:100%;"></a></p>
+<p><strong>Example release process pipeline</strong></p>
+<h4>
+<a id="user-content-kubernetes" class="anchor" href="#kubernetes" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Kubernetes</h4>
+<p><a href="http://localhost:6419/images/kubernetes-logo.png" target="_blank"><img src="architecture.md%20-%20Grip_files/kubernetes-logo.png" alt="Kubernetes Logo" style="max-width:100%;"></a></p>
+<blockquote>
+<p>Production-Grade Container Orchestration</p>
+</blockquote>
+<p><a href="https://kubernetes.io/docs/home" rel="nofollow"><strong>Kubernetes</strong></a>
+ is a portable, extensible open-source platform for managing 
+containerized workloads and services, that facilitates both declarative 
+configuration and automation. It has a large, rapidly growing ecosystem.
+ Kubernetes services, support, and tools are widely available.</p>
+<p>Google open-sourced the Kubernetes project in 2014. Kubernetes builds
+ upon a decade and a half of experience that Google has with running 
+production workloads at scale, combined with best-of-breed ideas and 
+practices from the community.</p>
+<p>It groups containers that make up an application into logical units 
+for easy management and discovery. Kubernetes builds upon 15 years of 
+experience of running production workloads at Google, combined with 
+best-of-breed ideas and practices from the community.</p>
+<ul>
+<li><strong>Planet Scale</strong></li>
+</ul>
+<p>Designed on the same principles that allows Google to run billions of
+ containers a week, Kubernetes can scale without increasing your ops 
+team.</p>
+<ul>
+<li><strong>Never Outgrow</strong></li>
+</ul>
+<p>Whether testing locally or running a global enterprise, Kubernetes 
+flexibility grows with you to deliver your applications consistently and
+ easily no matter how complex your need is.</p>
+<ul>
+<li><strong>Run Anywhere</strong></li>
+</ul>
+<p>Kubernetes is open source giving you the freedom to take advantage of
+ on-premises, hybrid, or public cloud infrastructure, letting you 
+effortlessly move workloads to where it matters to you.</p>
+<h5>
+<a id="user-content-why-containers" class="anchor" href="#why-containers" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Why containers</h5>
+<p><a href="http://localhost:6419/images/k8s-why-containers.svg" target="_blank"><img src="architecture.md%20-%20Grip_files/k8s-why-containers.svg" alt="Why containers Image" style="max-width:100%;"></a></p>
+<p>Looking for reasons <a href="https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/#why-containers" rel="nofollow">why you should be using containers</a>?
+TODO: ADD LOGO</p>
+<p>The <em><strong>Old Way</strong></em> to deploy applications was to 
+install the applications on a host using the operating-system package 
+manager. This had the disadvantage of entangling the applications’ 
+executables, configuration, libraries, and lifecycles with each other 
+and with the host OS. One could build immutable virtual-machine images 
+in order to achieve predictable rollouts and rollbacks, but VMs are 
+heavyweight and non-portable.</p>
+<p>The <em><strong>New Way</strong></em> is to deploy containers based 
+on operating-system-level virtualization rather than hardware 
+virtualization. These containers are isolated from each other and from 
+the host: they have their own filesystems, they can’t see each others’ 
+processes, and their computational resource usage can be bounded. They 
+are easier to build than VMs, and because they are decoupled from the 
+underlying infrastructure and from the host filesystem, they are 
+portable across clouds and OS distributions.</p>
+<p>Because containers are small and fast, one application can be packed 
+in each container image. This one-to-one application-to-image 
+relationship unlocks the full benefits of containers. With containers, 
+immutable container images can be created at build/release time rather 
+than deployment time, since each application doesn’t need to be composed
+ with the rest of the application stack, nor married to the production 
+infrastructure environment. Generating container images at build/release
+ time enables a consistent environment to be carried from development 
+into production. Similarly, containers are vastly more transparent than 
+VMs, which facilitates monitoring and management. This is especially 
+true when the containers’ process lifecycles are managed by the 
+infrastructure rather than hidden by a process supervisor inside the 
+container. Finally, with a single application per container, managing 
+the containers becomes tantamount to managing deployment of the 
+application.</p>
+<p><strong>Summary</strong> of container benefits:</p>
+<ul>
+<li>
+<p><strong>Agile application creation and deployment</strong>: Increased ease and efficiency of container image creation compared to VM image use.</p>
+</li>
+<li>
+<p><strong>Continuous development, integration, and deployment</strong>:
+ Provides for reliable and frequent container image build and deployment
+ with quick and easy rollbacks (due to image immutability).</p>
+</li>
+<li>
+<p><strong>Dev and Ops separation of concerns</strong>: Create 
+application container images at build/release time rather than 
+deployment time, thereby decoupling applications from infrastructure.</p>
+</li>
+<li>
+<p><strong>Observability</strong> Not only surfaces OS-level information and metrics, but also application health and other signals.</p>
+</li>
+<li>
+<p><strong>Environmental consistency across development, testing, and production</strong>: Runs the same on a laptop as it does in the cloud.</p>
+</li>
+<li>
+<p><strong>Cloud and OS distribution portability</strong>: Runs on Ubuntu, RHEL, CoreOS, on-prem, Google Kubernetes Engine, and anywhere else.</p>
+</li>
+<li>
+<p><strong>Application-centric management</strong>: Raises the level of abstraction from running an OS on virtual hardware to run an application on an OS using logical resources.</p>
+</li>
+<li>
+<p>Loosely coupled, distributed, elastic, liberated micro-services**: 
+Applications are broken into smaller, independent pieces and can be 
+deployed and managed dynamically – not a fat monolithic stack running on
+ one big single-purpose machine.</p>
+</li>
+<li>
+<p><strong>Resource isolation</strong>: Predictable application performance.</p>
+</li>
+<li>
+<p><strong>Resource utilization</strong>: High efficiency and density.</p>
+</li>
+</ul>
+<p>For more information about kubernetes visit <a href="https://kubernetes.io/docs/concepts/" rel="nofollow">Kubernetes Official Documentation</a></p>
+<h4>
+<a id="user-content-helm" class="anchor" href="#helm" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Helm</h4>
+<p><a href="http://localhost:6419/images/helm-logo.png" target="_blank"><img src="architecture.md%20-%20Grip_files/helm-logo.png" alt="Helm Logo" style="max-width:100%;"></a></p>
+<blockquote>
+<p>The package manager for Kubernetes</p>
+</blockquote>
+<p><a href="https://helm.sh/" rel="nofollow"><strong>Helm</strong></a> 
+is the best way to find, share, and use software built for Kubernetes. 
+Helm makes work with kubernetes much faster and flexible. Helm helps you
+ manage Kubernetes applications - Helm Charts helps you define, install,
+ and upgrade even the most complex Kubernetes application.</p>
+<p>Charts are easy to create, version, share, and publish - so start using Helm and stop the copy-and-paste madness. <strong>Helm</strong> aleady has a <a href="https://github.com/kubernetes/charts">huge library</a> of ready high flexible charts, that gives ability to deploy it in shortly on yout kubernetes cluster</p>
+<p>The latest version of Helm is maintained by the CNCF - in 
+collaboration with Microsoft, Google, Bitnami and the Helm contributors 
+community.</p>
+<h5>
+<a id="user-content-purpose-at-high-level" class="anchor" href="#purpose-at-high-level" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Purpose at high level</h5>
+<p><a href="http://localhost:6419/images/helm-architecture.jpg" target="_blank"><img src="architecture.md%20-%20Grip_files/helm-architecture.jpg" alt="Helm Architecture" style="max-width:100%;"></a></p>
+<p><strong>Helm</strong> is a tool for managing Kubernetes packages called charts. Helm can do the following:</p>
+<ul>
+<li>Create new charts from scratch</li>
+<li>Package charts into chart archive (tgz) files</li>
+<li>Interact with chart repositories where charts are stored</li>
+<li>Install and uninstall charts into an existing Kubernetes cluster</li>
+<li>Manage the release cycle of charts that have been installed with Helm</li>
+</ul>
+<p>For Helm, there are <a href="https://docs.helm.sh/using_helm/#using-helm" rel="nofollow"><strong>three important concepts</strong></a>:</p>
+<ol>
+<li>The <em>chart</em> is a bundle of information necessary to create an instance of a Kubernetes application.</li>
+<li>The <em>config</em> contains configuration information that can be merged into a packaged chart to create a releasable object.</li>
+<li>A <em>release</em> is a running instance of a chart, combined with a specific config.</li>
+</ol>
+<h5>
+<a id="user-content-helm-components" class="anchor" href="#helm-components" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Helm Components</h5>
+<p><a href="https://github.com/kubernetes/helm">Helm</a> has <strong>two major components</strong>:</p>
+<ol>
+<li>
+<strong>The Helm Client</strong> is a command-line client for end users. The client is responsible for the following domains:</li>
+</ol>
+<ul>
+<li>Local chart development</li>
+<li>Managing repositories</li>
+<li>Interacting with the Tiller server
+<ul>
+<li>Sending charts to be installed</li>
+<li>Asking for information about releases</li>
+<li>Requesting upgrading or uninstalling of existing releases</li>
+<li>The Tiller Server is an in-cluster server that interacts with the 
+Helm client, and interfaces with the Kubernetes API server. The server 
+is responsible for the following:</li>
+</ul>
+</li>
+</ul>
+<ol start="2">
+<li>
+<strong>The Tiller Server</strong> is an in-cluster server that 
+interacts with the Helm client, and interfaces with the Kubernetes API 
+server. The server is responsible for the following:</li>
+</ol>
+<ul>
+<li>Listening for incoming requests from the Helm client</li>
+<li>Combining a chart and configuration to build a release</li>
+<li>Installing charts into Kubernetes, and then tracking the subsequent release</li>
+<li>Upgrading and uninstalling charts by interacting with Kubernetes</li>
+</ul>
+<p>In a nutshell, the client is responsible for managing charts, and the server is responsible for managing releases.</p>
+
+              </article>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    
+
+  </div>
+  <div>&nbsp;</div>
+  </div><script>
+    function showCanonicalImages() {
+      var images = document.getElementsByTagName('img');
+      if (!images) {
+        return;
+      }
+      for (var index = 0; index < images.length; index++) {
+        var image = images[index];
+        if (image.getAttribute('data-canonical-src') && image.src !== image.getAttribute('data-canonical-src')) {
+          image.src = image.getAttribute('data-canonical-src');
+        }
+      }
+    }
+
+    function scrollToHash() {
+      if (location.hash && !document.querySelector(':target')) {
+        var element = document.getElementById('user-content-' + location.hash.slice(1));
+        if (element) {
+           element.scrollIntoView();
+        }
+      }
+    }
+
+    function autorefreshContent(eventSourceUrl) {
+      var initialTitle = document.title;
+      var contentElement = document.getElementById('grip-content');
+      var source = new EventSource(eventSourceUrl);
+      var isRendering = false;
+
+      source.onmessage = function(ev) {
+        var msg = JSON.parse(ev.data);
+        if (msg.updating) {
+          isRendering = true;
+          document.title = '(Rendering) ' + document.title;
+        } else {
+          isRendering = false;
+          document.title = initialTitle;
+          contentElement.innerHTML = msg.content;
+          showCanonicalImages();
+        }
+      }
+
+      source.onerror = function(e) {
+        if (e.readyState === EventSource.CLOSED && isRendering) {
+          isRendering = false;
+          document.title = initialTitle;
+        }
+      }
+    }
+
+    window.onhashchange = function() {
+      scrollToHash();
+    }
+
+    window.onload = function() {
+      scrollToHash();
+    }
+
+    showCanonicalImages();
+
+    var autorefreshUrl = document.getElementById('preview-page').getAttribute('data-autorefresh-url');
+    if (autorefreshUrl) {
+      autorefreshContent(autorefreshUrl);
+    }
+  </script>
+
+</body></html>
