@@ -6,6 +6,7 @@
 sequenceDiagram
     participant User
     participant Proxy
+    participant AppLogic
     participant Barong
     participant Peatio
     participant PeatioDaemons
@@ -14,10 +15,27 @@ sequenceDiagram
     participant Db
     participant Vault
     participant SmtpRelay
-    participant Pusher
+    participant PushNotifications
+    participant SMSNotifications
 
-    User->>Proxy: request post '{}/management_api/v1/withdraws/new'
-    Proxy->>Peatio: forward post '/management_api/v1/withdraws/new'
+    User->>Proxy: request post '{APPLOGIC}/api/v1/withdraws/new'
+    Proxy->>AppLogic: forward post '{APPLOGIC}/api/v1/withdraws/new'
+    AppLogic->>Db: Insert record
+    
+    AppLogic->>Vault: Create OTP (MFA)
+    Vault-->>AppLogic: Created OTP (MFA)
+    AppLogic-->>Proxy: Withdraw ID in queue 
+    Proxy-->>User: Withdraw ID in queue
+
+    Vault->>User: Send GA OTP
+    User->>Proxy: MFA Verification WithdrawId + OTP, POST {APPLOGIC}/api/v1/withdraws/verify'
+
+    Proxy->>AppLogic: MFA Verification WithdrawId + OTP, POST {APPLOGIC}/api/v1/withdraws/verify'
+
+    AppLogic->AppLogic: Check sign policy  
+
+    AppLogic->>Peatio: POST'/management_api/v1/withdraws/new'
+
     Peatio->>Db:  insert withdraw
     alt saved
         Db-->>Peatio: saved
