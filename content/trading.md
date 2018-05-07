@@ -21,7 +21,7 @@ sequenceDiagram
     User->>Proxy: request post '{APPLOGIC}/api/v1/withdraws/new'
     Proxy->>AppLogic: forward post '{APPLOGIC}/api/v1/withdraws/new'
     AppLogic->>Db: Insert record
-    
+
     AppLogic->>Vault: Create OTP (MFA)
     Vault-->>AppLogic: Created OTP (MFA)
     AppLogic-->>Proxy: Withdraw ID in queue 
