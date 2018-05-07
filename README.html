@@ -264,6 +264,71 @@ npm install -g babel-runtime
 </div>
 <h2 class="mume-header" id="withdraws-fiats">Withdraws: Fiats</h2>
 
+<h3 class="mume-header" id="user-initiate-new-withdraw">User initiate new withdraw</h3>
+
+<div class="mermaid">sequenceDiagram
+    participant PermittedSigners
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Peatio
+    participant PeatioDaemons
+    participant RabbitMQ
+    participant Db
+    participant Vault
+    participant Notifications
+
+    User->>Proxy: request post '{APPLOGIC}/api/v1/withdraws/new'
+    Proxy->>AppLogic: redirect post '{APPLOGIC}/api/v1/withdraws/new'
+    AppLogic->>Db: Insert record
+
+    AppLogic->>Vault: Create OTP (MFA)
+    Vault-->>AppLogic: Created OTP (MFA)
+    AppLogic-->>Proxy: Withdraw ID in queue
+    Proxy-->>User: Withdraw ID in queue
+
+    Vault->>User: Send GA OTP
+    User->>Proxy: MFA Verification WithdrawId + OTP, POST {APPLOGIC}/api/v1/withdraws/verify'
+    Proxy->>AppLogic: redirect POST {APPLOGIC}/api/v1/withdraws/verify'
+
+    AppLogic->AppLogic: Check sign policy
+
+    AppLogic->>Db: update record
+    AppLogic->>Db: request organization signers
+    Db-->>AppLogic: organization signers list
+    AppLogic->>Notifications: Publish withdraw request for organization signers
+</div>
+<h3 class="mume-header" id="subscriber-get-withdraw-request-for-organization-signers">Subscriber get withdraw request (for organization signers)</h3>
+
+<div class="mermaid">sequenceDiagram
+    participant PermittedSigners
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Peatio
+    participant PeatioDaemons
+    participant RabbitMQ
+    participant Db
+    participant Vault
+    participant Notifications
+
+    Notifications-->PermittedSigners: Get new notification
+
+    PermittedSigners->>Proxy: request GET {AppLogic} /api/v1/withdraws/id
+    Proxy->>AppLogic: redirect GET {AppLogic} /api/v1/withdraws/id
+
+    alt set signature
+        PermittedSigners->>AppLogic: request POST {AppLogic} /api/v1/withdraws/accept
+        AppLogic->>AppLogic: Set signature
+        AppLogic->>Peatio: Withdraw accepted POST {PEATIO}/management_api/v1/withdraws/new
+        AppLogic-xDb: Signed Withdraw POST {AppLogic} /api/v1/withdraws/accept
+    else canceled
+        PermittedSigners->>AppLogic: request POST {AppLogic} /api/v1/withdraws/cancel
+        AppLogic-xDb: Set withdraw state canceled
+    end
+</div>
+<h2 class="mume-header" id="depricated-withdraws-fiats">(depricated) Withdraws: Fiats</h2>
+
 <div class="mermaid">sequenceDiagram
     participant User
     participant Proxy
@@ -323,7 +388,13 @@ npm install -g babel-runtime
 <li><a href="#raised-security-api">Raised security API</a>
 <ul>
 <li><a href="#deposits-fiats">Deposits: Fiats</a></li>
-<li><a href="#withdraws-fiats">Withdraws: Fiats</a></li>
+<li><a href="#withdraws-fiats">Withdraws: Fiats</a>
+<ul>
+<li><a href="#user-initiate-new-withdraw">User initiate new withdraw</a></li>
+<li><a href="#subscriber-get-withdraw-request-for-organization-signers">Subscriber get withdraw request (for organization signers)</a></li>
+</ul>
+</li>
+<li><a href="#depricated-withdraws-fiats">(depricated) Withdraws: Fiats</a></li>
 </ul>
 </li>
 </ul>
