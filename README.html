@@ -233,7 +233,7 @@ npm install -g babel-runtime
 <p>This section contains</p>
 <h1 class="mume-header" id="user-management-api-1">User Management API</h1>
 
-<p>This section contains</p>
+<p>This section contains diagrams on Barong Management API</p>
 <h1 class="mume-header" id="trading-api">Trading API</h1>
 
 <p>This section contains</p>
@@ -304,11 +304,11 @@ npm install -g babel-runtime
 
     AppLogic->>Db: update record
     Db-->>AppLogic: get organization signers list
-    AppLogic-->>Notifications: Publish withdraw request for organization signers
+    AppLogic-->>Notifications: Publish withdraw request for organization [signers](#withdrawrequest)
     AppLogic-->>Proxy: Response notification about waiting accepting
     Proxy-->>User: Redirect notification
 </div>
-<h3 class="mume-header" id="subscriber-get-withdraw-request-for-organization-signers">Subscriber get withdraw request (for organization signers)</h3>
+<h3 class="mume-header" id="a-namewithdrawrequestsubscriber-get-withdraw-request-for-organization-signers"><a name="withdrawrequest" href=""></a>Subscriber get withdraw request (for organization signers)</h3>
 
 <div class="mermaid">sequenceDiagram
     participant PermittedSigners
@@ -391,7 +391,7 @@ npm install -g babel-runtime
 <li><a href="#withdraws-fiats">Withdraws: Fiats</a>
 <ul>
 <li><a href="#user-initiate-new-withdraw">User initiate new withdraw</a></li>
-<li><a href="#subscriber-get-withdraw-request-for-organization-signers">Subscriber get withdraw request (for organization signers)</a></li>
+<li><a href="#a-namewithdrawrequestsubscriber-get-withdraw-request-for-organization-signers"><a name="withdrawrequest"></a>Subscriber get withdraw request (for organization signers)</a></li>
 <li><a href="#all-organization-signatures-received">All organization signatures received</a></li>
 </ul>
 </li>
