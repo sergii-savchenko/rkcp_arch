@@ -29,7 +29,13 @@ After installing those plugins you should see something like this:
 
 ![](./assets/vscode.png)
 
+# User management API
 
+
+
+# Trading API 
+
+This section contains 
 # Raised security API 
 
 This section descripbes set of API of RKCP that needs additional confirmation on actions besides using session JWT and/or API keys
