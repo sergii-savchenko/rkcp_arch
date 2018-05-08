@@ -369,55 +369,6 @@ npm install -g babel-runtime
     AppLogic->>Db: Update record
     AppLogic-->>Notifications: Publish about withdraw completing
 </div>
-<h3 class="mume-header" id="depricated-withdraws-fiats">(depricated) Withdraws: Fiats</h3>
-
-<div class="mermaid">sequenceDiagram
-    participant User
-    participant Proxy
-    participant AppLogic
-    participant Barong
-    participant Peatio
-    participant PeatioDaemons
-    participant RabbitMQ
-    participant Redis
-    participant Db
-    participant Vault
-    participant SmtpRelay
-    participant PushNotifications
-    participant SMSNotifications
-
-    User->>Proxy: request post '{APPLOGIC}/api/v1/withdraws/new'
-    Proxy->>AppLogic: forward post '{APPLOGIC}/api/v1/withdraws/new'
-    AppLogic->>Db: Insert record
-
-    AppLogic->>Vault: Create OTP (MFA)
-    Vault-->>AppLogic: Created OTP (MFA)
-    AppLogic-->>Proxy: Withdraw ID in queue 
-    Proxy-->>User: Withdraw ID in queue
-
-    Vault->>User: Send GA OTP
-    User->>Proxy: MFA Verification WithdrawId + OTP, POST {APPLOGIC}/api/v1/withdraws/verify'
-
-    Proxy->>AppLogic: MFA Verification WithdrawId + OTP, POST {APPLOGIC}/api/v1/withdraws/verify'
-
-    AppLogic->AppLogic: Check sign policy  
-
-    AppLogic->>Peatio: POST'/management_api/v1/withdraws/new'
-
-    Peatio->>Db:  insert withdraw
-    alt saved
-        Db-->>Peatio: saved
-    else bad data
-        Db-->>Peatio: bad data
-    end
-    Peatio-->>Proxy: response
-    alt saved
-        Peatio-->>Proxy: status: 201
-    else bad data
-        Peatio-->>Proxy: status: 422
-    end
-    Proxy--xUser: forward response
-</div>
 
       </div>
       <div class="md-sidebar-toc"><ul>
@@ -437,7 +388,6 @@ npm install -g babel-runtime
 <li><a href="#user-initiate-new-withdraw">User initiate new withdraw</a></li>
 <li><a href="#subscriber-get-withdraw-request-for-organization-signers">Subscriber get withdraw request (for organization signers)</a></li>
 <li><a href="#all-organization-signatures-received">All organization signatures received</a></li>
-<li><a href="#depricated-withdraws-fiats">(depricated) Withdraws: Fiats</a></li>
 </ul>
 </li>
 </ul>
