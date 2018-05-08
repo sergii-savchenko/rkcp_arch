@@ -34,7 +34,7 @@ After installing those plugins you should see something like this:
 
 
 
-# Trading API 
+# User Management API# Trading API 
 
 This section contains 
 # Raised security API 
