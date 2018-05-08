@@ -29,12 +29,18 @@ After installing those plugins you should see something like this:
 
 ![](./assets/vscode.png)
 
+
 # User management API
 
+This section contains 
 
 
 
-# User Management API# Trading API 
+
+# User Management API
+
+This section contains 
+# Trading API 
 
 This section contains 
 # Raised security API 
