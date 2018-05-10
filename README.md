@@ -152,7 +152,8 @@ sequenceDiagram
     Barong-->>AppLogic: response result
     AppLogic-->>Proxy: Response result
     Proxy-->>User: Redirect results
-```## Timestamp
+```
+## Timestamp
 
 ### Receive server time in seconds since Unix epoch
 
@@ -187,7 +188,8 @@ sequenceDiagram
 ```
 # Trading API 
 
-This section contains ## Orders
+This section contains trading process (Peatio member_api) - creating/canceling orders...
+## Orders
 
 ### Create new order
 
@@ -241,7 +243,7 @@ sequenceDiagram
 ```
 # Raised security API 
 
-This section descripbes set of API of RKCP that needs additional confirmation on actions besides using session JWT and/or API keys
+This section describes set of API of RKCP that needs additional confirmation on actions besides using session JWT and/or API keys
 
 ## Deposits: Fiats
 

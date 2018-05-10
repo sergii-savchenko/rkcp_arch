@@ -339,14 +339,12 @@ npm install -g babel-runtime
     Barong-->>AppLogic: response result
     AppLogic-->>Proxy: Response result
     Proxy-->>User: Redirect results
-```## Timestamp
+</div>
+<h2 class="mume-header" id="timestamp">Timestamp</h2>
 
-### Receive server time in seconds since Unix epoch
+<h3 class="mume-header" id="receive-server-time-in-seconds-since-unix-epoch">Receive server time in seconds since Unix epoch</h3>
 
-
-
-```mermaid
-sequenceDiagram
+<div class="mermaid">sequenceDiagram
     participant User
     participant Proxy
     participant AppLogic
@@ -376,7 +374,9 @@ sequenceDiagram
 </div>
 <h1 class="mume-header" id="trading-api">Trading API</h1>
 
-<p>This section contains ## Orders</p>
+<p>This section contains trading process (Peatio member_api) - creating/canceling orders...</p>
+<h2 class="mume-header" id="orders">Orders</h2>
+
 <h3 class="mume-header" id="create-new-order">Create new order</h3>
 
 <div class="mermaid">sequenceDiagram
@@ -426,7 +426,7 @@ sequenceDiagram
 </div>
 <h1 class="mume-header" id="raised-security-api">Raised security API</h1>
 
-<p>This section descripbes set of API of RKCP that needs additional confirmation on actions besides using session JWT and/or API keys</p>
+<p>This section describes set of API of RKCP that needs additional confirmation on actions besides using session JWT and/or API keys</p>
 <h2 class="mume-header" id="deposits-fiats">Deposits: Fiats</h2>
 
 <div class="mermaid">sequenceDiagram
@@ -577,14 +577,25 @@ sequenceDiagram
 <li><a href="#create-a-label-with-private-scope-and-assigns-to-account">Create a label with 'private' scope and assigns to account</a></li>
 <li><a href="#update-label">Update label</a></li>
 <li><a href="#delete-label">Delete label</a></li>
+</ul>
+</li>
+<li><a href="#timestamp">Timestamp</a>
+<ul>
 <li><a href="#receive-server-time-in-seconds-since-unix-epoch">Receive server time in seconds since Unix epoch</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#trading-api">Trading API</a><br>
-* <a href="#create-new-order">Create new order</a><br>
-* <a href="#delete-order">Delete order</a></li>
+<li><a href="#trading-api">Trading API</a>
+<ul>
+<li><a href="#orders">Orders</a>
+<ul>
+<li><a href="#create-new-order">Create new order</a></li>
+<li><a href="#delete-order">Delete order</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li><a href="#raised-security-api">Raised security API</a>
 <ul>
 <li><a href="#deposits-fiats">Deposits: Fiats</a></li>
