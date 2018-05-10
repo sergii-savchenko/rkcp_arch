@@ -157,6 +157,8 @@ sequenceDiagram
 
 ### Receive server time in seconds since Unix epoch
 
+This endpoint is useful for expiration syncronization and testing Management API
+
 ```mermaid
 sequenceDiagram
     participant User
