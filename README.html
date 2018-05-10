@@ -334,8 +334,8 @@ npm install -g babel-runtime
     AppLogic->>Vault: Check sign policy
     Vault-->>AppLogic: Trust
 
-    AppLogic->>+Db: update record
-    AppLogic->>+Barong: jws PUT '{BARONG}/management_api/v1/labels/delete'
+    AppLogic->>Db: update record
+    AppLogic->>Barong: jws PUT '{BARONG}/management_api/v1/labels/delete'
     Barong-->>AppLogic: response result
     AppLogic-->>Proxy: Response result
     Proxy-->>User: Redirect results
