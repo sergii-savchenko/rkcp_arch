@@ -37,12 +37,154 @@ This section contains
 
 
 
-# User Management API
+# Barong Management API
 
 This section contains diagrams on Barong Management API
 
 
+## Labels with 'private' scope
 
+### Create a label with 'private' scope and assigns to account
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Barong
+    participant RabbitMQ
+    participant Db
+    participant Vault
+    participant Notifications
+
+    User->>Proxy: request POST '{APPLOGIC}/api/v1/labels/new'
+    Proxy->>AppLogic: redirect POST '{APPLOGIC}/api/v1/labels/new'
+    AppLogic->>Db: Insert record
+
+    AppLogic->>Vault: Create OTP (MFA)
+    Vault-->>AppLogic: Created OTP (MFA)
+    AppLogic-->>Proxy: Label ID in queue
+    Proxy-->>User: Label ID in queue
+
+    Vault->>User: Send GA OTP
+    User->>Proxy: MFA Verification LabelId + OTP, POST '{APPLOGIC}/api/v1/labels/verify'
+    Proxy->>AppLogic: redirect POST '{APPLOGIC}/api/v1/labels/verify'
+
+    AppLogic->>Vault: Check sign policy
+    Vault-->>AppLogic: Trust
+
+    AppLogic->>+Db: update record
+    AppLogic->>+Barong: jws POST '{BARONG}/management_api/v1/labels/'
+    Barong-->>AppLogic: response result
+    AppLogic-->>Proxy: Response result
+    Proxy-->>User: Redirect results
+```
+
+### Update label
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Barong
+    participant RabbitMQ
+    participant Db
+    participant Vault
+    participant Notifications
+
+    User->>Proxy: request POST '{APPLOGIC}/api/v1/labels/update'
+    Proxy->>AppLogic: redirect POST '{APPLOGIC}/api/v1/labels/update'
+    AppLogic->>Db: Find record
+    Db-->>AppLogic: Receive label Id
+
+    AppLogic->>Vault: Create OTP (MFA)
+    Vault-->>AppLogic: Created OTP (MFA)
+    AppLogic-->>Proxy: Label ID in queue
+    Proxy-->>User: Label ID in queue
+
+    Vault->>User: Send GA OTP
+    User->>Proxy: MFA Verification LabelId + OTP, POST '{APPLOGIC}/api/v1/labels/verify'
+    Proxy->>AppLogic: redirect POST '{APPLOGIC}/api/v1/labels/verify'
+
+    AppLogic->>Vault: Check sign policy
+    Vault-->>AppLogic: Trust
+
+    AppLogic->>+Db: update record
+    AppLogic->>+Barong: jws PUT '{BARONG}/management_api/v1/labels/'
+    Barong-->>AppLogic: response result
+    AppLogic-->>Proxy: Response result
+    Proxy-->>User: Redirect results
+```
+
+### Delete label
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Barong
+    participant RabbitMQ
+    participant Db
+    participant Vault
+    participant Notifications
+
+    User->>Proxy: request POST '{APPLOGIC}/api/v1/labels/delete'
+    Proxy->>AppLogic: redirect POST '{APPLOGIC}/api/v1/labels/delete'
+    AppLogic->>Db: Find record
+    Db-->>AppLogic: Receive label Id
+
+    AppLogic->>Vault: Create OTP (MFA)
+    Vault-->>AppLogic: Created OTP (MFA)
+    AppLogic-->>Proxy: Label ID in queue
+    Proxy-->>User: Label ID in queue
+
+    Vault->>User: Send GA OTP
+    User->>Proxy: MFA Verification LabelId + OTP, POST '{APPLOGIC}/api/v1/labels/verify'
+    Proxy->>AppLogic: redirect POST '{APPLOGIC}/api/v1/labels/verify'
+
+    AppLogic->>Vault: Check sign policy
+    Vault-->>AppLogic: Trust
+
+    AppLogic->>+Db: update record
+    AppLogic->>+Barong: jws PUT '{BARONG}/management_api/v1/labels/delete'
+    Barong-->>AppLogic: response result
+    AppLogic-->>Proxy: Response result
+    Proxy-->>User: Redirect results
+```## Timestamp
+
+### Receive server time in seconds since Unix epoch
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Barong
+    participant RabbitMQ
+    participant Db
+    participant Vault
+    participant Notifications
+
+    User->>Proxy: request POST '{APPLOGIC}/api/v1/timestamp'
+    Proxy->>AppLogic: redirect POST '{APPLOGIC}/api/v1/timestamp'
+    
+    AppLogic->>Vault: Create OTP (MFA)
+    Vault-->>AppLogic: Created OTP (MFA)
+    
+    Vault->>User: Send GA OTP
+    User->>Proxy: MFA Verification OTP, POST '{APPLOGIC}/api/v1/timestamp/verify'
+    Proxy->>AppLogic: redirect POST '{APPLOGIC}/api/v1/timestamp/verify'
+
+    AppLogic->>Vault: Check sign policy
+    Vault-->>AppLogic: Trust
+
+    AppLogic->>+Barong: jws POST '{BARONG}/management_api/v1/timestamp/'
+    Barong-->>AppLogic: response result
+    AppLogic-->>Proxy: Response result
+    Proxy-->>User: Redirect results
+```
 # Trading API 
 
 This section contains 

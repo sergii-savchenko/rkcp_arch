@@ -231,9 +231,149 @@ npm install -g babel-runtime
 <h1 class="mume-header" id="user-management-api">User management API</h1>
 
 <p>This section contains</p>
-<h1 class="mume-header" id="user-management-api-1">User Management API</h1>
+<h1 class="mume-header" id="barong-management-api">Barong Management API</h1>
 
 <p>This section contains diagrams on Barong Management API</p>
+<h2 class="mume-header" id="labels-with-private-scope">Labels with 'private' scope</h2>
+
+<h3 class="mume-header" id="create-a-label-with-private-scope-and-assigns-to-account">Create a label with 'private' scope and assigns to account</h3>
+
+<div class="mermaid">sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Barong
+    participant RabbitMQ
+    participant Db
+    participant Vault
+    participant Notifications
+
+    User->>Proxy: request POST '{APPLOGIC}/api/v1/labels/new'
+    Proxy->>AppLogic: redirect POST '{APPLOGIC}/api/v1/labels/new'
+    AppLogic->>Db: Insert record
+
+    AppLogic->>Vault: Create OTP (MFA)
+    Vault-->>AppLogic: Created OTP (MFA)
+    AppLogic-->>Proxy: Label ID in queue
+    Proxy-->>User: Label ID in queue
+
+    Vault->>User: Send GA OTP
+    User->>Proxy: MFA Verification LabelId + OTP, POST '{APPLOGIC}/api/v1/labels/verify'
+    Proxy->>AppLogic: redirect POST '{APPLOGIC}/api/v1/labels/verify'
+
+    AppLogic->>Vault: Check sign policy
+    Vault-->>AppLogic: Trust
+
+    AppLogic->>+Db: update record
+    AppLogic->>+Barong: jws POST '{BARONG}/management_api/v1/labels/'
+    Barong-->>AppLogic: response result
+    AppLogic-->>Proxy: Response result
+    Proxy-->>User: Redirect results
+</div>
+<h3 class="mume-header" id="update-label">Update label</h3>
+
+<div class="mermaid">sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Barong
+    participant RabbitMQ
+    participant Db
+    participant Vault
+    participant Notifications
+
+    User->>Proxy: request POST '{APPLOGIC}/api/v1/labels/update'
+    Proxy->>AppLogic: redirect POST '{APPLOGIC}/api/v1/labels/update'
+    AppLogic->>Db: Find record
+    Db-->>AppLogic: Receive label Id
+
+    AppLogic->>Vault: Create OTP (MFA)
+    Vault-->>AppLogic: Created OTP (MFA)
+    AppLogic-->>Proxy: Label ID in queue
+    Proxy-->>User: Label ID in queue
+
+    Vault->>User: Send GA OTP
+    User->>Proxy: MFA Verification LabelId + OTP, POST '{APPLOGIC}/api/v1/labels/verify'
+    Proxy->>AppLogic: redirect POST '{APPLOGIC}/api/v1/labels/verify'
+
+    AppLogic->>Vault: Check sign policy
+    Vault-->>AppLogic: Trust
+
+    AppLogic->>+Db: update record
+    AppLogic->>+Barong: jws PUT '{BARONG}/management_api/v1/labels/'
+    Barong-->>AppLogic: response result
+    AppLogic-->>Proxy: Response result
+    Proxy-->>User: Redirect results
+</div>
+<h3 class="mume-header" id="delete-label">Delete label</h3>
+
+<div class="mermaid">sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Barong
+    participant RabbitMQ
+    participant Db
+    participant Vault
+    participant Notifications
+
+    User->>Proxy: request POST '{APPLOGIC}/api/v1/labels/delete'
+    Proxy->>AppLogic: redirect POST '{APPLOGIC}/api/v1/labels/delete'
+    AppLogic->>Db: Find record
+    Db-->>AppLogic: Receive label Id
+
+    AppLogic->>Vault: Create OTP (MFA)
+    Vault-->>AppLogic: Created OTP (MFA)
+    AppLogic-->>Proxy: Label ID in queue
+    Proxy-->>User: Label ID in queue
+
+    Vault->>User: Send GA OTP
+    User->>Proxy: MFA Verification LabelId + OTP, POST '{APPLOGIC}/api/v1/labels/verify'
+    Proxy->>AppLogic: redirect POST '{APPLOGIC}/api/v1/labels/verify'
+
+    AppLogic->>Vault: Check sign policy
+    Vault-->>AppLogic: Trust
+
+    AppLogic->>+Db: update record
+    AppLogic->>+Barong: jws PUT '{BARONG}/management_api/v1/labels/delete'
+    Barong-->>AppLogic: response result
+    AppLogic-->>Proxy: Response result
+    Proxy-->>User: Redirect results
+```## Timestamp
+
+### Receive server time in seconds since Unix epoch
+
+
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Barong
+    participant RabbitMQ
+    participant Db
+    participant Vault
+    participant Notifications
+
+    User->>Proxy: request POST '{APPLOGIC}/api/v1/timestamp'
+    Proxy->>AppLogic: redirect POST '{APPLOGIC}/api/v1/timestamp'
+    
+    AppLogic->>Vault: Create OTP (MFA)
+    Vault-->>AppLogic: Created OTP (MFA)
+    
+    Vault->>User: Send GA OTP
+    User->>Proxy: MFA Verification OTP, POST '{APPLOGIC}/api/v1/timestamp/verify'
+    Proxy->>AppLogic: redirect POST '{APPLOGIC}/api/v1/timestamp/verify'
+
+    AppLogic->>Vault: Check sign policy
+    Vault-->>AppLogic: Trust
+
+    AppLogic->>+Barong: jws POST '{BARONG}/management_api/v1/timestamp/'
+    Barong-->>AppLogic: response result
+    AppLogic-->>Proxy: Response result
+    Proxy-->>User: Redirect results
+</div>
 <h1 class="mume-header" id="trading-api">Trading API</h1>
 
 <p>This section contains</p>
@@ -383,7 +523,18 @@ npm install -g babel-runtime
 </ul>
 </li>
 <li><a href="#user-management-api">User management API</a></li>
-<li><a href="#user-management-api-1">User Management API</a></li>
+<li><a href="#barong-management-api">Barong Management API</a>
+<ul>
+<li><a href="#labels-with-private-scope">Labels with 'private' scope</a>
+<ul>
+<li><a href="#create-a-label-with-private-scope-and-assigns-to-account">Create a label with 'private' scope and assigns to account</a></li>
+<li><a href="#update-label">Update label</a></li>
+<li><a href="#delete-label">Delete label</a></li>
+<li><a href="#receive-server-time-in-seconds-since-unix-epoch">Receive server time in seconds since Unix epoch</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li><a href="#trading-api">Trading API</a></li>
 <li><a href="#raised-security-api">Raised security API</a>
 <ul>
