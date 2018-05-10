@@ -210,6 +210,7 @@ sequenceDiagram
     
     AppLogic->>Peatio: request POST '{PEATIO}/api/v2/orders/'
     Peatio->>Db: save order
+    Peatio->>PeatioDaemons: push in queuee
     Peatio->>RabbitMQ: in queuee
     Peatio-->>AppLogic: response new order JSON
 
