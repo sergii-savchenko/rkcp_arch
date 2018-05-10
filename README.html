@@ -376,7 +376,54 @@ sequenceDiagram
 </div>
 <h1 class="mume-header" id="trading-api">Trading API</h1>
 
-<p>This section contains</p>
+<p>This section contains ## Orders</p>
+<h3 class="mume-header" id="create-new-order">Create new order</h3>
+
+<div class="mermaid">sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Peatio
+    participant PeatioDaemons
+    participant RabbitMQ
+    participant Db
+    participant Vault
+    participant Notifications
+
+    User->>Proxy: request POST '{APPLOGIC}/api/v1/orders/new'
+    Proxy->>AppLogic: redirect POST '{APPLOGIC}/api/v1/orders/new'
+    
+    AppLogic->>Peatio: request POST '{PEATIO}/api/v2/orders/'
+    Peatio->>Db: save order
+    Peatio->>RabbitMQ: in queuee
+    Peatio-->>AppLogic: response new order JSON
+
+    AppLogic->>Proxy: Response order result
+    Proxy-->>User: Redirect result
+</div>
+<h3 class="mume-header" id="delete-order">Delete order</h3>
+
+<div class="mermaid">sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Peatio
+    participant PeatioDaemons
+    participant RabbitMQ
+    participant Db
+    participant Vault
+    participant Notifications
+
+    User->>Proxy: request POST '{APPLOGIC}/api/v1/orders/delete'
+    Proxy->>AppLogic: redirect POST '{APPLOGIC}/api/v1/orders/delete'
+    
+    AppLogic->>Peatio: request POST '{PEATIO}/api/v2/order/delete'
+    Peatio->>Db: canceled order
+    Peatio-->>AppLogic: Response result
+
+    AppLogic->>Proxy: Response result
+    Proxy-->>User: Redirect result
+</div>
 <h1 class="mume-header" id="raised-security-api">Raised security API</h1>
 
 <p>This section descripbes set of API of RKCP that needs additional confirmation on actions besides using session JWT and/or API keys</p>
@@ -535,7 +582,9 @@ sequenceDiagram
 </li>
 </ul>
 </li>
-<li><a href="#trading-api">Trading API</a></li>
+<li><a href="#trading-api">Trading API</a><br>
+* <a href="#create-new-order">Create new order</a><br>
+* <a href="#delete-order">Delete order</a></li>
 <li><a href="#raised-security-api">Raised security API</a>
 <ul>
 <li><a href="#deposits-fiats">Deposits: Fiats</a></li>

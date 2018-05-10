@@ -187,7 +187,58 @@ sequenceDiagram
 ```
 # Trading API 
 
-This section contains 
+This section contains ## Orders
+
+### Create new order
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Peatio
+    participant PeatioDaemons
+    participant RabbitMQ
+    participant Db
+    participant Vault
+    participant Notifications
+
+    User->>Proxy: request POST '{APPLOGIC}/api/v1/orders/new'
+    Proxy->>AppLogic: redirect POST '{APPLOGIC}/api/v1/orders/new'
+    
+    AppLogic->>Peatio: request POST '{PEATIO}/api/v2/orders/'
+    Peatio->>Db: save order
+    Peatio->>RabbitMQ: in queuee
+    Peatio-->>AppLogic: response new order JSON
+
+    AppLogic->>Proxy: Response order result
+    Proxy-->>User: Redirect result
+```
+
+### Delete order
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Peatio
+    participant PeatioDaemons
+    participant RabbitMQ
+    participant Db
+    participant Vault
+    participant Notifications
+
+    User->>Proxy: request POST '{APPLOGIC}/api/v1/orders/delete'
+    Proxy->>AppLogic: redirect POST '{APPLOGIC}/api/v1/orders/delete'
+    
+    AppLogic->>Peatio: request POST '{PEATIO}/api/v2/order/delete'
+    Peatio->>Db: canceled order
+    Peatio-->>AppLogic: Response result
+
+    AppLogic->>Proxy: Response result
+    Proxy-->>User: Redirect result
+```
 # Raised security API 
 
 This section descripbes set of API of RKCP that needs additional confirmation on actions besides using session JWT and/or API keys
