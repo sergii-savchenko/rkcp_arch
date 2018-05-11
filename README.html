@@ -606,6 +606,31 @@ npm install -g babel-runtime
     AppLogic->>Proxy: Response list
     Proxy-->>User: Redirect list
 </div>
+<h3 class="mume-header" id="get-fees-depositwithdrawtrading">Get fees (deposit/withdraw/trading)</h3>
+
+<div class="mermaid">sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Peatio
+    participant RabbitMQ
+    participant PeatioDaemons
+    participant Redis
+    participant Db
+    participant Vault
+    participant Notifications
+
+    User->>Proxy: request GET '{APPLOGIC}/api/v1/fees/withdraw'
+    Note over User: simple request without jwt
+    Proxy->>AppLogic: redirect GET '{APPLOGIC}/api/v1/fees/withdraw'
+    AppLogic->>Peatio: request GET '{PEATIO}/api/v2/fees/withdraw'
+    Peatio->>Db: get fees
+    Db-->>Peatio: response fees
+    Peatio-->>AppLogic: response JSON
+
+    AppLogic->>Proxy: Response list
+    Proxy-->>User: Redirect list
+</div>
 <h1 class="mume-header" id="raised-security-api">Raised security API</h1>
 
 <p>This section describes set of API of RKCP that needs additional confirmation on actions besides using session JWT and/or API keys</p>
@@ -807,6 +832,7 @@ npm install -g babel-runtime
 <li><a href="#get-depth">Get depth</a></li>
 <li><a href="#get-recent-trades-on-market">Get recent trades on market</a></li>
 <li><a href="#get-ohlck-line-of-specific-market">Get OHLC(k line) of specific market</a></li>
+<li><a href="#get-fees-depositwithdrawtrading">Get fees (deposit/withdraw/trading)</a></li>
 </ul>
 </li>
 </ul>
