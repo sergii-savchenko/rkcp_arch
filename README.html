@@ -435,6 +435,177 @@ npm install -g babel-runtime
     AppLogic->>Proxy: Response result
     Proxy-->>User: Redirect result
 </div>
+<h2 class="mume-header" id="public-data">Public data</h2>
+
+<h3 class="mume-header" id="get-markets-list">Get markets list</h3>
+
+<div class="mermaid">sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Peatio
+    participant RabbitMQ
+    participant PeatioDaemons
+    participant Db
+    participant Vault
+    participant Notifications
+
+    User->>Proxy: request GET '{APPLOGIC}/api/v1/markets'
+    Note over User: simple request without jwt
+    Proxy->>AppLogic: redirect GET '{APPLOGIC}/api/v1/markets'
+    AppLogic->>Peatio: request GET '{PEATIO}/api/v2/markets'
+    Peatio->>Db: get markets
+    Db-->>Peatio: response markets
+    Peatio-->>AppLogic: response JSON
+
+    AppLogic->>Proxy: Response list
+    Proxy-->>User: Redirect list
+</div>
+<h3 class="mume-header" id="get-tickers">Get tickers</h3>
+
+<div class="mermaid">sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Peatio
+    participant RabbitMQ
+    participant PeatioDaemons
+    participant Db
+    participant Vault
+    participant Notifications
+
+    User->>Proxy: request GET '{APPLOGIC}/api/v1/tickers'
+    Note over User: simple request without jwt
+    Proxy->>AppLogic: redirect GET '{APPLOGIC}/api/v1/tickers'
+    AppLogic->>Peatio: request GET '{PEATIO}/api/v2/tickers'
+    Peatio->>Db: get tickers
+    Db-->>Peatio: response tickers
+    Peatio-->>AppLogic: response JSON
+
+    AppLogic->>Proxy: Response list
+    Proxy-->>User: Redirect list
+</div>
+<h3 class="mume-header" id="get-tickers-for-specified-market">Get tickers for specified market</h3>
+
+<div class="mermaid">sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Peatio
+    participant RabbitMQ
+    participant PeatioDaemons
+    participant Db
+    participant Vault
+    participant Notifications
+
+    User->>Proxy: request GET '{APPLOGIC}/api/v1/tickers/{market}'
+    Note over User: simple request without jwt
+    Proxy->>AppLogic: redirect GET '{APPLOGIC}/api/v1/tickers/{market}'
+    AppLogic->>Peatio: request GET '{PEATIO}/api/v2/tickers/{market}'
+    Peatio->>Db: get tickers for specified market
+    Db-->>Peatio: response tickers
+    Peatio-->>AppLogic: response JSON
+
+    AppLogic->>Proxy: Response list
+    Proxy-->>User: Redirect list
+</div>
+<h3 class="mume-header" id="get-order-book-for-market">Get order book for market</h3>
+
+<div class="mermaid">sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Peatio
+    participant RabbitMQ
+    participant PeatioDaemons
+    participant Db
+    participant Vault
+    participant Notifications
+
+    User->>Proxy: request GET '{APPLOGIC}/api/v1/order_book'
+    Note over User: simple request without jwt
+    Proxy->>AppLogic: redirect GET '{APPLOGIC}/api/v1/order_book'
+    AppLogic->>Peatio: request GET '{PEATIO}/api/v2/order_book'
+    Peatio->>Db: request order book
+    Db-->>Peatio: response list
+    Peatio-->>AppLogic: response JSON
+
+    AppLogic->>Proxy: Response list
+    Proxy-->>User: Redirect list
+</div>
+<h3 class="mume-header" id="get-depth">Get depth</h3>
+
+<div class="mermaid">sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Peatio
+    participant RabbitMQ
+    participant PeatioDaemons
+    participant Db
+    participant Vault
+    participant Notifications
+
+    User->>Proxy: request GET '{APPLOGIC}/api/v1/depth'
+    Note over User: simple request without jwt
+    Proxy->>AppLogic: redirect GET '{APPLOGIC}/api/v1/depth'
+    AppLogic->>Peatio: request GET '{PEATIO}/api/v2/depth'
+    Peatio->>Db: request order book
+    Db-->>Peatio: response list
+    Peatio-->>AppLogic: response JSON
+
+    AppLogic->>Proxy: Response list
+    Proxy-->>User: Redirect list
+</div>
+<h3 class="mume-header" id="get-recent-trades-on-market">Get recent trades on market</h3>
+
+<div class="mermaid">sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Peatio
+    participant RabbitMQ
+    participant PeatioDaemons
+    participant Db
+    participant Vault
+    participant Notifications
+
+    User->>Proxy: request GET '{APPLOGIC}/api/v1/trades'
+    Note over User: simple request without jwt
+    Proxy->>AppLogic: redirect GET '{APPLOGIC}/api/v1/trades'
+    AppLogic->>Peatio: request GET '{PEATIO}/api/v2/trades'
+    Peatio->>Db: request order book
+    Db-->>Peatio: response list
+    Peatio-->>AppLogic: response JSON
+
+    AppLogic->>Proxy: Response list
+    Proxy-->>User: Redirect list
+</div>
+<h3 class="mume-header" id="get-ohlck-line-of-specific-market">Get OHLC(k line) of specific market</h3>
+
+<div class="mermaid">sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Peatio
+    participant RabbitMQ
+    participant PeatioDaemons
+    participant Redis
+    participant Db
+    participant Vault
+    participant Notifications
+
+    User->>Proxy: request GET '{APPLOGIC}/api/v1/k'
+    Note over User: simple request without jwt
+    Proxy->>AppLogic: redirect GET '{APPLOGIC}/api/v1/k'
+    AppLogic->>Peatio: request GET '{PEATIO}/api/v2/k'
+    Peatio->>Redis: get data
+    Redis-->>Peatio: response data
+    Peatio-->>AppLogic: response JSON
+
+    AppLogic->>Proxy: Response list
+    Proxy-->>User: Redirect list
+</div>
 <h1 class="mume-header" id="raised-security-api">Raised security API</h1>
 
 <p>This section describes set of API of RKCP that needs additional confirmation on actions besides using session JWT and/or API keys</p>
@@ -578,18 +749,16 @@ npm install -g babel-runtime
 
 <div class="mermaid">sequenceDiagram
     participant Sender
-    participant AppLogic(API)
     participant AppLogic
     participant Db
 
-    Sender->>AppLogic(API): Request with JWToken
-    AppLogic(API)->>AppLogic: Decode & verify JWToken
+    Sender->>AppLogic: Request with JWToken
+    AppLogic->>AppLogic: Decode & verify JWToken
     Note over AppLogic: verify: expiration, iss, jti, aud, sub, algorithms, leeway (iat, iss, exp)
     AppLogic->>Db: Find account by email
     Db-->>AppLogic: Receive member
     alt no verification or no member
-        AppLogic-->>AppLogic(API): Unauthorized
-        AppLogic(API)-->>Sender: 401
+        AppLogic-->>Sender: 401 Unauthorized
     else verified
         Note over AppLogic: continue execution
     end
@@ -627,6 +796,17 @@ npm install -g babel-runtime
 <ul>
 <li><a href="#create-new-order">Create new order</a></li>
 <li><a href="#delete-order">Delete order</a></li>
+</ul>
+</li>
+<li><a href="#public-data">Public data</a>
+<ul>
+<li><a href="#get-markets-list">Get markets list</a></li>
+<li><a href="#get-tickers">Get tickers</a></li>
+<li><a href="#get-tickers-for-specified-market">Get tickers for specified market</a></li>
+<li><a href="#get-order-book-for-market">Get order book for market</a></li>
+<li><a href="#get-depth">Get depth</a></li>
+<li><a href="#get-recent-trades-on-market">Get recent trades on market</a></li>
+<li><a href="#get-ohlck-line-of-specific-market">Get OHLC(k line) of specific market</a></li>
 </ul>
 </li>
 </ul>

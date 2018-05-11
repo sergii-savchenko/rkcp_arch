@@ -254,6 +254,191 @@ sequenceDiagram
     AppLogic->>Proxy: Response result
     Proxy-->>User: Redirect result
 ```
+## Public data
+
+### Get markets list
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Peatio
+    participant RabbitMQ
+    participant PeatioDaemons
+    participant Db
+    participant Vault
+    participant Notifications
+
+    User->>Proxy: request GET '{APPLOGIC}/api/v1/markets'
+    Note over User: simple request without jwt
+    Proxy->>AppLogic: redirect GET '{APPLOGIC}/api/v1/markets'
+    AppLogic->>Peatio: request GET '{PEATIO}/api/v2/markets'
+    Peatio->>Db: get markets
+    Db-->>Peatio: response markets
+    Peatio-->>AppLogic: response JSON
+
+    AppLogic->>Proxy: Response list
+    Proxy-->>User: Redirect list
+```
+
+### Get tickers
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Peatio
+    participant RabbitMQ
+    participant PeatioDaemons
+    participant Db
+    participant Vault
+    participant Notifications
+
+    User->>Proxy: request GET '{APPLOGIC}/api/v1/tickers'
+    Note over User: simple request without jwt
+    Proxy->>AppLogic: redirect GET '{APPLOGIC}/api/v1/tickers'
+    AppLogic->>Peatio: request GET '{PEATIO}/api/v2/tickers'
+    Peatio->>Db: get tickers
+    Db-->>Peatio: response tickers
+    Peatio-->>AppLogic: response JSON
+
+    AppLogic->>Proxy: Response list
+    Proxy-->>User: Redirect list
+```
+
+### Get tickers for specified market
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Peatio
+    participant RabbitMQ
+    participant PeatioDaemons
+    participant Db
+    participant Vault
+    participant Notifications
+
+    User->>Proxy: request GET '{APPLOGIC}/api/v1/tickers/{market}'
+    Note over User: simple request without jwt
+    Proxy->>AppLogic: redirect GET '{APPLOGIC}/api/v1/tickers/{market}'
+    AppLogic->>Peatio: request GET '{PEATIO}/api/v2/tickers/{market}'
+    Peatio->>Db: get tickers for specified market
+    Db-->>Peatio: response tickers
+    Peatio-->>AppLogic: response JSON
+
+    AppLogic->>Proxy: Response list
+    Proxy-->>User: Redirect list
+```
+
+### Get order book for market
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Peatio
+    participant RabbitMQ
+    participant PeatioDaemons
+    participant Db
+    participant Vault
+    participant Notifications
+
+    User->>Proxy: request GET '{APPLOGIC}/api/v1/order_book'
+    Note over User: simple request without jwt
+    Proxy->>AppLogic: redirect GET '{APPLOGIC}/api/v1/order_book'
+    AppLogic->>Peatio: request GET '{PEATIO}/api/v2/order_book'
+    Peatio->>Db: request order book
+    Db-->>Peatio: response list
+    Peatio-->>AppLogic: response JSON
+
+    AppLogic->>Proxy: Response list
+    Proxy-->>User: Redirect list
+```
+
+### Get depth
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Peatio
+    participant RabbitMQ
+    participant PeatioDaemons
+    participant Db
+    participant Vault
+    participant Notifications
+
+    User->>Proxy: request GET '{APPLOGIC}/api/v1/depth'
+    Note over User: simple request without jwt
+    Proxy->>AppLogic: redirect GET '{APPLOGIC}/api/v1/depth'
+    AppLogic->>Peatio: request GET '{PEATIO}/api/v2/depth'
+    Peatio->>Db: request order book
+    Db-->>Peatio: response list
+    Peatio-->>AppLogic: response JSON
+
+    AppLogic->>Proxy: Response list
+    Proxy-->>User: Redirect list
+```
+
+### Get recent trades on market
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Peatio
+    participant RabbitMQ
+    participant PeatioDaemons
+    participant Db
+    participant Vault
+    participant Notifications
+
+    User->>Proxy: request GET '{APPLOGIC}/api/v1/trades'
+    Note over User: simple request without jwt
+    Proxy->>AppLogic: redirect GET '{APPLOGIC}/api/v1/trades'
+    AppLogic->>Peatio: request GET '{PEATIO}/api/v2/trades'
+    Peatio->>Db: request order book
+    Db-->>Peatio: response list
+    Peatio-->>AppLogic: response JSON
+
+    AppLogic->>Proxy: Response list
+    Proxy-->>User: Redirect list
+```
+
+### Get OHLC(k line) of specific market
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Peatio
+    participant RabbitMQ
+    participant PeatioDaemons
+    participant Redis
+    participant Db
+    participant Vault
+    participant Notifications
+
+    User->>Proxy: request GET '{APPLOGIC}/api/v1/k'
+    Note over User: simple request without jwt
+    Proxy->>AppLogic: redirect GET '{APPLOGIC}/api/v1/k'
+    AppLogic->>Peatio: request GET '{PEATIO}/api/v2/k'
+    Peatio->>Redis: get data
+    Redis-->>Peatio: response data
+    Peatio-->>AppLogic: response JSON
+
+    AppLogic->>Proxy: Response list
+    Proxy-->>User: Redirect list
+```
+
 # Raised security API 
 
 This section describes set of API of RKCP that needs additional confirmation on actions besides using session JWT and/or API keys
@@ -410,18 +595,16 @@ This section contains jwt authentification process
 ```mermaid
 sequenceDiagram
     participant Sender
-    participant AppLogic(API)
     participant AppLogic
     participant Db
 
-    Sender->>AppLogic(API): Request with JWToken
-    AppLogic(API)->>AppLogic: Decode & verify JWToken
+    Sender->>AppLogic: Request with JWToken
+    AppLogic->>AppLogic: Decode & verify JWToken
     Note over AppLogic: verify: expiration, iss, jti, aud, sub, algorithms, leeway (iat, iss, exp)
     AppLogic->>Db: Find account by email
     Db-->>AppLogic: Receive member
     alt no verification or no member
-        AppLogic-->>AppLogic(API): Unauthorized
-        AppLogic(API)-->>Sender: 401
+        AppLogic-->>Sender: 401 Unauthorized
     else verified
         Note over AppLogic: continue execution
     end
