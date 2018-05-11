@@ -207,7 +207,10 @@ code.language-yaml {
     </head>
     <body for="html-export">
       <div class="mume markdown-preview   ">
-      <h1 class="mume-header" id="installation">Installation</h1>
+      <h1 class="mume-header" id="github-repository">GitHub repository:</h1>
+
+<p><a href="https://github.com/sergii-savchenko/rkcp_arch">https://github.com/sergii-savchenko/rkcp_arch</a></p>
+<h1 class="mume-header" id="installation">Installation</h1>
 
 <p>To use CLI to render document, please install (depending on your system configuration, you may need to use <code>sudo</code>):</p>
 <pre class="language-">npm install -g markdown-cli-renderer
@@ -228,6 +231,24 @@ npm install -g babel-runtime
 </ul>
 <p>After installing those plugins you should see something like this:</p>
 <p><img src="./assets/vscode.png" alt=""></p>
+<h1 class="mume-header" id="service-processes">Service processes</h1>
+
+<p>This section contains jwt authentification process</p>
+<h3 class="mume-header" id="jwt-verification">JWT verification</h3>
+
+<div class="mermaid">sequenceDiagram
+    participant Sender
+    participant AppLogic.
+    participant AppLogic
+    participant Db
+
+    Sender->>AppLogic.: Request with JWToken
+    AppLogic.->>AppLogic: Decode & verify JWToken
+    Note over AppLogic: verify: expiration, iss, jti, aud, sub, algorithms, leeway (iat, iss, exp)
+    AppLogic->>Db: Find account by email
+    Db-->>AppLogic: Receive member
+    AppLogic-->>AppLogic.: Verification's result
+</div>
 <h1 class="mume-header" id="user-management-api">User management API</h1>
 
 <p>This section contains</p>
@@ -385,19 +406,21 @@ npm install -g babel-runtime
     participant Proxy
     participant AppLogic
     participant Peatio
-    participant PeatioDaemons
     participant RabbitMQ
+    participant PeatioDaemons
     participant Db
     participant Vault
     participant Notifications
 
+    PeatioDaemons-->RabbitMQ: subscribe
     User->>Proxy: request POST '{APPLOGIC}/api/v1/orders/new'
     Proxy->>AppLogic: redirect POST '{APPLOGIC}/api/v1/orders/new'
-    
+    Note over AppLogic: verify JWT (see JWT verification)
     AppLogic->>Peatio: request POST '{PEATIO}/api/v2/orders/'
+    Note over Peatio: verify JWT
     Peatio->>Db: save order
-    Peatio->>PeatioDaemons: push in queuee
-    Peatio->>RabbitMQ: in queuee
+    Peatio->>RabbitMQ: publish order
+    RabbitMQ-->>PeatioDaemons: Receive notification in subscribing channel
     Peatio-->>AppLogic: response new order JSON
 
     AppLogic->>Proxy: Response order result
@@ -418,9 +441,13 @@ npm install -g babel-runtime
 
     User->>Proxy: request POST '{APPLOGIC}/api/v1/orders/delete'
     Proxy->>AppLogic: redirect POST '{APPLOGIC}/api/v1/orders/delete'
-    
+    Note over AppLogic: verify JWT (see JWT verification)
     AppLogic->>Peatio: request POST '{PEATIO}/api/v2/order/delete'
+    Note over Peatio: verify JWT
     Peatio->>Db: canceled order
+    Peatio->>RabbitMQ: publish canceling
+    RabbitMQ-->>PeatioDaemons: Receive notification in subscribing channel
+
     Peatio-->>AppLogic: Response result
 
     AppLogic->>Proxy: Response result
@@ -565,12 +592,15 @@ npm install -g babel-runtime
 
       </div>
       <div class="md-sidebar-toc"><ul>
+<li><a href="#github-repository">GitHub repository:</a></li>
 <li><a href="#installation">Installation</a>
 <ul>
 <li><a href="#rendering-document">Rendering document</a></li>
 <li><a href="#viewing-current-documents">Viewing current documents</a></li>
 </ul>
 </li>
+<li><a href="#service-processes">Service processes</a><br>
+* <a href="#jwt-verification">JWT verification</a></li>
 <li><a href="#user-management-api">User management API</a></li>
 <li><a href="#barong-management-api">Barong Management API</a>
 <ul>

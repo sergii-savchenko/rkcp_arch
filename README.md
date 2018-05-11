@@ -1,3 +1,7 @@
+# GitHub repository:
+
+https://github.com/sergii-savchenko/rkcp_arch
+
 # Installation
 
 To use CLI to render document, please install (depending on your system configuration, you may need to use `sudo    `):
@@ -29,6 +33,27 @@ After installing those plugins you should see something like this:
 
 ![](./assets/vscode.png)
 
+
+# Service processes
+
+This section contains jwt authentification process
+
+### JWT verification
+
+```mermaid
+sequenceDiagram
+    participant Sender
+    participant AppLogic.
+    participant AppLogic
+    participant Db
+
+    Sender->>AppLogic.: Request with JWToken
+    AppLogic.->>AppLogic: Decode & verify JWToken
+    Note over AppLogic: verify: expiration, iss, jti, aud, sub, algorithms, leeway (iat, iss, exp)
+    AppLogic->>Db: Find account by email
+    Db-->>AppLogic: Receive member
+    AppLogic-->>AppLogic.: Verification's result
+```
 
 # User management API
 
@@ -201,19 +226,21 @@ sequenceDiagram
     participant Proxy
     participant AppLogic
     participant Peatio
-    participant PeatioDaemons
     participant RabbitMQ
+    participant PeatioDaemons
     participant Db
     participant Vault
     participant Notifications
 
+    PeatioDaemons-->RabbitMQ: subscribe
     User->>Proxy: request POST '{APPLOGIC}/api/v1/orders/new'
     Proxy->>AppLogic: redirect POST '{APPLOGIC}/api/v1/orders/new'
-    
+    Note over AppLogic: verify JWT (see JWT verification)
     AppLogic->>Peatio: request POST '{PEATIO}/api/v2/orders/'
+    Note over Peatio: verify JWT
     Peatio->>Db: save order
-    Peatio->>PeatioDaemons: push in queuee
-    Peatio->>RabbitMQ: in queuee
+    Peatio->>RabbitMQ: publish order
+    RabbitMQ-->>PeatioDaemons: Receive notification in subscribing channel
     Peatio-->>AppLogic: response new order JSON
 
     AppLogic->>Proxy: Response order result
@@ -236,9 +263,13 @@ sequenceDiagram
 
     User->>Proxy: request POST '{APPLOGIC}/api/v1/orders/delete'
     Proxy->>AppLogic: redirect POST '{APPLOGIC}/api/v1/orders/delete'
-    
+    Note over AppLogic: verify JWT (see JWT verification)
     AppLogic->>Peatio: request POST '{PEATIO}/api/v2/order/delete'
+    Note over Peatio: verify JWT
     Peatio->>Db: canceled order
+    Peatio->>RabbitMQ: publish canceling
+    RabbitMQ-->>PeatioDaemons: Receive notification in subscribing channel
+
     Peatio-->>AppLogic: Response result
 
     AppLogic->>Proxy: Response result
