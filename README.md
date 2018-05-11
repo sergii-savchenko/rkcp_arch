@@ -34,27 +34,6 @@ After installing those plugins you should see something like this:
 ![](./assets/vscode.png)
 
 
-# Service processes
-
-This section contains jwt authentification process
-
-### JWT verification
-
-```mermaid
-sequenceDiagram
-    participant Sender
-    participant AppLogic.
-    participant AppLogic
-    participant Db
-
-    Sender->>AppLogic.: Request with JWToken
-    AppLogic.->>AppLogic: Decode & verify JWToken
-    Note over AppLogic: verify: expiration, iss, jti, aud, sub, algorithms, leeway (iat, iss, exp)
-    AppLogic->>Db: Find account by email
-    Db-->>AppLogic: Receive member
-    AppLogic-->>AppLogic.: Verification's result
-```
-
 # User management API
 
 This section contains 
@@ -420,4 +399,25 @@ sequenceDiagram
     PeatioDaemons-->>-AppLogic: withdraw created
     AppLogic->>Db: Update record
     AppLogic-->>Notifications: Publish about withdraw completing
+```
+
+# Service processes
+
+This section contains jwt authentification process
+
+### JWT verification
+
+```mermaid
+sequenceDiagram
+    participant Sender
+    participant AppLogic.
+    participant AppLogic
+    participant Db
+
+    Sender->>AppLogic.: Request with JWToken
+    AppLogic.->>AppLogic: Decode & verify JWToken
+    Note over AppLogic: verify: expiration, iss, jti, aud, sub, algorithms, leeway (iat, iss, exp)
+    AppLogic->>Db: Find account by email
+    Db-->>AppLogic: Receive member
+    AppLogic-->>AppLogic.: Verification's result
 ```
