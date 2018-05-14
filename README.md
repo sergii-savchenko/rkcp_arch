@@ -211,19 +211,33 @@ sequenceDiagram
     participant Vault
     participant Notifications
 
-    PeatioDaemons-->RabbitMQ: subscribe
+    PeatioDaemons->>RabbitMQ: [subscribe default channel (queues: matching, new_trade, order_processor)]
+    PeatioDaemons->>RabbitMQ: [subscribe orderbook channel]
+    PeatioDaemons->>RabbitMQ: [subscribe trade channel]
     User->>Proxy: request POST '{APPLOGIC}/api/v1/orders/new'
     Proxy->>AppLogic: redirect POST '{APPLOGIC}/api/v1/orders/new'
     Note over AppLogic: verify JWT (see JWT verification)
     AppLogic->>Peatio: request POST '{PEATIO}/api/v2/orders/'
     Note over Peatio: verify JWT
-    Peatio->>Db: save order
-    Peatio->>RabbitMQ: publish order
-    RabbitMQ-->>PeatioDaemons: Receive notification in subscribing channel
-    Peatio-->>AppLogic: response new order JSON
-
-    AppLogic->>Proxy: Response order result
-    Proxy-->>User: Redirect result
+    Peatio->>+Db: save order
+    Peatio->>Db: lock funds (change account balance)
+    Db-->>-Peatio: result
+    alt success
+        Peatio->>RabbitMQ: [in default channel publish action:submit order to the matching queue]
+        opt daemons worker
+            RabbitMQ-->>PeatioDaemons: [receive data from default channel]
+            PeatioDaemons->>RabbitMQ: [in orderbook channel publish action:new marketID+sell/marketId+buy]
+            RabbitMQ-->>PeatioDaemons: [receive data from orderbook channel]
+            PeatioDaemons->>RabbitMQ: [in default channel publish action:submit order to the matching new_trade, order_processor]
+            PeatioDaemons-->>PeatioDaemons: calculate
+            PeatioDaemons->>Db: save data
+        end
+        Peatio-->>AppLogic: response new order JSON
+    else fail
+        Peatio-->>AppLogic: cannot create
+    end
+    AppLogic-->>Proxy: Response
+    Proxy-->>User: Response
 ```
 
 ### Delete order
@@ -251,8 +265,8 @@ sequenceDiagram
 
     Peatio-->>AppLogic: Response result
 
-    AppLogic->>Proxy: Response result
-    Proxy-->>User: Redirect result
+    AppLogic-->>Proxy: Response
+    Proxy-->>User: Response
 ```
 ## Public data
 
@@ -278,8 +292,8 @@ sequenceDiagram
     Db-->>Peatio: response markets
     Peatio-->>AppLogic: response JSON
 
-    AppLogic->>Proxy: Response list
-    Proxy-->>User: Redirect list
+    AppLogic-->>Proxy: Response
+    Proxy-->>User: Response
 ```
 
 ### Get tickers
@@ -304,8 +318,8 @@ sequenceDiagram
     Db-->>Peatio: response tickers
     Peatio-->>AppLogic: response JSON
 
-    AppLogic->>Proxy: Response list
-    Proxy-->>User: Redirect list
+    AppLogic-->>Proxy: Response
+    Proxy-->>User: Response
 ```
 
 ### Get tickers for specified market
@@ -330,8 +344,8 @@ sequenceDiagram
     Db-->>Peatio: response tickers
     Peatio-->>AppLogic: response JSON
 
-    AppLogic->>Proxy: Response list
-    Proxy-->>User: Redirect list
+    AppLogic-->>Proxy: Response
+    Proxy-->>User: Response
 ```
 
 ### Get order book for market
@@ -356,8 +370,8 @@ sequenceDiagram
     Db-->>Peatio: response list
     Peatio-->>AppLogic: response JSON
 
-    AppLogic->>Proxy: Response list
-    Proxy-->>User: Redirect list
+    AppLogic-->>Proxy: Response
+    Proxy-->>User: Response
 ```
 
 ### Get depth
@@ -382,8 +396,8 @@ sequenceDiagram
     Db-->>Peatio: response list
     Peatio-->>AppLogic: response JSON
 
-    AppLogic->>Proxy: Response list
-    Proxy-->>User: Redirect list
+    AppLogic-->>Proxy: Response
+    Proxy-->>User: Response
 ```
 
 ### Get recent trades on market
@@ -408,8 +422,8 @@ sequenceDiagram
     Db-->>Peatio: response list
     Peatio-->>AppLogic: response JSON
 
-    AppLogic->>Proxy: Response list
-    Proxy-->>User: Redirect list
+    AppLogic-->>Proxy: Response
+    Proxy-->>User: Response
 ```
 
 ### Get OHLC(k line) of specific market
@@ -435,8 +449,8 @@ sequenceDiagram
     Redis-->>Peatio: response data
     Peatio-->>AppLogic: response JSON
 
-    AppLogic->>Proxy: Response list
-    Proxy-->>User: Redirect list
+    AppLogic-->>Proxy: Response
+    Proxy-->>User: Response
 ```
 
 ### Get fees (deposit/withdraw/trading)
@@ -462,8 +476,8 @@ sequenceDiagram
     Db-->>Peatio: response fees
     Peatio-->>AppLogic: response JSON
 
-    AppLogic->>Proxy: Response list
-    Proxy-->>User: Redirect list
+    AppLogic-->>Proxy: Response
+    Proxy-->>User: Response
 ```
 
 # Raised security API 
