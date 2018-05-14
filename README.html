@@ -411,7 +411,7 @@ npm install -g babel-runtime
             RabbitMQ-->>PeatioDaemons: [receive data from default channel]
             PeatioDaemons->>RabbitMQ: [in orderbook channel publish action:new marketID+sell/marketId+buy]
             RabbitMQ-->>PeatioDaemons: [receive data from orderbook channel]
-            PeatioDaemons->>RabbitMQ: [in default channel publish action:submit order to the matching new_trade, order_processor]
+            PeatioDaemons->>RabbitMQ: [in default channel to the matching new_trade, order_processor]
             PeatioDaemons-->>PeatioDaemons: calculate
             PeatioDaemons->>Db: save data
         end
