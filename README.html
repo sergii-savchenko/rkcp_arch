@@ -378,9 +378,7 @@ npm install -g babel-runtime
 </div>
 <h1 class="mume-header" id="trading-api">Trading API</h1>
 
-<p>This section contains trading process (Peatio member_api) - creating/canceling orders...</p>
-<h2 class="mume-header" id="orders">Orders</h2>
-
+<p>API which can be used by client application like SPA## Orders</p>
 <h3 class="mume-header" id="create-new-order">Create new order</h3>
 
 <div class="mermaid">sequenceDiagram
@@ -645,6 +643,77 @@ npm install -g babel-runtime
     AppLogic-->>Proxy: Response
     Proxy-->>User: Response
 </div>
+<h2 class="mume-header" id="accounts-data">Account's data</h2>
+
+<h3 class="mume-header" id="get-your-profile-and-accounts-info">Get your profile and accounts info</h3>
+
+<div class="mermaid">sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Peatio
+    participant RabbitMQ
+    participant PeatioDaemons
+    participant Db
+    participant Vault
+    participant Notifications
+
+    User->>Proxy: request GET '{APPLOGIC}/api/v1/members/me'
+    Proxy->>AppLogic: redirect GET '{APPLOGIC}/api/v1/members/me'
+    Note over AppLogic: verify JWT (see JWT verification)
+    AppLogic->>Peatio: request GET '{PEATIO}/api/v2/members/me'
+    Note over Peatio: verify JWT
+    Peatio->>Db: get account record
+    Db-->>Peatio: account info
+    AppLogic-->>Proxy: Response
+    Proxy-->>User: Response
+</div>
+<h3 class="mume-header" id="get-your-deposits-history">Get your deposits history</h3>
+
+<div class="mermaid">sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Peatio
+    participant RabbitMQ
+    participant PeatioDaemons
+    participant Db
+    participant Vault
+    participant Notifications
+
+    User->>Proxy: request GET '{APPLOGIC}/api/v1/deposits'
+    Proxy->>AppLogic: redirect GET '{APPLOGIC}/api/v1/deposits'
+    Note over AppLogic: verify JWT (see JWT verification)
+    AppLogic->>Peatio: request GET '{PEATIO}/api/v2/deposits'
+    Note over Peatio: verify JWT
+    Peatio->>Db: get deposits
+    Db-->>Peatio: deposits list
+    AppLogic-->>Proxy: Response
+    Proxy-->>User: Response
+</div>
+<h3 class="mume-header" id="get-your-deposit-address">Get your deposit address</h3>
+
+<div class="mermaid">sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Peatio
+    participant RabbitMQ
+    participant PeatioDaemons
+    participant Db
+    participant Vault
+    participant Notifications
+
+    User->>Proxy: request GET '{APPLOGIC}/api/v1/deposit_address'
+    Proxy->>AppLogic: redirect GET '{APPLOGIC}/api/v1/deposit_address'
+    Note over AppLogic: verify JWT (see JWT verification)
+    AppLogic->>Peatio: request GET '{PEATIO}/api/v2/deposit_address'
+    Note over Peatio: verify JWT
+    Peatio->>Db: get deposit address for account
+    Db-->>Peatio: deposit address
+    AppLogic-->>Proxy: Response
+    Proxy-->>User: Response
+</div>
 <h1 class="mume-header" id="raised-security-api">Raised security API</h1>
 
 <p>This section describes set of API of RKCP that needs additional confirmation on actions besides using session JWT and/or API keys</p>
@@ -829,14 +898,10 @@ npm install -g babel-runtime
 </li>
 </ul>
 </li>
-<li><a href="#trading-api">Trading API</a>
+<li><a href="#trading-api">Trading API</a><br>
+* <a href="#create-new-order">Create new order</a><br>
+* <a href="#delete-order">Delete order</a>
 <ul>
-<li><a href="#orders">Orders</a>
-<ul>
-<li><a href="#create-new-order">Create new order</a></li>
-<li><a href="#delete-order">Delete order</a></li>
-</ul>
-</li>
 <li><a href="#public-data">Public data</a>
 <ul>
 <li><a href="#get-markets-list">Get markets list</a></li>
@@ -847,6 +912,13 @@ npm install -g babel-runtime
 <li><a href="#get-recent-trades-on-market">Get recent trades on market</a></li>
 <li><a href="#get-ohlck-line-of-specific-market">Get OHLC(k line) of specific market</a></li>
 <li><a href="#get-fees-depositwithdrawtrading">Get fees (deposit/withdraw/trading)</a></li>
+</ul>
+</li>
+<li><a href="#accounts-data">Account's data</a>
+<ul>
+<li><a href="#get-your-profile-and-accounts-info">Get your profile and accounts info</a></li>
+<li><a href="#get-your-deposits-history">Get your deposits history</a></li>
+<li><a href="#get-your-deposit-address">Get your deposit address</a></li>
 </ul>
 </li>
 </ul>
