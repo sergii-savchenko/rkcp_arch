@@ -526,6 +526,7 @@ sequenceDiagram
     Note over Peatio: verify JWT
     Peatio->>Db: get deposits
     Db-->>Peatio: deposits list
+    Peatio-->>AppLogic: Response
     AppLogic-->>Proxy: Response
     Proxy-->>User: Response
 ```
@@ -551,6 +552,7 @@ sequenceDiagram
     Note over Peatio: verify JWT
     Peatio->>Db: get deposit address for account
     Db-->>Peatio: deposit address
+    Peatio-->>AppLogic: Response
     AppLogic-->>Proxy: Response
     Proxy-->>User: Response
 ```
