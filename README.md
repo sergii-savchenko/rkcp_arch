@@ -210,9 +210,10 @@ sequenceDiagram
     participant Db
     participant Vault
     participant Notifications
-    Peatio->>+Db: save order
+
+    Peatio->>Db: save order
     Peatio->>Db: lock funds (change account balance)
-    Db-->>-Peatio: result
+    Db-->>Peatio: result
     alt success
         Peatio->>RabbitMQ: [in default channel publish action:submit order to the matching queue]
         opt daemons worker
@@ -223,6 +224,8 @@ sequenceDiagram
             PeatioDaemons-->>PeatioDaemons: calculate
             PeatioDaemons->>Db: save data
         end
+    else is fail
+        Note over Peatio: without this order in response
     end
 ```
 
