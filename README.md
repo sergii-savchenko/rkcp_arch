@@ -244,11 +244,11 @@ sequenceDiagram
     participant Notifications
 
     PeatioDaemons->>RabbitMQ: [subscribe default channel]
-    Note over PeatioDaemons: queues - matching, new_trade, order_processor
+    Note over PeatioDaemons,RabbitMQ: queues - matching, new_trade, order_processor
     PeatioDaemons->>RabbitMQ: [subscribe orderbook channel]
-    Note over PeatioDaemons: queues - slave_book
+    Note over PeatioDaemons,RabbitMQ: queues - slave_book
     PeatioDaemons->>RabbitMQ: [subscribe trade channel]
-    Note over PeatioDaemons: queues - market_ticker
+    Note over PeatioDaemons,RabbitMQ: queues - market_ticker
     User->>Proxy: request POST '{APPLOGIC}/api/v1/orders/new'
     Proxy->>AppLogic: redirect POST '{APPLOGIC}/api/v1/orders/new'
     Note over AppLogic: verify JWT (see JWT verification)
@@ -275,11 +275,11 @@ sequenceDiagram
     participant Notifications
 
     PeatioDaemons->>RabbitMQ: [subscribe default channel]
-    Note over PeatioDaemons: queues - matching, new_trade, order_processor
+    Note over PeatioDaemons,RabbitMQ: queues - matching, new_trade, order_processor
     PeatioDaemons->>RabbitMQ: [subscribe orderbook channel]
-    Note over PeatioDaemons: queues - slave_book
+    Note over PeatioDaemons,RabbitMQ: queues - slave_book
     PeatioDaemons->>RabbitMQ: [subscribe trade channel]
-    Note over PeatioDaemons: queues - market_ticker
+    Note over PeatioDaemons,RabbitMQ: queues - market_ticker
 
     User->>Proxy: request POST '{APPLOGIC}/api/v1/orders/multi'
     Proxy->>AppLogic: redirect POST '{APPLOGIC}/api/v1/orders/multi'
@@ -312,11 +312,11 @@ sequenceDiagram
     participant Notifications
 
     PeatioDaemons->>RabbitMQ: [subscribe default channel]
-    Note over PeatioDaemons: queues - matching
+    Note over PeatioDaemons,RabbitMQ: queues - matching
     PeatioDaemons->>RabbitMQ: [subscribe orderbook channel]
-    Note over PeatioDaemons: queues - slave_book
+    Note over PeatioDaemons,RabbitMQ: queues - slave_book
     PeatioDaemons->>RabbitMQ: [subscribe trade channel]
-    Note over PeatioDaemons: queues - market_ticker
+    Note over PeatioDaemons,RabbitMQ: queues - market_ticker
 
     User->>Proxy: request POST '{APPLOGIC}/api/v1/orders/delete'
     Proxy->>AppLogic: redirect POST '{APPLOGIC}/api/v1/orders/delete'
@@ -353,11 +353,11 @@ sequenceDiagram
     participant Notifications
 
     PeatioDaemons->>RabbitMQ: [subscribe default channel]
-    Note over PeatioDaemons: queues - matching
+    Note over PeatioDaemons,RabbitMQ: queues - matching
     PeatioDaemons->>RabbitMQ: [subscribe orderbook channel]
-    Note over PeatioDaemons: queues - slave_book
+    Note over PeatioDaemons,RabbitMQ: queues - slave_book
     PeatioDaemons->>RabbitMQ: [subscribe trade channel]
-    Note over PeatioDaemons: queues - market_ticker
+    Note over PeatioDaemons,RabbitMQ: queues - market_ticker
 
     User->>Proxy: request POST '{APPLOGIC}/api/v1/orders/clear'
     Proxy->>AppLogic: redirect POST '{APPLOGIC}/api/v1/orders/clear'
