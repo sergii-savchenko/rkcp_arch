@@ -214,7 +214,7 @@ sequenceDiagram
     Peatio->>Db: save order
     Peatio->>Db: lock funds (change account balance)
     Db-->>Peatio: result
-    alt success
+    opt success
         Peatio->>RabbitMQ: [in default channel publish action:submit order to the matching queue]
         opt daemons worker
             RabbitMQ-->>PeatioDaemons: [receive data from default channel]
@@ -224,8 +224,6 @@ sequenceDiagram
             PeatioDaemons-->>PeatioDaemons: calculate
             PeatioDaemons->>Db: save data
         end
-    else is fail
-        Note over Peatio: without this order in response
     end
 ```
 
@@ -366,7 +364,7 @@ sequenceDiagram
     Note over Peatio: verify JWT
     Peatio->>Db: get orders list
     opt each order
-        Note over PeatioDaemons: actions see delete order
+        Note over PeatioDaemons,RabbitMQ: see opt [daemons worker] in DFD Delete order
     end
 
     Peatio-->>AppLogic: Response result
