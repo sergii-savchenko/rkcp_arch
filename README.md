@@ -209,9 +209,10 @@ sequenceDiagram
     participant PeatioDaemons
     participant Db
     participant Vault
-    participant Notifications
+    participant Pusher
 
     Peatio->>Db: save order
+    PeatioDaemons->>Pusher: [trigger pusher_member / order]
     Peatio->>Db: lock funds (change account balance)
     Db-->>Peatio: result
     opt success
@@ -221,8 +222,9 @@ sequenceDiagram
             PeatioDaemons->>RabbitMQ: [in orderbook channel publish action:new marketID+sell/marketId+buy]
             RabbitMQ-->>PeatioDaemons: [receive data from orderbook channel]
             PeatioDaemons->>RabbitMQ: [in default channel to the matching new_trade, order_processor]
-            PeatioDaemons-->>PeatioDaemons: calculate
-            PeatioDaemons->>Db: save data
+            PeatioDaemons-->>PeatioDaemons: matching
+            PeatioDaemons->>Db: save trade, update orders
+            PeatioDaemons->>Pusher: [trigger global.trade-market / trade]
         end
     end
 ```
@@ -321,6 +323,7 @@ sequenceDiagram
     Note over AppLogic: verify JWT (see JWT verification)
     AppLogic->>Peatio: request POST '{PEATIO}/api/v2/order/delete'
     Note over Peatio: verify JWT
+    PeatioDaemons->>Pusher: [trigger pusher_member / order]
     opt daemons worker
         RabbitMQ-->>PeatioDaemons: [receive data from default channel]
         PeatioDaemons->>RabbitMQ: [in orderbook channel publish action:cancel]
@@ -328,6 +331,7 @@ sequenceDiagram
         PeatioDaemons->>RabbitMQ: [in default channel to the canceling order_processor]
         PeatioDaemons-->>PeatioDaemons: calculate
         PeatioDaemons->>Db: save data
+        PeatioDaemons->>Pusher: [trigger global.trade-market / trade]
     end
 
     Peatio-->>AppLogic: Response result
@@ -914,8 +918,8 @@ sequenceDiagram
     AppLogic->>Db: update record
     Db-->>AppLogic: get organization signers list
     opt if coin - daemons worker
-        RabbitMQ-->>PeatioDaemons: [receive data from default channel]
-        PeatioDaemons->>Pusher: [publish withdraw]
+        PeatioDaemons->>Pusher: [trigger private-{cn} / withdraw]
+        PeatioDaemons->>RabbitMQ: [publish default channel]
     end
     AppLogic-->>Notifications: Publish withdraw request for organization signers
     AppLogic-->>Proxy: Response notification about waiting accepting
