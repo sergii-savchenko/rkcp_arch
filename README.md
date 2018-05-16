@@ -702,6 +702,7 @@ sequenceDiagram
 ```
 
 ### Get fees (deposit/withdraw/trading)
+This endpoint is avaible in Peatio 1.8
 
 ```mermaid
 sequenceDiagram
