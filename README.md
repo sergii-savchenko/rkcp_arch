@@ -210,9 +210,12 @@ sequenceDiagram
     participant Vault
     participant Notifications
 
-    PeatioDaemons->>RabbitMQ: [subscribe default channel (queues: matching, new_trade, order_processor)]
+    PeatioDaemons->>RabbitMQ: [subscribe default channel]
+    Note over PeatioDaemons: queues - matching, new_trade, order_processor
     PeatioDaemons->>RabbitMQ: [subscribe orderbook channel]
+    Note over PeatioDaemons: queues - slave_book
     PeatioDaemons->>RabbitMQ: [subscribe trade channel]
+    Note over PeatioDaemons: queues - market_ticker
     User->>Proxy: request POST '{APPLOGIC}/api/v1/orders/new'
     Proxy->>AppLogic: redirect POST '{APPLOGIC}/api/v1/orders/new'
     Note over AppLogic: verify JWT (see JWT verification)
@@ -239,6 +242,43 @@ sequenceDiagram
     Proxy-->>User: Response
 ```
 
+### Create multi orders
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Peatio
+    participant PeatioDaemons
+    participant RabbitMQ
+    participant Db
+    participant Vault
+    participant Notifications
+
+    PeatioDaemons->>RabbitMQ: [subscribe default channel]
+    Note over PeatioDaemons: queues - matching, new_trade, order_processor
+    PeatioDaemons->>RabbitMQ: [subscribe orderbook channel]
+    Note over PeatioDaemons: queues - slave_book
+    PeatioDaemons->>RabbitMQ: [subscribe trade channel]
+    Note over PeatioDaemons: queues - market_ticker
+
+    User->>Proxy: request POST '{APPLOGIC}/api/v1/orders/multi'
+    Proxy->>AppLogic: redirect POST '{APPLOGIC}/api/v1/orders/multi'
+    Note over AppLogic: verify JWT (see JWT verification)
+    AppLogic->>Peatio: request POST '{PEATIO}/api/v2/order/multi'
+    Note over Peatio: verify JWT
+    Peatio->>Db: get orders list
+    opt each order
+        Note over PeatioDaemons: actions see DFD create order
+    end
+
+    Peatio-->>AppLogic: Response result
+
+    AppLogic-->>Proxy: Response
+    Proxy-->>User: Response
+```
+
 ### Delete order
 
 ```mermaid
@@ -253,20 +293,213 @@ sequenceDiagram
     participant Vault
     participant Notifications
 
+    PeatioDaemons->>RabbitMQ: [subscribe default channel]
+    Note over PeatioDaemons: queues - matching
+    PeatioDaemons->>RabbitMQ: [subscribe orderbook channel]
+    Note over PeatioDaemons: queues - slave_book
+    PeatioDaemons->>RabbitMQ: [subscribe trade channel]
+    Note over PeatioDaemons: queues - market_ticker
+
     User->>Proxy: request POST '{APPLOGIC}/api/v1/orders/delete'
     Proxy->>AppLogic: redirect POST '{APPLOGIC}/api/v1/orders/delete'
     Note over AppLogic: verify JWT (see JWT verification)
     AppLogic->>Peatio: request POST '{PEATIO}/api/v2/order/delete'
     Note over Peatio: verify JWT
-    Peatio->>Db: canceled order
-    Peatio->>RabbitMQ: publish canceling
-    RabbitMQ-->>PeatioDaemons: Receive notification in subscribing channel
+    opt daemons worker
+        RabbitMQ-->>PeatioDaemons: [receive data from default channel]
+        PeatioDaemons->>RabbitMQ: [in orderbook channel publish action:cancel]
+        RabbitMQ-->>PeatioDaemons: [receive data from orderbook channel]
+        PeatioDaemons->>RabbitMQ: [in default channel to the canceling order_processor]
+        PeatioDaemons-->>PeatioDaemons: calculate
+        PeatioDaemons->>Db: save data
+    end
 
     Peatio-->>AppLogic: Response result
 
     AppLogic-->>Proxy: Response
     Proxy-->>User: Response
 ```
+
+### Clear all orders
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Peatio
+    participant PeatioDaemons
+    participant RabbitMQ
+    participant Db
+    participant Vault
+    participant Notifications
+
+    PeatioDaemons->>RabbitMQ: [subscribe default channel]
+    Note over PeatioDaemons: queues - matching
+    PeatioDaemons->>RabbitMQ: [subscribe orderbook channel]
+    Note over PeatioDaemons: queues - slave_book
+    PeatioDaemons->>RabbitMQ: [subscribe trade channel]
+    Note over PeatioDaemons: queues - market_ticker
+
+    User->>Proxy: request POST '{APPLOGIC}/api/v1/orders/clear'
+    Proxy->>AppLogic: redirect POST '{APPLOGIC}/api/v1/orders/clear'
+    Note over AppLogic: verify JWT (see JWT verification)
+    AppLogic->>Peatio: request POST '{PEATIO}/api/v2/order/clear'
+    Note over Peatio: verify JWT
+    Peatio->>Db: get orders list
+    opt each order
+        Note over PeatioDaemons: actions see delete order
+    end
+
+    Peatio-->>AppLogic: Response result
+
+    AppLogic-->>Proxy: Response
+    Proxy-->>User: Response
+```
+
+### Get orders list
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Peatio
+    participant PeatioDaemons
+    participant RabbitMQ
+    participant Db
+    participant Vault
+    participant Notifications
+
+    User->>Proxy: request GET '{APPLOGIC}/api/v1/orders'
+    Proxy->>AppLogic: redirect GET '{APPLOGIC}/api/v1/orders'
+    Note over AppLogic: verify JWT (see JWT verification)
+    AppLogic->>Peatio: request GET '{PEATIO}/api/v2/orders'
+    Note over Peatio: verify JWT
+    Peatio->>Db: get orders list
+    Db-->>Peatio: response list
+
+    Peatio-->>AppLogic: Response result
+
+    AppLogic-->>Proxy: Response
+    Proxy-->>User: Response
+```
+
+### Get order detail
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Peatio
+    participant PeatioDaemons
+    participant RabbitMQ
+    participant Db
+    participant Vault
+    participant Notifications
+
+    User->>Proxy: request GET '{APPLOGIC}/api/v1/order'
+    Proxy->>AppLogic: redirect GET '{APPLOGIC}/api/v1/order'
+    Note over AppLogic: verify JWT (see JWT verification)
+    AppLogic->>Peatio: request GET '{PEATIO}/api/v2/order'
+    Note over Peatio: verify JWT
+    Peatio->>Db: get order details
+    Db-->>Peatio: response order
+
+    Peatio-->>AppLogic: Response result
+
+    AppLogic-->>Proxy: Response
+    Proxy-->>User: Response
+```
+
+### Get the order book of specified market
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Peatio
+    participant PeatioDaemons
+    participant RabbitMQ
+    participant Db
+    participant Vault
+    participant Notifications
+
+    User->>Proxy: request GET '{APPLOGIC}/api/v1/order_book'
+    Proxy->>AppLogic: redirect GET '{APPLOGIC}/api/v1/order_book'
+    Note over AppLogic: verify JWT (see JWT verification)
+    AppLogic->>Peatio: request GET '{PEATIO}/api/v2/order_book'
+    Note over Peatio: verify JWT
+    Peatio->>+Db: get orders (asks)
+    Peatio->>+Db: get orders (bids)
+    Peatio->>-Db: response asks
+    Peatio->>-Db: response bids
+    Peatio-->>Peatio: create response array
+
+    Peatio-->>AppLogic: Response
+
+    AppLogic-->>Proxy: Response
+    Proxy-->>User: Response
+```
+
+### Get depth or specified market
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Peatio
+    participant PeatioDaemons
+    participant RabbitMQ
+    participant Db
+    participant Vault
+    participant Notifications
+
+    User->>Proxy: request GET '{APPLOGIC}/api/v1/depth'
+    Proxy->>AppLogic: redirect GET '{APPLOGIC}/api/v1/depth'
+    Note over AppLogic: verify JWT (see JWT verification)
+    AppLogic->>Peatio: request GET '{PEATIO}/api/v2/depth'
+    Note over Peatio: verify JWT
+    Peatio->>Peatio: get Global for market with specific (asks and bids) and add timestamp
+    Peatio-->>Peatio: create response data
+
+    Peatio-->>AppLogic: Response
+
+    AppLogic-->>Proxy: Response
+    Proxy-->>User: Response
+```
+
+### Get members executed trades
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Peatio
+    participant PeatioDaemons
+    participant RabbitMQ
+    participant Db
+    participant Vault
+    participant Notifications
+
+    User->>Proxy: request GET '{APPLOGIC}/api/v1/trades'
+    Proxy->>AppLogic: redirect GET '{APPLOGIC}/api/v1/trades'
+    Note over AppLogic: verify JWT (see JWT verification)
+    AppLogic->>Peatio: request GET '{PEATIO}/api/v2/trades'
+    Note over Peatio: verify JWT
+    Peatio->>Db: get trades list
+    Db-->>Peatio: response list
+
+    Peatio-->>AppLogic: Response result
+
+    AppLogic-->>Proxy: Response
+    Proxy-->>User: Response
+```
+
 ## Public data
 
 ### Get markets list
@@ -417,7 +650,7 @@ sequenceDiagram
     Note over User: simple request without jwt
     Proxy->>AppLogic: redirect GET '{APPLOGIC}/api/v1/trades'
     AppLogic->>Peatio: request GET '{PEATIO}/api/v2/trades'
-    Peatio->>Db: request order book
+    Peatio->>Db: request trades
     Db-->>Peatio: response list
     Peatio-->>AppLogic: response JSON
 
@@ -545,13 +778,45 @@ sequenceDiagram
     participant Vault
     participant Notifications
 
+    PeatioDaemons->>RabbitMQ: [subscribe default channel]
+    Note over PeatioDaemons: queues - deposit_payment_address, deposit_coins
     User->>Proxy: request GET '{APPLOGIC}/api/v1/deposit_address'
     Proxy->>AppLogic: redirect GET '{APPLOGIC}/api/v1/deposit_address'
     Note over AppLogic: verify JWT (see JWT verification)
     AppLogic->>Peatio: request GET '{PEATIO}/api/v2/deposit_address'
     Note over Peatio: verify JWT
-    Peatio->>Db: get deposit address for account
-    Db-->>Peatio: deposit address
+    Peatio->>Db: get account
+    Db-->>Peatio: account info
+    opt daemons worker
+        Peatio->>PeatioDaemons: request deposit coin address
+        PeatioDaemons-->>Peatio: response address
+    end
+    Peatio-->>AppLogic: Response
+    AppLogic-->>Proxy: Response
+    Proxy-->>User: Response
+```
+
+### Get your deposit details
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Peatio
+    participant RabbitMQ
+    participant PeatioDaemons
+    participant Db
+    participant Vault
+    participant Notifications
+
+    User->>Proxy: request GET '{APPLOGIC}/api/v1/deposit'
+    Proxy->>AppLogic: redirect GET '{APPLOGIC}/api/v1/deposit'
+    Note over AppLogic: verify JWT (see JWT verification)
+    AppLogic->>Peatio: request GET '{PEATIO}/api/v2/deposit'
+    Note over Peatio: verify JWT
+    Peatio->>Db: get deposit details
+    Db-->>Peatio: deposit details
     Peatio-->>AppLogic: Response
     AppLogic-->>Proxy: Response
     Proxy-->>User: Response
