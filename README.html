@@ -1027,8 +1027,10 @@ npm install -g babel-runtime
     participant RabbitMQ
     participant Db
     participant Vault
-    participant Notifications
+    participant Pusher
 
+    PeatioDaemons->>RabbitMQ: [subscribe default channel]
+    Note over PeatioDaemons,RabbitMQ: queues - withdraw_coin
     User->>Proxy: request post '{APPLOGIC}/api/v1/withdraws/new'
     Proxy->>AppLogic: redirect post '{APPLOGIC}/api/v1/withdraws/new'
     AppLogic->>Db: Insert record
@@ -1046,6 +1048,10 @@ npm install -g babel-runtime
 
     AppLogic->>Db: update record
     Db-->>AppLogic: get organization signers list
+    opt if coin - daemons worker
+        RabbitMQ-->>PeatioDaemons: [receive data from default channel]
+        PeatioDaemons->>Pusher: [publish withdraw]
+    end
     AppLogic-->>Notifications: Publish withdraw request for organization signers
     AppLogic-->>Proxy: Response notification about waiting accepting
     Proxy-->>User: Redirect notification
