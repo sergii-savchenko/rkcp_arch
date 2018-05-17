@@ -1878,7 +1878,9 @@ sequenceDiagram
     AppLogic->>Db: Update record
     AppLogic-->>Notifications: Publish about withdraw completing
 ```
+# API secret for Barong
 
+This section is actual for 
 # Service processes
 
 This section contains jwt authentification process

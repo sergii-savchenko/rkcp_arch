@@ -273,6 +273,38 @@ npm install -g babel-runtime
     AppLogic-->>Proxy: Response result
     Proxy-->>User: Redirect results
 </div>
+<pre class="language-">sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Barong
+    participant RabbitMQ
+    participant Db
+    participant Vault
+    participant Notifications
+
+    User-&gt;&gt;Proxy: request POST &apos;{APPLOGIC}/api/v1/labels/new&apos;
+    Proxy-&gt;&gt;AppLogic: redirect POST &apos;{APPLOGIC}/api/v1/labels/new&apos;
+    AppLogic-&gt;&gt;Db: Insert record
+
+    AppLogic-&gt;&gt;Vault: Create OTP (MFA)
+    Vault--&gt;&gt;AppLogic: Created OTP (MFA)
+    AppLogic--&gt;&gt;Proxy: Label ID in queue
+    Proxy--&gt;&gt;User: Label ID in queue
+
+    Vault-&gt;&gt;User: Send GA OTP
+    User-&gt;&gt;Proxy: MFA Verification LabelId + OTP, POST &apos;{APPLOGIC}/api/v1/labels/verify&apos;
+    Proxy-&gt;&gt;AppLogic: redirect POST &apos;{APPLOGIC}/api/v1/labels/verify&apos;
+
+    AppLogic-&gt;&gt;Vault: Check sign policy
+    Vault--&gt;&gt;AppLogic: Trust
+
+    AppLogic-&gt;&gt;+Db: update record
+    AppLogic-&gt;&gt;+Barong: jws POST &apos;{BARONG}/management_api/v1/labels/&apos;
+    Barong--&gt;&gt;AppLogic: response result
+    AppLogic--&gt;&gt;Proxy: Response result
+    Proxy--&gt;&gt;User: Redirect results
+</pre>
 <h3 class="mume-header" id="update-label">Update label</h3>
 
 <div class="mermaid">sequenceDiagram
@@ -308,6 +340,39 @@ npm install -g babel-runtime
     AppLogic-->>Proxy: Response result
     Proxy-->>User: Redirect results
 </div>
+<pre class="language-">sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Barong
+    participant RabbitMQ
+    participant Db
+    participant Vault
+    participant Notifications
+
+    User-&gt;&gt;Proxy: request POST &apos;{APPLOGIC}/api/v1/labels/update&apos;
+    Proxy-&gt;&gt;AppLogic: redirect POST &apos;{APPLOGIC}/api/v1/labels/update&apos;
+    AppLogic-&gt;&gt;Db: Find record
+    Db--&gt;&gt;AppLogic: Receive label Id
+
+    AppLogic-&gt;&gt;Vault: Create OTP (MFA)
+    Vault--&gt;&gt;AppLogic: Created OTP (MFA)
+    AppLogic--&gt;&gt;Proxy: Label ID in queue
+    Proxy--&gt;&gt;User: Label ID in queue
+
+    Vault-&gt;&gt;User: Send GA OTP
+    User-&gt;&gt;Proxy: MFA Verification LabelId + OTP, POST &apos;{APPLOGIC}/api/v1/labels/verify&apos;
+    Proxy-&gt;&gt;AppLogic: redirect POST &apos;{APPLOGIC}/api/v1/labels/verify&apos;
+
+    AppLogic-&gt;&gt;Vault: Check sign policy
+    Vault--&gt;&gt;AppLogic: Trust
+
+    AppLogic-&gt;&gt;+Db: update record
+    AppLogic-&gt;&gt;+Barong: jws PUT &apos;{BARONG}/management_api/v1/labels/&apos;
+    Barong--&gt;&gt;AppLogic: response result
+    AppLogic--&gt;&gt;Proxy: Response result
+    Proxy--&gt;&gt;User: Redirect results
+</pre>
 <h3 class="mume-header" id="delete-label">Delete label</h3>
 
 <div class="mermaid">sequenceDiagram
@@ -343,6 +408,39 @@ npm install -g babel-runtime
     AppLogic-->>Proxy: Response result
     Proxy-->>User: Redirect results
 </div>
+<pre class="language-">sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Barong
+    participant RabbitMQ
+    participant Db
+    participant Vault
+    participant Notifications
+
+    User-&gt;&gt;Proxy: request POST &apos;{APPLOGIC}/api/v1/labels/delete&apos;
+    Proxy-&gt;&gt;AppLogic: redirect POST &apos;{APPLOGIC}/api/v1/labels/delete&apos;
+    AppLogic-&gt;&gt;Db: Find record
+    Db--&gt;&gt;AppLogic: Receive label Id
+
+    AppLogic-&gt;&gt;Vault: Create OTP (MFA)
+    Vault--&gt;&gt;AppLogic: Created OTP (MFA)
+    AppLogic--&gt;&gt;Proxy: Label ID in queue
+    Proxy--&gt;&gt;User: Label ID in queue
+
+    Vault-&gt;&gt;User: Send GA OTP
+    User-&gt;&gt;Proxy: MFA Verification LabelId + OTP, POST &apos;{APPLOGIC}/api/v1/labels/verify&apos;
+    Proxy-&gt;&gt;AppLogic: redirect POST &apos;{APPLOGIC}/api/v1/labels/verify&apos;
+
+    AppLogic-&gt;&gt;Vault: Check sign policy
+    Vault--&gt;&gt;AppLogic: Trust
+
+    AppLogic-&gt;&gt;Db: update record
+    AppLogic-&gt;&gt;Barong: jws PUT &apos;{BARONG}/management_api/v1/labels/delete&apos;
+    Barong--&gt;&gt;AppLogic: response result
+    AppLogic--&gt;&gt;Proxy: Response result
+    Proxy--&gt;&gt;User: Redirect results
+</pre>
 <h2 class="mume-header" id="timestamp">Timestamp</h2>
 
 <h3 class="mume-header" id="receive-server-time-in-seconds-since-unix-epoch">Receive server time in seconds since Unix epoch</h3>
@@ -376,6 +474,34 @@ npm install -g babel-runtime
     AppLogic-->>Proxy: Response result
     Proxy-->>User: Redirect results
 </div>
+<pre class="language-">sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Barong
+    participant RabbitMQ
+    participant Db
+    participant Vault
+    participant Notifications
+
+    User-&gt;&gt;Proxy: request POST &apos;{APPLOGIC}/api/v1/timestamp&apos;
+    Proxy-&gt;&gt;AppLogic: redirect POST &apos;{APPLOGIC}/api/v1/timestamp&apos;
+    
+    AppLogic-&gt;&gt;Vault: Create OTP (MFA)
+    Vault--&gt;&gt;AppLogic: Created OTP (MFA)
+    
+    Vault-&gt;&gt;User: Send GA OTP
+    User-&gt;&gt;Proxy: MFA Verification OTP, POST &apos;{APPLOGIC}/api/v1/timestamp/verify&apos;
+    Proxy-&gt;&gt;AppLogic: redirect POST &apos;{APPLOGIC}/api/v1/timestamp/verify&apos;
+
+    AppLogic-&gt;&gt;Vault: Check sign policy
+    Vault--&gt;&gt;AppLogic: Trust
+
+    AppLogic-&gt;&gt;+Barong: jws POST &apos;{BARONG}/management_api/v1/timestamp/&apos;
+    Barong--&gt;&gt;AppLogic: response result
+    AppLogic--&gt;&gt;Proxy: Response result
+    Proxy--&gt;&gt;User: Redirect results
+</pre>
 <h1 class="mume-header" id="trading-api">Trading API</h1>
 
 <p>API which can be used by client application like SPA## Orders</p>
@@ -410,6 +536,34 @@ npm install -g babel-runtime
         end
     end
 </div>
+<pre class="language-">sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Peatio
+    participant RabbitMQ
+    participant PeatioDaemons
+    participant Db
+    participant Vault
+    participant Pusher
+
+    Peatio-&gt;&gt;Db: save order
+    PeatioDaemons-&gt;&gt;Pusher: [trigger pusher_member / order]
+    Peatio-&gt;&gt;Db: lock funds (change account balance)
+    Db--&gt;&gt;Peatio: result
+    opt success
+        Peatio-&gt;&gt;RabbitMQ: [in default channel publish action:submit order to the matching queue]
+        opt daemons worker
+            RabbitMQ--&gt;&gt;PeatioDaemons: [receive data from default channel]
+            PeatioDaemons-&gt;&gt;RabbitMQ: [in orderbook channel publish action:new marketID+sell/marketId+buy]
+            RabbitMQ--&gt;&gt;PeatioDaemons: [receive data from orderbook channel]
+            PeatioDaemons-&gt;&gt;RabbitMQ: [in default channel to the matching new_trade, order_processor]
+            PeatioDaemons--&gt;&gt;PeatioDaemons: matching
+            PeatioDaemons-&gt;&gt;Db: save trade, update orders
+            PeatioDaemons-&gt;&gt;Pusher: [trigger global.trade-market / trade]
+        end
+    end
+</pre>
 <h3 class="mume-header" id="create-new-order">Create new order</h3>
 
 <div class="mermaid">sequenceDiagram
@@ -439,6 +593,33 @@ npm install -g babel-runtime
     AppLogic-->>Proxy: Response
     Proxy-->>User: Response
 </div>
+<pre class="language-">sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Peatio
+    participant RabbitMQ
+    participant PeatioDaemons
+    participant Db
+    participant Vault
+    participant Notifications
+
+    PeatioDaemons-&gt;&gt;RabbitMQ: [subscribe default channel]
+    Note over PeatioDaemons,RabbitMQ: queues - matching, new_trade, order_processor
+    PeatioDaemons-&gt;&gt;RabbitMQ: [subscribe orderbook channel]
+    Note over PeatioDaemons,RabbitMQ: queues - slave_book
+    PeatioDaemons-&gt;&gt;RabbitMQ: [subscribe trade channel]
+    Note over PeatioDaemons,RabbitMQ: queues - market_ticker
+    User-&gt;&gt;Proxy: request POST &apos;{APPLOGIC}/api/v1/orders/new&apos;
+    Proxy-&gt;&gt;AppLogic: redirect POST &apos;{APPLOGIC}/api/v1/orders/new&apos;
+    Note over AppLogic: verify JWT (see JWT verification)
+    AppLogic-&gt;&gt;Peatio: request POST &apos;{PEATIO}/api/v2/orders/&apos;
+    Note over Peatio: verify JWT
+    Note over Peatio, PeatioDaemons: see Saving order and start matching
+    Peatio--&gt;&gt;AppLogic: response saving result
+    AppLogic--&gt;&gt;Proxy: Response
+    Proxy--&gt;&gt;User: Response
+</pre>
 <h3 class="mume-header" id="create-multi-orders">Create multi orders</h3>
 
 <div class="mermaid">sequenceDiagram
@@ -474,6 +655,39 @@ npm install -g babel-runtime
     AppLogic-->>Proxy: Response
     Proxy-->>User: Response
 </div>
+<pre class="language-">sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Peatio
+    participant PeatioDaemons
+    participant RabbitMQ
+    participant Db
+    participant Vault
+    participant Notifications
+
+    PeatioDaemons-&gt;&gt;RabbitMQ: [subscribe default channel]
+    Note over PeatioDaemons,RabbitMQ: queues - matching, new_trade, order_processor
+    PeatioDaemons-&gt;&gt;RabbitMQ: [subscribe orderbook channel]
+    Note over PeatioDaemons,RabbitMQ: queues - slave_book
+    PeatioDaemons-&gt;&gt;RabbitMQ: [subscribe trade channel]
+    Note over PeatioDaemons,RabbitMQ: queues - market_ticker
+
+    User-&gt;&gt;Proxy: request POST &apos;{APPLOGIC}/api/v1/orders/multi&apos;
+    Proxy-&gt;&gt;AppLogic: redirect POST &apos;{APPLOGIC}/api/v1/orders/multi&apos;
+    Note over AppLogic: verify JWT (see JWT verification)
+    AppLogic-&gt;&gt;Peatio: request POST &apos;{PEATIO}/api/v2/order/multi&apos;
+    Note over Peatio: verify JWT
+    Peatio-&gt;&gt;Peatio: select each order from request
+    opt each order
+        Note over Peatio, PeatioDaemons: see Saving order and start matching
+    end
+
+    Peatio--&gt;&gt;AppLogic: Response result
+
+    AppLogic--&gt;&gt;Proxy: Response
+    Proxy--&gt;&gt;User: Response
+</pre>
 <h3 class="mume-header" id="delete-order">Delete order</h3>
 
 <div class="mermaid">sequenceDiagram
@@ -515,6 +729,45 @@ npm install -g babel-runtime
     AppLogic-->>Proxy: Response
     Proxy-->>User: Response
 </div>
+<pre class="language-">sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Peatio
+    participant PeatioDaemons
+    participant RabbitMQ
+    participant Db
+    participant Vault
+    participant Notifications
+
+    PeatioDaemons-&gt;&gt;RabbitMQ: [subscribe default channel]
+    Note over PeatioDaemons,RabbitMQ: queues - matching
+    PeatioDaemons-&gt;&gt;RabbitMQ: [subscribe orderbook channel]
+    Note over PeatioDaemons,RabbitMQ: queues - slave_book
+    PeatioDaemons-&gt;&gt;RabbitMQ: [subscribe trade channel]
+    Note over PeatioDaemons,RabbitMQ: queues - market_ticker
+
+    User-&gt;&gt;Proxy: request POST &apos;{APPLOGIC}/api/v1/orders/delete&apos;
+    Proxy-&gt;&gt;AppLogic: redirect POST &apos;{APPLOGIC}/api/v1/orders/delete&apos;
+    Note over AppLogic: verify JWT (see JWT verification)
+    AppLogic-&gt;&gt;Peatio: request POST &apos;{PEATIO}/api/v2/order/delete&apos;
+    Note over Peatio: verify JWT
+    PeatioDaemons-&gt;&gt;Pusher: [trigger pusher_member / order]
+    opt daemons worker
+        RabbitMQ--&gt;&gt;PeatioDaemons: [receive data from default channel]
+        PeatioDaemons-&gt;&gt;RabbitMQ: [in orderbook channel publish action:cancel]
+        RabbitMQ--&gt;&gt;PeatioDaemons: [receive data from orderbook channel]
+        PeatioDaemons-&gt;&gt;RabbitMQ: [in default channel to the canceling order_processor]
+        PeatioDaemons--&gt;&gt;PeatioDaemons: calculate
+        PeatioDaemons-&gt;&gt;Db: save data
+        PeatioDaemons-&gt;&gt;Pusher: [trigger global.trade-market / trade]
+    end
+
+    Peatio--&gt;&gt;AppLogic: Response result
+
+    AppLogic--&gt;&gt;Proxy: Response
+    Proxy--&gt;&gt;User: Response
+</pre>
 <h3 class="mume-header" id="clear-all-orders">Clear all orders</h3>
 
 <div class="mermaid">sequenceDiagram
@@ -550,6 +803,39 @@ npm install -g babel-runtime
     AppLogic-->>Proxy: Response
     Proxy-->>User: Response
 </div>
+<pre class="language-">sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Peatio
+    participant PeatioDaemons
+    participant RabbitMQ
+    participant Db
+    participant Vault
+    participant Notifications
+
+    PeatioDaemons-&gt;&gt;RabbitMQ: [subscribe default channel]
+    Note over PeatioDaemons,RabbitMQ: queues - matching
+    PeatioDaemons-&gt;&gt;RabbitMQ: [subscribe orderbook channel]
+    Note over PeatioDaemons,RabbitMQ: queues - slave_book
+    PeatioDaemons-&gt;&gt;RabbitMQ: [subscribe trade channel]
+    Note over PeatioDaemons,RabbitMQ: queues - market_ticker
+
+    User-&gt;&gt;Proxy: request POST &apos;{APPLOGIC}/api/v1/orders/clear&apos;
+    Proxy-&gt;&gt;AppLogic: redirect POST &apos;{APPLOGIC}/api/v1/orders/clear&apos;
+    Note over AppLogic: verify JWT (see JWT verification)
+    AppLogic-&gt;&gt;Peatio: request POST &apos;{PEATIO}/api/v2/order/clear&apos;
+    Note over Peatio: verify JWT
+    Peatio-&gt;&gt;Db: get orders list
+    opt each order
+        Note over PeatioDaemons,RabbitMQ: see opt [daemons worker] in DFD Delete order
+    end
+
+    Peatio--&gt;&gt;AppLogic: Response result
+
+    AppLogic--&gt;&gt;Proxy: Response
+    Proxy--&gt;&gt;User: Response
+</pre>
 <h3 class="mume-header" id="get-orders-list">Get orders list</h3>
 
 <div class="mermaid">sequenceDiagram
@@ -576,6 +862,30 @@ npm install -g babel-runtime
     AppLogic-->>Proxy: Response
     Proxy-->>User: Response
 </div>
+<pre class="language-">sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Peatio
+    participant PeatioDaemons
+    participant RabbitMQ
+    participant Db
+    participant Vault
+    participant Notifications
+
+    User-&gt;&gt;Proxy: request GET &apos;{APPLOGIC}/api/v1/orders&apos;
+    Proxy-&gt;&gt;AppLogic: redirect GET &apos;{APPLOGIC}/api/v1/orders&apos;
+    Note over AppLogic: verify JWT (see JWT verification)
+    AppLogic-&gt;&gt;Peatio: request GET &apos;{PEATIO}/api/v2/orders&apos;
+    Note over Peatio: verify JWT
+    Peatio-&gt;&gt;Db: get orders list
+    Db--&gt;&gt;Peatio: response list
+
+    Peatio--&gt;&gt;AppLogic: Response result
+
+    AppLogic--&gt;&gt;Proxy: Response
+    Proxy--&gt;&gt;User: Response
+</pre>
 <h3 class="mume-header" id="get-order-detail">Get order detail</h3>
 
 <div class="mermaid">sequenceDiagram
@@ -602,6 +912,30 @@ npm install -g babel-runtime
     AppLogic-->>Proxy: Response
     Proxy-->>User: Response
 </div>
+<pre class="language-">sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Peatio
+    participant PeatioDaemons
+    participant RabbitMQ
+    participant Db
+    participant Vault
+    participant Notifications
+
+    User-&gt;&gt;Proxy: request GET &apos;{APPLOGIC}/api/v1/order&apos;
+    Proxy-&gt;&gt;AppLogic: redirect GET &apos;{APPLOGIC}/api/v1/order&apos;
+    Note over AppLogic: verify JWT (see JWT verification)
+    AppLogic-&gt;&gt;Peatio: request GET &apos;{PEATIO}/api/v2/order&apos;
+    Note over Peatio: verify JWT
+    Peatio-&gt;&gt;Db: get order details
+    Db--&gt;&gt;Peatio: response order
+
+    Peatio--&gt;&gt;AppLogic: Response result
+
+    AppLogic--&gt;&gt;Proxy: Response
+    Proxy--&gt;&gt;User: Response
+</pre>
 <h3 class="mume-header" id="get-the-order-book-of-specified-market">Get the order book of specified market</h3>
 
 <div class="mermaid">sequenceDiagram
@@ -631,6 +965,33 @@ npm install -g babel-runtime
     AppLogic-->>Proxy: Response
     Proxy-->>User: Response
 </div>
+<pre class="language-">sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Peatio
+    participant PeatioDaemons
+    participant RabbitMQ
+    participant Db
+    participant Vault
+    participant Notifications
+
+    User-&gt;&gt;Proxy: request GET &apos;{APPLOGIC}/api/v1/order_book&apos;
+    Proxy-&gt;&gt;AppLogic: redirect GET &apos;{APPLOGIC}/api/v1/order_book&apos;
+    Note over AppLogic: verify JWT (see JWT verification)
+    AppLogic-&gt;&gt;Peatio: request GET &apos;{PEATIO}/api/v2/order_book&apos;
+    Note over Peatio: verify JWT
+    Peatio-&gt;&gt;+Db: get orders (asks)
+    Peatio-&gt;&gt;+Db: get orders (bids)
+    Peatio-&gt;&gt;-Db: response asks
+    Peatio-&gt;&gt;-Db: response bids
+    Peatio--&gt;&gt;Peatio: create response array
+
+    Peatio--&gt;&gt;AppLogic: Response
+
+    AppLogic--&gt;&gt;Proxy: Response
+    Proxy--&gt;&gt;User: Response
+</pre>
 <h3 class="mume-header" id="get-depth-or-specified-market">Get depth or specified market</h3>
 
 <div class="mermaid">sequenceDiagram
@@ -657,6 +1018,30 @@ npm install -g babel-runtime
     AppLogic-->>Proxy: Response
     Proxy-->>User: Response
 </div>
+<pre class="language-">sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Peatio
+    participant PeatioDaemons
+    participant RabbitMQ
+    participant Db
+    participant Vault
+    participant Notifications
+
+    User-&gt;&gt;Proxy: request GET &apos;{APPLOGIC}/api/v1/depth&apos;
+    Proxy-&gt;&gt;AppLogic: redirect GET &apos;{APPLOGIC}/api/v1/depth&apos;
+    Note over AppLogic: verify JWT (see JWT verification)
+    AppLogic-&gt;&gt;Peatio: request GET &apos;{PEATIO}/api/v2/depth&apos;
+    Note over Peatio: verify JWT
+    Peatio-&gt;&gt;Peatio: get Global for market with specific (asks and bids) and add timestamp
+    Peatio--&gt;&gt;Peatio: create response data
+
+    Peatio--&gt;&gt;AppLogic: Response
+
+    AppLogic--&gt;&gt;Proxy: Response
+    Proxy--&gt;&gt;User: Response
+</pre>
 <h3 class="mume-header" id="get-members-executed-trades">Get members executed trades</h3>
 
 <div class="mermaid">sequenceDiagram
@@ -683,6 +1068,30 @@ npm install -g babel-runtime
     AppLogic-->>Proxy: Response
     Proxy-->>User: Response
 </div>
+<pre class="language-">sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Peatio
+    participant PeatioDaemons
+    participant RabbitMQ
+    participant Db
+    participant Vault
+    participant Notifications
+
+    User-&gt;&gt;Proxy: request GET &apos;{APPLOGIC}/api/v1/trades&apos;
+    Proxy-&gt;&gt;AppLogic: redirect GET &apos;{APPLOGIC}/api/v1/trades&apos;
+    Note over AppLogic: verify JWT (see JWT verification)
+    AppLogic-&gt;&gt;Peatio: request GET &apos;{PEATIO}/api/v2/trades&apos;
+    Note over Peatio: verify JWT
+    Peatio-&gt;&gt;Db: get trades list
+    Db--&gt;&gt;Peatio: response list
+
+    Peatio--&gt;&gt;AppLogic: Response result
+
+    AppLogic--&gt;&gt;Proxy: Response
+    Proxy--&gt;&gt;User: Response
+</pre>
 <h2 class="mume-header" id="public-data">Public data</h2>
 
 <h3 class="mume-header" id="get-markets-list">Get markets list</h3>
@@ -709,6 +1118,28 @@ npm install -g babel-runtime
     AppLogic-->>Proxy: Response
     Proxy-->>User: Response
 </div>
+<pre class="language-">sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Peatio
+    participant RabbitMQ
+    participant PeatioDaemons
+    participant Db
+    participant Vault
+    participant Notifications
+
+    User-&gt;&gt;Proxy: request GET &apos;{APPLOGIC}/api/v1/markets&apos;
+    Note over User: simple request without jwt
+    Proxy-&gt;&gt;AppLogic: redirect GET &apos;{APPLOGIC}/api/v1/markets&apos;
+    AppLogic-&gt;&gt;Peatio: request GET &apos;{PEATIO}/api/v2/markets&apos;
+    Peatio-&gt;&gt;Db: get markets
+    Db--&gt;&gt;Peatio: response markets
+    Peatio--&gt;&gt;AppLogic: response JSON
+
+    AppLogic--&gt;&gt;Proxy: Response
+    Proxy--&gt;&gt;User: Response
+</pre>
 <h3 class="mume-header" id="get-tickers">Get tickers</h3>
 
 <div class="mermaid">sequenceDiagram
@@ -733,6 +1164,28 @@ npm install -g babel-runtime
     AppLogic-->>Proxy: Response
     Proxy-->>User: Response
 </div>
+<pre class="language-">sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Peatio
+    participant RabbitMQ
+    participant PeatioDaemons
+    participant Db
+    participant Vault
+    participant Notifications
+
+    User-&gt;&gt;Proxy: request GET &apos;{APPLOGIC}/api/v1/tickers&apos;
+    Note over User: simple request without jwt
+    Proxy-&gt;&gt;AppLogic: redirect GET &apos;{APPLOGIC}/api/v1/tickers&apos;
+    AppLogic-&gt;&gt;Peatio: request GET &apos;{PEATIO}/api/v2/tickers&apos;
+    Peatio-&gt;&gt;Db: get tickers
+    Db--&gt;&gt;Peatio: response tickers
+    Peatio--&gt;&gt;AppLogic: response JSON
+
+    AppLogic--&gt;&gt;Proxy: Response
+    Proxy--&gt;&gt;User: Response
+</pre>
 <h3 class="mume-header" id="get-tickers-for-specified-market">Get tickers for specified market</h3>
 
 <div class="mermaid">sequenceDiagram
@@ -757,6 +1210,28 @@ npm install -g babel-runtime
     AppLogic-->>Proxy: Response
     Proxy-->>User: Response
 </div>
+<pre class="language-">sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Peatio
+    participant RabbitMQ
+    participant PeatioDaemons
+    participant Db
+    participant Vault
+    participant Notifications
+
+    User-&gt;&gt;Proxy: request GET &apos;{APPLOGIC}/api/v1/tickers/{market}&apos;
+    Note over User: simple request without jwt
+    Proxy-&gt;&gt;AppLogic: redirect GET &apos;{APPLOGIC}/api/v1/tickers/{market}&apos;
+    AppLogic-&gt;&gt;Peatio: request GET &apos;{PEATIO}/api/v2/tickers/{market}&apos;
+    Peatio-&gt;&gt;Db: get tickers for specified market
+    Db--&gt;&gt;Peatio: response tickers
+    Peatio--&gt;&gt;AppLogic: response JSON
+
+    AppLogic--&gt;&gt;Proxy: Response
+    Proxy--&gt;&gt;User: Response
+</pre>
 <h3 class="mume-header" id="get-order-book-for-market">Get order book for market</h3>
 
 <div class="mermaid">sequenceDiagram
@@ -781,6 +1256,28 @@ npm install -g babel-runtime
     AppLogic-->>Proxy: Response
     Proxy-->>User: Response
 </div>
+<pre class="language-">sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Peatio
+    participant RabbitMQ
+    participant PeatioDaemons
+    participant Db
+    participant Vault
+    participant Notifications
+
+    User-&gt;&gt;Proxy: request GET &apos;{APPLOGIC}/api/v1/order_book&apos;
+    Note over User: simple request without jwt
+    Proxy-&gt;&gt;AppLogic: redirect GET &apos;{APPLOGIC}/api/v1/order_book&apos;
+    AppLogic-&gt;&gt;Peatio: request GET &apos;{PEATIO}/api/v2/order_book&apos;
+    Peatio-&gt;&gt;Db: request order book
+    Db--&gt;&gt;Peatio: response list
+    Peatio--&gt;&gt;AppLogic: response JSON
+
+    AppLogic--&gt;&gt;Proxy: Response
+    Proxy--&gt;&gt;User: Response
+</pre>
 <h3 class="mume-header" id="get-depth">Get depth</h3>
 
 <div class="mermaid">sequenceDiagram
@@ -805,6 +1302,28 @@ npm install -g babel-runtime
     AppLogic-->>Proxy: Response
     Proxy-->>User: Response
 </div>
+<pre class="language-">sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Peatio
+    participant RabbitMQ
+    participant PeatioDaemons
+    participant Db
+    participant Vault
+    participant Notifications
+
+    User-&gt;&gt;Proxy: request GET &apos;{APPLOGIC}/api/v1/depth&apos;
+    Note over User: simple request without jwt
+    Proxy-&gt;&gt;AppLogic: redirect GET &apos;{APPLOGIC}/api/v1/depth&apos;
+    AppLogic-&gt;&gt;Peatio: request GET &apos;{PEATIO}/api/v2/depth&apos;
+    Peatio-&gt;&gt;Db: request order book
+    Db--&gt;&gt;Peatio: response list
+    Peatio--&gt;&gt;AppLogic: response JSON
+
+    AppLogic--&gt;&gt;Proxy: Response
+    Proxy--&gt;&gt;User: Response
+</pre>
 <h3 class="mume-header" id="get-recent-trades-on-market">Get recent trades on market</h3>
 
 <div class="mermaid">sequenceDiagram
@@ -829,6 +1348,28 @@ npm install -g babel-runtime
     AppLogic-->>Proxy: Response
     Proxy-->>User: Response
 </div>
+<pre class="language-">sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Peatio
+    participant RabbitMQ
+    participant PeatioDaemons
+    participant Db
+    participant Vault
+    participant Notifications
+
+    User-&gt;&gt;Proxy: request GET &apos;{APPLOGIC}/api/v1/trades&apos;
+    Note over User: simple request without jwt
+    Proxy-&gt;&gt;AppLogic: redirect GET &apos;{APPLOGIC}/api/v1/trades&apos;
+    AppLogic-&gt;&gt;Peatio: request GET &apos;{PEATIO}/api/v2/trades&apos;
+    Peatio-&gt;&gt;Db: request trades
+    Db--&gt;&gt;Peatio: response list
+    Peatio--&gt;&gt;AppLogic: response JSON
+
+    AppLogic--&gt;&gt;Proxy: Response
+    Proxy--&gt;&gt;User: Response
+</pre>
 <h3 class="mume-header" id="get-ohlck-line-of-specific-market">Get OHLC(k line) of specific market</h3>
 
 <div class="mermaid">sequenceDiagram
@@ -854,9 +1395,32 @@ npm install -g babel-runtime
     AppLogic-->>Proxy: Response
     Proxy-->>User: Response
 </div>
+<pre class="language-">sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Peatio
+    participant RabbitMQ
+    participant PeatioDaemons
+    participant Redis
+    participant Db
+    participant Vault
+    participant Notifications
+
+    User-&gt;&gt;Proxy: request GET &apos;{APPLOGIC}/api/v1/k&apos;
+    Note over User: simple request without jwt
+    Proxy-&gt;&gt;AppLogic: redirect GET &apos;{APPLOGIC}/api/v1/k&apos;
+    AppLogic-&gt;&gt;Peatio: request GET &apos;{PEATIO}/api/v2/k&apos;
+    Peatio-&gt;&gt;Redis: get data
+    Redis--&gt;&gt;Peatio: response data
+    Peatio--&gt;&gt;AppLogic: response JSON
+
+    AppLogic--&gt;&gt;Proxy: Response
+    Proxy--&gt;&gt;User: Response
+</pre>
 <h3 class="mume-header" id="get-fees-depositwithdrawtrading">Get fees (deposit/withdraw/trading)</h3>
 
-<p>This endpoint is avaible in Peatio 1.8</p>
+<p>Those endpoints is avaible in Peatio 1.8</p>
 <div class="mermaid">sequenceDiagram
     participant User
     participant Proxy
@@ -880,6 +1444,29 @@ npm install -g babel-runtime
     AppLogic-->>Proxy: Response
     Proxy-->>User: Response
 </div>
+<pre class="language-">sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Peatio
+    participant RabbitMQ
+    participant PeatioDaemons
+    participant Redis
+    participant Db
+    participant Vault
+    participant Notifications
+
+    User-&gt;&gt;Proxy: request GET &apos;{APPLOGIC}/api/v1/fees/withdraw&apos;
+    Note over User: simple request without jwt
+    Proxy-&gt;&gt;AppLogic: redirect GET &apos;{APPLOGIC}/api/v1/fees/withdraw&apos;
+    AppLogic-&gt;&gt;Peatio: request GET &apos;{PEATIO}/api/v2/fees/withdraw&apos;
+    Peatio-&gt;&gt;Db: get fees
+    Db--&gt;&gt;Peatio: response fees
+    Peatio--&gt;&gt;AppLogic: response JSON
+
+    AppLogic--&gt;&gt;Proxy: Response
+    Proxy--&gt;&gt;User: Response
+</pre>
 <h2 class="mume-header" id="accounts-data">Account's data</h2>
 
 <h3 class="mume-header" id="get-your-profile-and-accounts-info">Get your profile and accounts info</h3>
@@ -905,6 +1492,27 @@ npm install -g babel-runtime
     AppLogic-->>Proxy: Response
     Proxy-->>User: Response
 </div>
+<pre class="language-">sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Peatio
+    participant RabbitMQ
+    participant PeatioDaemons
+    participant Db
+    participant Vault
+    participant Notifications
+
+    User-&gt;&gt;Proxy: request GET &apos;{APPLOGIC}/api/v1/members/me&apos;
+    Proxy-&gt;&gt;AppLogic: redirect GET &apos;{APPLOGIC}/api/v1/members/me&apos;
+    Note over AppLogic: verify JWT (see JWT verification)
+    AppLogic-&gt;&gt;Peatio: request GET &apos;{PEATIO}/api/v2/members/me&apos;
+    Note over Peatio: verify JWT
+    Peatio-&gt;&gt;Db: get account record
+    Db--&gt;&gt;Peatio: account info
+    AppLogic--&gt;&gt;Proxy: Response
+    Proxy--&gt;&gt;User: Response
+</pre>
 <h3 class="mume-header" id="get-your-deposits-history">Get your deposits history</h3>
 
 <div class="mermaid">sequenceDiagram
@@ -929,6 +1537,28 @@ npm install -g babel-runtime
     AppLogic-->>Proxy: Response
     Proxy-->>User: Response
 </div>
+<pre class="language-">sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Peatio
+    participant RabbitMQ
+    participant PeatioDaemons
+    participant Db
+    participant Vault
+    participant Notifications
+
+    User-&gt;&gt;Proxy: request GET &apos;{APPLOGIC}/api/v1/deposits&apos;
+    Proxy-&gt;&gt;AppLogic: redirect GET &apos;{APPLOGIC}/api/v1/deposits&apos;
+    Note over AppLogic: verify JWT (see JWT verification)
+    AppLogic-&gt;&gt;Peatio: request GET &apos;{PEATIO}/api/v2/deposits&apos;
+    Note over Peatio: verify JWT
+    Peatio-&gt;&gt;Db: get deposits
+    Db--&gt;&gt;Peatio: deposits list
+    Peatio--&gt;&gt;AppLogic: Response
+    AppLogic--&gt;&gt;Proxy: Response
+    Proxy--&gt;&gt;User: Response
+</pre>
 <h3 class="mume-header" id="get-your-deposit-address">Get your deposit address</h3>
 
 <div class="mermaid">sequenceDiagram
@@ -959,6 +1589,34 @@ npm install -g babel-runtime
     AppLogic-->>Proxy: Response
     Proxy-->>User: Response
 </div>
+<pre class="language-">sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Peatio
+    participant RabbitMQ
+    participant PeatioDaemons
+    participant Db
+    participant Vault
+    participant Notifications
+
+    PeatioDaemons-&gt;&gt;RabbitMQ: [subscribe default channel]
+    Note over PeatioDaemons: queues - deposit_payment_address, deposit_coins
+    User-&gt;&gt;Proxy: request GET &apos;{APPLOGIC}/api/v1/deposit_address&apos;
+    Proxy-&gt;&gt;AppLogic: redirect GET &apos;{APPLOGIC}/api/v1/deposit_address&apos;
+    Note over AppLogic: verify JWT (see JWT verification)
+    AppLogic-&gt;&gt;Peatio: request GET &apos;{PEATIO}/api/v2/deposit_address&apos;
+    Note over Peatio: verify JWT
+    Peatio-&gt;&gt;Db: get account
+    Db--&gt;&gt;Peatio: account info
+    opt daemons worker
+        Peatio-&gt;&gt;PeatioDaemons: request deposit coin address
+        PeatioDaemons--&gt;&gt;Peatio: response address
+    end
+    Peatio--&gt;&gt;AppLogic: Response
+    AppLogic--&gt;&gt;Proxy: Response
+    Proxy--&gt;&gt;User: Response
+</pre>
 <h3 class="mume-header" id="get-your-deposit-details">Get your deposit details</h3>
 
 <div class="mermaid">sequenceDiagram
@@ -983,11 +1641,34 @@ npm install -g babel-runtime
     AppLogic-->>Proxy: Response
     Proxy-->>User: Response
 </div>
+<pre class="language-">sequenceDiagram
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Peatio
+    participant RabbitMQ
+    participant PeatioDaemons
+    participant Db
+    participant Vault
+    participant Notifications
+
+    User-&gt;&gt;Proxy: request GET &apos;{APPLOGIC}/api/v1/deposit&apos;
+    Proxy-&gt;&gt;AppLogic: redirect GET &apos;{APPLOGIC}/api/v1/deposit&apos;
+    Note over AppLogic: verify JWT (see JWT verification)
+    AppLogic-&gt;&gt;Peatio: request GET &apos;{PEATIO}/api/v2/deposit&apos;
+    Note over Peatio: verify JWT
+    Peatio-&gt;&gt;Db: get deposit details
+    Db--&gt;&gt;Peatio: deposit details
+    Peatio--&gt;&gt;AppLogic: Response
+    AppLogic--&gt;&gt;Proxy: Response
+    Proxy--&gt;&gt;User: Response
+</pre>
 <h1 class="mume-header" id="raised-security-api">Raised security API</h1>
 
 <p>This section describes set of API of RKCP that needs additional confirmation on actions besides using session JWT and/or API keys</p>
 <h2 class="mume-header" id="deposits-fiats">Deposits: Fiats</h2>
 
+<p>This version is not realizing in Peatio</p>
 <div class="mermaid">sequenceDiagram
     participant User
     participant Proxy
@@ -1001,26 +1682,70 @@ npm install -g babel-runtime
     participant SmtpRelay
     participant Pusher
 
-    User->>Proxy: request post '/management_api/v1/deposits/new'
-    Proxy->>Peatio: forward post '/management_api/v1/deposits/new'
-    Peatio->>Db:  insert deposits
-    alt saved
-        Db-->>Peatio: saved
-    else bad data
-        Db-->>Peatio: bad data
+    PeatioDaemons->>RabbitMQ: [subscribe default channel]
+    Note over PeatioDaemons,RabbitMQ: queues - deposit_coin
+    User->>Proxy: request post '{APPLOGIC}/api/v1/deposits/new'
+    Proxy->>AppLogic: redirect post '{APPLOGIC}/api/v1/deposits/new'
+    AppLogic->>Db: Insert record
+
+    AppLogic->>Vault: Create OTP (MFA)
+    Vault-->>AppLogic: Created OTP (MFA)
+    AppLogic-->>Proxy: Deposit ID in queue
+    Proxy-->>User: Deposit ID in queue
+
+    Vault->>User: Send GA OTP
+    User->>Proxy: MFA Verification DepositId + OTP, POST {APPLOGIC}/api/v1/deposits/verify'
+    Proxy->>AppLogic: redirect POST {APPLOGIC}/api/v1/deposits/verify'
+
+    AppLogic->AppLogic: Check sign policy
+    opt if coin - daemons worker
+        PeatioDaemons->>Pusher: [trigger private-{cn} / deposit]
+        PeatioDaemons->>RabbitMQ: [publish default channel]
     end
-    Peatio-->>Proxy: response
-    alt saved
-        Peatio-->>Proxy: status: 201
-    else bad data
-        Peatio-->>Proxy: status: 422
-    end
-    Proxy--xUser: forward response
+    AppLogic-->>Proxy: Response
+    Proxy-->>User: Redirect
 </div>
+<pre class="language-">sequenceDiagram
+    participant User
+    participant Proxy
+    participant Barong
+    participant Peatio
+    participant PeatioDaemons
+    participant RabbitMQ
+    participant Redis
+    participant Db
+    participant Vault
+    participant SmtpRelay
+    participant Pusher
+
+    PeatioDaemons-&gt;&gt;RabbitMQ: [subscribe default channel]
+    Note over PeatioDaemons,RabbitMQ: queues - deposit_coin
+    User-&gt;&gt;Proxy: request post &apos;{APPLOGIC}/api/v1/deposits/new&apos;
+    Proxy-&gt;&gt;AppLogic: redirect post &apos;{APPLOGIC}/api/v1/deposits/new&apos;
+    AppLogic-&gt;&gt;Db: Insert record
+
+    AppLogic-&gt;&gt;Vault: Create OTP (MFA)
+    Vault--&gt;&gt;AppLogic: Created OTP (MFA)
+    AppLogic--&gt;&gt;Proxy: Deposit ID in queue
+    Proxy--&gt;&gt;User: Deposit ID in queue
+
+    Vault-&gt;&gt;User: Send GA OTP
+    User-&gt;&gt;Proxy: MFA Verification DepositId + OTP, POST {APPLOGIC}/api/v1/deposits/verify&apos;
+    Proxy-&gt;&gt;AppLogic: redirect POST {APPLOGIC}/api/v1/deposits/verify&apos;
+
+    AppLogic-&gt;AppLogic: Check sign policy
+    opt if coin - daemons worker
+        PeatioDaemons-&gt;&gt;Pusher: [trigger private-{cn} / deposit]
+        PeatioDaemons-&gt;&gt;RabbitMQ: [publish default channel]
+    end
+    AppLogic--&gt;&gt;Proxy: Response
+    Proxy--&gt;&gt;User: Redirect
+</pre>
 <h2 class="mume-header" id="withdraws-fiats">Withdraws: Fiats</h2>
 
 <h3 class="mume-header" id="user-initiate-new-withdraw">User initiate new withdraw</h3>
 
+<p>This version is not realizing in Peatio</p>
 <div class="mermaid">sequenceDiagram
     participant PermittedSigners
     participant User
@@ -1060,6 +1785,45 @@ npm install -g babel-runtime
     AppLogic-->>Proxy: Response notification about waiting accepting
     Proxy-->>User: Redirect notification
 </div>
+<pre class="language-">sequenceDiagram
+    participant PermittedSigners
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Peatio
+    participant PeatioDaemons
+    participant RabbitMQ
+    participant Db
+    participant Vault
+    participant Pusher
+
+    PeatioDaemons-&gt;&gt;RabbitMQ: [subscribe default channel]
+    Note over PeatioDaemons,RabbitMQ: queues - withdraw_coin
+    User-&gt;&gt;Proxy: request post &apos;{APPLOGIC}/api/v1/withdraws/new&apos;
+    Proxy-&gt;&gt;AppLogic: redirect post &apos;{APPLOGIC}/api/v1/withdraws/new&apos;
+    AppLogic-&gt;&gt;Db: Insert record
+
+    AppLogic-&gt;&gt;Vault: Create OTP (MFA)
+    Vault--&gt;&gt;AppLogic: Created OTP (MFA)
+    AppLogic--&gt;&gt;Proxy: Withdraw ID in queue
+    Proxy--&gt;&gt;User: Withdraw ID in queue
+
+    Vault-&gt;&gt;User: Send GA OTP
+    User-&gt;&gt;Proxy: MFA Verification WithdrawId + OTP, POST {APPLOGIC}/api/v1/withdraws/verify&apos;
+    Proxy-&gt;&gt;AppLogic: redirect POST {APPLOGIC}/api/v1/withdraws/verify&apos;
+
+    AppLogic-&gt;AppLogic: Check sign policy
+
+    AppLogic-&gt;&gt;Db: update record
+    Db--&gt;&gt;AppLogic: get organization signers list
+    opt if coin - daemons worker
+        PeatioDaemons-&gt;&gt;Pusher: [trigger private-{cn} / withdraw]
+        PeatioDaemons-&gt;&gt;RabbitMQ: [publish default channel]
+    end
+    AppLogic--&gt;&gt;Notifications: Publish withdraw request for organization signers
+    AppLogic--&gt;&gt;Proxy: Response notification about waiting accepting
+    Proxy--&gt;&gt;User: Redirect notification
+</pre>
 <h3 class="mume-header" id="subscriber-get-withdraw-request-for-organization-signers">Subscriber get withdraw request (for organization signers)</h3>
 
 <div class="mermaid">sequenceDiagram
@@ -1098,9 +1862,46 @@ npm install -g babel-runtime
         end
         AppLogic-->>Proxy: response result
         Proxy-->>PermittedSigners: redirect result
-    end
-    
+    end    
 </div>
+<pre class="language-">sequenceDiagram
+    participant PermittedSigners
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Peatio
+    participant PeatioDaemons
+    participant RabbitMQ
+    participant Db
+    participant Vault
+    participant Notifications
+
+    Notifications--&gt;&gt;PermittedSigners: Receive notification about signature waiting
+
+    PermittedSigners-&gt;&gt;Proxy: Receive withdraw - request GET {AppLogic} /api/v1/withdraws/id
+    Proxy-&gt;&gt;AppLogic: redirect GET {AppLogic} /api/v1/withdraws/id
+
+    Db--&gt;&gt;AppLogic: get withdraw
+    AppLogic--&gt;&gt;Proxy: redirect withdraw
+    Proxy--&gt;&gt;PermittedSigners: redirect withdraw
+
+    opt not canceled yet
+        alt jws signatures
+            PermittedSigners-&gt;&gt;AppLogic: request POST {AppLogic} /api/v1/withdraws/accept
+            AppLogic-&gt;&gt;AppLogic: Sign withdraw document
+            AppLogic-&gt;&gt;Db: Update record - add withdraw signature
+            opt all signatures received
+                AppLogic--&gt;&gt;Notifications: Publish info about receiving all organization signatures
+            end
+        else canceled
+            PermittedSigners-&gt;&gt;AppLogic: request POST {AppLogic} /api/v1/withdraws/cancel
+            AppLogic-&gt;&gt;Db: Set withdraw state canceled
+            AppLogic--&gt;&gt;Notifications: Publish about withdraw canceling
+        end
+        AppLogic--&gt;&gt;Proxy: response result
+        Proxy--&gt;&gt;PermittedSigners: redirect result
+    end
+</pre>
 <h3 class="mume-header" id="all-organization-signatures-received">All organization signatures received</h3>
 
 <div class="mermaid">sequenceDiagram
@@ -1125,6 +1926,31 @@ npm install -g babel-runtime
     AppLogic->>Db: Update record
     AppLogic-->>Notifications: Publish about withdraw completing
 </div>
+<pre class="language-">sequenceDiagram
+    participant PermittedSigners
+    participant User
+    participant Proxy
+    participant AppLogic
+    participant Peatio
+    participant PeatioDaemons
+    participant RabbitMQ
+    participant Db
+    participant Vault
+    participant Notifications
+    
+    Notifications--&gt;&gt;AppLogic: Withdraw - all signatures received
+    AppLogic-&gt;&gt;AppLogic: Set PEATIO mandatory signature
+    AppLogic-&gt;&gt;Peatio: Create accepted withdraw POST {PEATIO} /management_api/v1/withdraws/new
+    Peatio-&gt;&gt;+PeatioDaemons: withdraw in queuee
+    PeatioDaemons-&gt;&gt;+RabbitMQ: withdraw in queuee
+    RabbitMQ--&gt;&gt;-PeatioDaemons: withdraw created
+    PeatioDaemons--&gt;&gt;-AppLogic: withdraw created
+    AppLogic-&gt;&gt;Db: Update record
+    AppLogic--&gt;&gt;Notifications: Publish about withdraw completing
+</pre>
+<h1 class="mume-header" id="api-secret-for-barong">API secret for Barong</h1>
+
+<p>This section is actual for</p>
 <h1 class="mume-header" id="service-processes">Service processes</h1>
 
 <p>This section contains jwt authentification process</p>
@@ -1146,6 +1972,22 @@ npm install -g babel-runtime
         Note over AppLogic: continue execution
     end
 </div>
+<pre class="language-">sequenceDiagram
+    participant Sender
+    participant AppLogic
+    participant Db
+
+    Sender-&gt;&gt;AppLogic: Request with JWToken
+    AppLogic-&gt;&gt;AppLogic: Decode &amp; verify JWToken
+    Note over AppLogic: verify: expiration, iss, jti, aud, sub, algorithms, leeway (iat, iss, exp)
+    AppLogic-&gt;&gt;Db: Find account by email
+    Db--&gt;&gt;AppLogic: Receive member
+    alt no verification or no member
+        AppLogic--&gt;&gt;Sender: 401 Unauthorized
+    else verified
+        Note over AppLogic: continue execution
+    end
+</pre>
 
       </div>
       <div class="md-sidebar-toc"><ul>
@@ -1219,6 +2061,7 @@ npm install -g babel-runtime
 </li>
 </ul>
 </li>
+<li><a href="#api-secret-for-barong">API secret for Barong</a></li>
 <li><a href="#service-processes">Service processes</a><br>
 * <a href="#jwt-verification">JWT verification</a></li>
 </ul>
